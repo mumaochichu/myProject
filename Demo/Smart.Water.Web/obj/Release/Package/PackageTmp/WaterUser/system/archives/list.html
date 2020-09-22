@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户管理</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../theme/wateruser/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../theme/wateruser/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="../../../theme/wateruser/fullcalendar.css">
+    <link rel="stylesheet" href="../../../theme/wateruser/style.css">
+    <link href="../../../style/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../../js/jQuery/Plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="../../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <script src="../../../js/jQuery/jquery.min.js"></script>
+    <script src="../../../theme/wateruser/bootstrap.min.js"></script>
+    <script src="../../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../../js/jQuery/Plugins/jquery.layout/jquery-latest.js"></script>
+    <script src="../../../js/jQuery/Plugins/jquery.layout/jquery.layout-latest.js"></script>
+    <script src="../../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../../../js/jQuery/Plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <script src="../../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../../../js/jQuery/Plugins/zTree"></script>
+    <style>
+        #title {
+            color: #555555;
+            font-size: 28px;
+            font-weight: normal;
+            float: none;
+            text-shadow: 0 1px 0 #ffffff;
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .ztree li ul {
+            padding: 0px,0px,0px,10px;
+        }
+    </style>
+    <script type="text/javascript">
+        var oTable;
+        var type = "";
+        var name = "";
+        var treeObj, zNodes = [], selectNode, selectPnode;
+        //树的配置项
+        var setting = {
+            view: {
+                showLine: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: zTreeOnClick
+            }
+        };
+        $(function () {
+            //layout布局确定
+            $('body').layout({
+                applyDemoStyles: true,
+                north__closable: false,
+                togglerTip_open: "关闭",//pane打开时，当鼠标移动到边框上按钮上，显示的提示语
+                togglerTip_closed: "打开",//pane关闭时，当鼠标移动到边框上按钮上，显示的提示语
+                togglerLength_open: 35,//pane打开时，边框按钮的长度
+                togglerLength_closed: 35,//pane关闭时，边框按钮的长度
+                togglerContent_open: " <div style='background:rgb(221, 221, 221)'><img src='../../../images/wateruser/plugin/mini-left.gif' /></div>",//pane打开时，边框按钮中需要显示的内容
+                togglerContent_closed: "<div style='background:rgb(221, 221, 221)'><img src='../../../images/wateruser/plugin/mini-right.gif' /></div>",//pane关闭时，边框按钮中需要显示的内容
+            });
+            //获取树
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                async: false,
+                url: 'Handler.ashx?Action=Tree',
+                success: function (result) {
+                    $.each(result, function (i, v) {
+                        zNodes.push({
+                            id: v.JDID, pId: v.PCID, name: v.NAME, code: v.CODE
+                        });
+                    });
+                    cityTree = $.fn.zTree.init($("#cityTrees"), setting, zNodes);
+                    treeObj = $.fn.zTree.getZTreeObj("cityTrees");
+                    var nodes = treeObj.getNodes();
+                    for (var i = 0; i < nodes.length; i++) { //设置节点展开
+                        treeObj.expandNode(nodes[i], true, false, true);
+                    }
+                    //节点初始化
+                    var hinodes = [];
+                    var count = 0;
+                    $.each(nodes, function (ni, nv) {
+                        //判断是否创建营业所
+                        if (nv.isParent) {
+                            $.each(nv.children, function (i, v) {
+                                //判断营业所是否创建组，如果不创建不显示该营业所节点。
+                                if (v.isParent) {
+                                    $.each(v.children, function (ii, vv) {
+                                        if (vv.isParent) {
+                                            $.each(vv.children, function (iii, vvv) {
+                                                vvv.icon = "../../../js/jQuery/Plugins/zTree/css/zTreeStyle/img/diy/2.png"
+                                            })
+                                        } else {
+                                            vv.icon = "../../../js/jQuery/Plugins/zTree/css/zTreeStyle/img/diy/3.png"
+                                        }
+                                    })
+                                } else {
+                                    hinodes.push(v);
+                                    count++;
+                                }
+                            })
+                        } else {
+                            $("#btnAdd").attr("dispaly", "true");
+                            $("#btnAdd").attr("title", "请先创建营业所和组后再开户！");
+                        }
+                    })
+                    if (count == 0) {
+                    } else if (hinodes.length == count) {
+                        $("#btnAdd").attr("dispaly", "true");
+                        $("#btnAdd").attr("title", "请先创建组后再开户！");
+                        $.each(hinodes, function (i, v) {
+                            treeObj.removeNode(v);
+                        });
+                    } else {
+                        $.each(hinodes, function (i, v) {
+                            treeObj.removeNode(v);
+                        });
+                    }
+
+                }
+            });
+            //创建表格
+            oTable = $('#paTable').DataTable({
+                "oLanguage": {
+                    "sUrl": "../../../js/jQuery/Plugins/DataTables/dataTables.chinese.txt"
+                },
+                "bJQueryUI": true,
+                "sDom": '<""l>t<"F"fp>',
+                "bServerSide": true,
+                "sAjaxSource": "Handler.ashx?Action=List",      //mvc后台ajax调用接口
+                'bPaginate': true,                      //是否分页。
+                "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
+                'bFilter': false,                       //是否使用内置的过滤功能。
+                "sScrollY": calcDataTableHeight(),
+                "bSort": false,
+                "iDisplayLength": 10,  //每页显示的行数
+                "bLengthChange": false,//允许用户从一个选择菜单中格式化页面大小(改变页面显示的数据数量)
+                'sPaginationType': 'full_numbers',      //分页样式    //分页样式
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "name", "value": name },
+                                { "name": "type", "value": type });
+                },
+                "aoColumns": [
+                    { "mData": "ID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
+                    {
+                        "mData": "YSHHM", "sTitle": "用水户户名", "sWidth": "20%",
+                    },
+                    {
+                        "mData": "YSHHH", "sTitle": "用水户户号", "sWidth": "10%",
+                    },
+                    {
+                        "mData": "CBH", "sTitle": "册本号", "sWidth": "10%",
+                    },
+                     {
+                         "mData": "LXR", "sTitle": "联系人", "sWidth": "10%",
+                     },
+                    {
+                        "mData": "GLLX", "sTitle": "管理类型", "sWidth": "10%",
+                    },
+                    {
+                        "mData": "BJXH", "sTitle": "表具型号", "sWidth": "15%",
+                    },
+                    {
+                        "mData": "BTBH", "sTitle": "表体编号", "sWidth": "15%",
+                    },
+                    {
+                        "sTitle": "操作",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, full) {
+                            var html = "<a href='#' title='修改' onclick='edit(\"" + full.ID + "\")'><i class='fa fa-pencil'></i>&nbsp&nbsp</a> ";
+                            html += "<a href='#' title='换表' onclick='change(\"" + full.ID + "\")'><i class='fa fa-tachometer'></i>&nbsp&nbsp</a> ";
+                            html += "<a href='#' title='销户' onclick='deleteOne(\"" + full.ID + "\",\"" + full.YSHHM + "\")'><i class='fa fa-remove'></i>&nbsp&nbsp</a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+            $("#btnQuery").click(function () {
+                treeObj.cancelSelectedNode();
+                type = "";
+                name = $("#txtName").val();
+                if (oTable != undefined && oTable != null) {
+                    refresh();
+                }
+            });
+            $(window).resize(function () {
+                var oSettings = oTable.settings();
+                oSettings[0].oScroll.sY = calcDataTableHeight();
+                refresh();
+            });
+            //停止进度条，初始化点击空白处，收缩二级菜单事件
+            $(".ui-layout-container").click(function () {
+                if (top.$("#user-nav > ul >li").hasClass("open")) {
+                    top.$("#user-nav > ul >li").removeClass("open");
+                }
+            });
+            top.NProgress.done();
+
+        });
+        //树的点击事件
+        function zTreeOnClick(event, treeId, treeNode) {
+            selectNode = treeNode;
+            $("#btnAdd").attr("disabled", true);
+            $("#btnAdd").attr("title", "请先选择要添加的组！");
+            if (treeNode.level == 0) {
+                $("#txtName").val("");
+                name = null;
+                type = "";
+                if (oTable != undefined && oTable != null) {
+                    refresh();
+                }
+            }
+            if (treeNode.level == 1) {
+                $("#txtName").val("");
+                name = treeNode.id;
+                type = "YYS";
+                if (oTable != undefined && oTable != null) {
+                    refresh();
+                }
+            }
+            if (treeNode.level == 2) {
+                $("#txtName").val("");
+                name = treeNode.id;
+                type = "YYSZ";
+                if (oTable != undefined && oTable != null) {
+                    refresh();
+                }
+                selectPnode = treeObj.getNodesByParam("id", selectNode.pId, null);
+                $("#btnAdd").removeAttr("disabled");
+                $("#btnAdd").removeAttr("title");
+            }
+            if (treeNode.level == 3) {
+                $("#txtName").val("");
+                name = treeNode.id;
+                type = "YSH";
+                if (oTable != undefined && oTable != null) {
+                    refresh();
+                }
+            }
+        }
+        //高度计算
+        function calcDataTableHeight() {
+            var height;
+            if (isIE() == "true") {
+                height = ($("#uleft").height() - $(".form-inline").height()) * 0.845;
+            } else {
+                height = ($("#uleft").height() - $(".form-inline").height()) * 0.85;
+            }
+            return height;
+        };
+
+        /*添加*/
+        function Add() {
+            NProgress.start();
+          
+            window.location.href = "./add.aspx?YYSZID=" + selectNode.id + "&YYSID=" + selectNode.pId + "&YYSMC=" + selectPnode[0].name + "&YYSZM=" + selectNode.name;
+        }
+
+        /*编辑*/
+        function edit(id) {
+            NProgress.start();
+            window.location.href = "./edit.aspx?id=" + id;
+        }
+        /*换表*/
+        function change(id) {
+            NProgress.start();
+            window.location.href = "./changemeter.aspx?id=" + id;
+        }
+        /*删除*/
+        function deleteOne(id, name) {
+            window.location.href = "./delete.aspx?id=" + id + "&name=" + name;
+        }
+        /*
+         * 装载模块到主页面中。
+         * @author Robin
+         * @param {String} id 主键ID。
+         * @param {String} category 文件大类是必须和ftppathxml.xml中的pathtype对应的，且必须要对应Upload下的文件夹名称，三者一致
+         * @param {String} SMALLNAME 子文件类别。
+         */
+        /**
+        * confirm提示.需要提前加载noty.这个方法放在utils里会报错
+        * 需要引用js/Bootstrap/Version3/css/bootstrap-button.css，js/Noty/packaged/jquery.noty.packaged.min.js
+        * @param message 提示的内容
+        * @param type 类型information,alert,error,success,warning
+        * @param okCallback yes执行的方法
+        * @param cancelCallback no执行的方法
+        * @param lblok yes显示的内容
+        * @param lblcancel no显示的内容
+        * @constructor
+        */
+        function confirm(message, type, okCallback, cancelCallback, lblok, lblcancel) {
+            if (!noty) {
+                alert("请检查插件是否加载成功！");
+                return;
+            }
+            var _default =
+            {
+                text: message || "您确定要删除所选对象吗?",
+                type: type || "alert",
+                dismissQueue: true,
+                modal: true,
+                layout: "center",
+                buttons: [
+                    {
+                        addClass: 'btn btn-primary',
+                        text: lblok || "确定",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (okCallback && $.isFunction(okCallback)) {
+
+                                okCallback();
+                            }
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-warning',
+                        text: lblcancel || "取消",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (cancelCallback && $.isFunction(cancelCallback)) {
+
+                                cancelCallback();
+                            }
+                        }
+                    }
+                ]
+            };
+            noty(_default);
+        }
+        //是否为ie浏览器
+        function isIE() { //ie?
+            if (!!window.ActiveXObject || "ActiveXObject" in window)
+                return "true";
+            else
+                return "false";
+        };
+        //刷新表格
+        function refresh() {
+            oTable.draw();
+        }
+    </script>
+</head>
+<body>
+    <div class="ui-layout-center" style="overflow:hidden">
+        <div id="uleft" class="widget-box" style="height:99.5%;border-bottom: 1px solid #cdcdcd;margin-top:0px">
+            <form class="form-inline" style="padding:10px 15px;border-bottom: 1px solid #cdcdcd;">
+                用水户户名：
+                <input type="text" class="form-control" id="txtName" />&nbsp;&nbsp;<input type="button" class="btn btn-info" value="查询" id="btnQuery" />
+                <span class="pull-right"><input type="button" class="btn btn-info" value="开户" disabled="disabled" title="请先选择要添加的组！" id="btnAdd" onclick="Add()" /></span>
+            </form>
+            <div class="widget-content nopadding">
+                <table id="paTable" class="table table-bordered data-table dataTable" style="border-bottom: 1px solid #cdcdcd;" width="99%"></table>
+            </div>
+        </div>
+    </div>
+    <div class="ui-layout-north">用户信息</div>
+    <div class="ui-layout-west">
+        <ul id="cityTrees" class="ztree" style="padding:5px 5px 5px 5px"></ul>
+    </div>
+</body>
+</html>

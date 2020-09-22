@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | jiayazhan3</title>
+      <script src="../../../js/jQuery/jquery.min.js"></script>
+      <script src="../../../js/Framework/robin-utils.js"></script>
+      <script src="../../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+      <link href="../../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <style>
+    /* a style sheet needs to be present for cursor hiding and custom cursors to work. */
+    </style>
+	<script>
+        //获取Id
+        var Id = Robin.Utils.GetQueryObject().Id;      
+		function htmlfunc(){
+		    //默认加载数据
+		    updataJYZ(Id);
+		    NProgress.done();
+		    //实时更新数据
+		    setInterval(function () {
+		        updataJYZ(Id);
+		    }, 10 * 1000);
+			}
+			function ChangeXscWaterLevel(value){
+				if(value){
+					 SendMessage("Main Camera","ChangeXscWaterLevel",value);
+				}else{
+					 SendMessage("蓄水池水面","ChangeXscWaterLevel","0");
+				}
+			}
+			function Change3DPressureValue(value){
+				 SendMessage("Main Camera","Change3DPressureValue",value);
+			}
+			function BtnTurnOnShuibengClick(){
+				 SendMessage("Main Camera","BtnTurnOnShuibengClick","");
+			}
+			function BtnTurnOffShuibengClick()
+			{
+				 SendMessage("Main Camera","BtnTurnOffShuibengClick","");
+			}
+			function TurnOnShuibeng1()
+			{
+				 SendMessage("Main Camera","TurnOnShuibeng1","");
+			}
+			function TurnOffShuibeng1()
+			{
+				 SendMessage("Main Camera","TurnOffShuibeng1","");
+			}
+			function TurnOnShuibeng2()
+			{
+				 SendMessage("Main Camera","TurnOnShuibeng2","");
+			}
+			function TurnOffShuibeng2()
+			{
+				 SendMessage("Main Camera","TurnOffShuibeng2","");
+			}
+			function TurnFaultShuibeng1()
+			{
+				 SendMessage("Main Camera","TurnFaultShuibeng1","");
+			}
+			function TurnFaultShuibeng2()
+			{
+				 SendMessage("Main Camera","TurnFaultShuibeng2","");
+			}
+
+        //定义方法，加载实时数据
+			function updataJYZ(Id) {
+			   
+			    $.each(top.tmodel.monitorData(), function (i, v) {
+			        if (v.StationKey() == Id) {
+			            //更新
+			            switch (v.TagKey()) {			                
+			                case "030202_002":
+			                    //故障状态
+			                    if (v.TagValue() == 1)
+			                    {
+			                        TurnFaultShuibeng2();
+			                        TurnFaultShuibeng1();
+			                    }
+			                    break;			        
+			            }
+			            switch (v.TagCode()) {
+			                //水池水位
+			                case Id + "_005_1":
+			                    ChangeXscWaterLevel(v.TagValue());
+			                    break;
+			                    //出口压力
+			                case Id + "_003_1":
+			                    Change3DPressureValue(v.TagValue());
+			                    break;
+                            //1#泵
+			                case Id + "_007_1":
+			                    if (v.TagValue() == 1) {
+			                        TurnOnShuibeng1();//打开水泵1
+			                    } else {
+			                        TurnOffShuibeng1();//关闭水泵1
+			                    }
+			                    break;
+			                case Id + "_007_2":
+                                //2#泵
+			                    if (v.TagValue() == 1) {
+			                        TurnOffShuibeng2();//打开2#泵
+			                    } else {
+			                        TurnOffShuibeng2();//关闭2#泵
+			                    }
+			                    break;
+
+			            }
+			          //  return false;
+                        
+			        }
+			    });
+			}
+	</script>
+  </head>
+  <body onload="NProgress.start();">
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="450px" width="1000px"></canvas>	
+    <script type='text/javascript'>
+  var Module = {
+    TOTAL_MEMORY: 268435456,
+    errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+    compatibilitycheck: null,
+    dataUrl: "Release/jiayazhan3.data",
+    codeUrl: "Release/jiayazhan3.js",
+    memUrl: "Release/jiayazhan3.mem",
+  };
+</script>
+<script src="Release/UnityLoader.js"></script>
+
+  </body>
+</html>

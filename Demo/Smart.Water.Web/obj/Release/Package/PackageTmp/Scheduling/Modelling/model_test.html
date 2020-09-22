@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+        Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache); //IE
+        Response.Cache.SetNoStore(); //FireFox
+    </script>
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../Scheduling/Modelling/ModellingToorbar.js"></script>
+</head>
+<body>
+    <div id="callHandler">点击向Handler发送消息</div>
+    <script type="text/javascript">
+        $("#callHandler").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "../../Scheduling/Modelling/ModellingResult.ashx",
+                data: { "projectName": "阜阳城市供水模型-3", "layerName": "水库", "objectCode": "100663305" },
+                cache: false,
+                success: function (msg) {
+                    alert("数据获取成功"+msg);
+                },
+                error: function (msg, textStatus) {
+                    //alert("okokokok");
+                    alert(msg + "   " + textStatus);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

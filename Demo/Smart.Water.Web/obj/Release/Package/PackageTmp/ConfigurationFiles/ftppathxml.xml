@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" standalone="yes" ?>
+<NewDataSet>
+	<ftppath>
+		<!--案件上报-->
+		<pathtype>AJSB</pathtype>
+		<pathNameCN>案件上报</pathNameCN>
+		<path>~/Upload/AJSB/</path>
+	</ftppath>
+  <ftppath>
+    <!--巡查记录-->
+    <pathtype>XCJL</pathtype>
+    <pathNameCN>巡查记录</pathNameCN>
+    <path>~/Upload/XCJL/</path>
+  </ftppath>
+  <ftppath>
+    <!--养护记录-->
+    <pathtype>YHJL</pathtype>
+    <pathNameCN>养护记录</pathNameCN>
+    <path>~/Upload/YHJL/</path>
+  </ftppath>
+  <ftppath>
+    <!--简易执法-->
+    <pathtype>JYZF</pathtype>
+    <pathNameCN>简易执法</pathNameCN>
+    <path>~/Upload/JYZF/</path>
+  </ftppath>
+  <ftppath>
+    <!--简易执法处置后-->
+    <pathtype>JYZFCZH</pathtype>
+    <pathNameCN>简易执法处置后</pathNameCN>
+    <path>~/Upload/JYZFCZH/</path>
+  </ftppath>
+  <ftppath>
+    <!--隐患上报-->
+    <pathtype>YHSB</pathtype>
+    <pathNameCN>隐患上报</pathNameCN>
+    <path>~/Upload/YHSB/</path>
+  </ftppath>
+</NewDataSet>

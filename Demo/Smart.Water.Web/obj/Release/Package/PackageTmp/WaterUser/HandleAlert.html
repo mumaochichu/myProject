@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>报警处置</title>
+    <link href="../js/jQuery/Plugins/jsPanel/jquery.jspanel.css" rel="stylesheet" />
+    <link href="../js/Bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <script src="../js/jQuery/jquery.min.js"></script>
+    <script src="../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../js/Bootstrap/v4/js/bootstrap.min.js"></script>
+    <script src="../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <style>
+        .panel-title, .panel-body, .panel-footer {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {            
+            $(".panel-title").html(parent.Robin.Portal.Alert.stationName + '<br/>' + parent.Robin.Portal.Alert.info);
+            //撤销
+            $("#btnCancel").click(function () {
+                var alertId = parent.Robin.Portal.Alert.alertId;
+                var message = $.trim($("#txtMessage").val());
+                var user = $.trim($("#txtUser").val());
+                if (user == '')
+                {
+                    alert("请输入处置人");
+                    return;
+                }
+                if (message == '') {
+                    alert("请输入处置信息");
+                    return;
+                }
+
+                var obj={
+                    username: user, opertype: "业务系统处置", message: message,
+                    alertId:alertId
+                };
+
+                parent.ws.send("alertOper&" + JSON.stringify(obj));
+
+                parent.Robin.Portal.Alert.closeAlert();
+            });
+        });
+
+        function oper() {            
+            //更新任务表
+            $.ajax({
+                url: '../Handler/LoginAuthorize.ashx?Action=UserInfo',
+                dataType: "json",
+                success: function (result)
+                {
+                    var data = result.ALIASNAME;
+                    if (parent.Robin.Portal.Alert.stationKey != '') {
+                        $.post(parent.Robin.Setting.GlobalSetting.RestAPIService + "/iot/alert/v1/" + parent.Robin.Portal.Alert.stationKey,
+                            { username: data, opertype: "撤销", message: message },
+                            function (result) {
+                                parent.Robin.Portal.Alert.closeAlert();
+
+                            });
+                    }
+                    else {
+                        parent.Robin.Portal.Alert.closeAlert();
+                    }
+
+                }
+            });
+
+        }
+    </script>
+</head>
+<body style="padding-top:0px; padding-bottom:0px;">
+    <div class="panel panel-primary panel-line">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="font-size:20px; text-align:center"></h3>
+        </div>
+        <div class="panel-body">
+            <input class="form-control" id="txtUser" placeholder="处置人" />
+            <textarea class="form-control" style="height:110px;" id="txtMessage"></textarea>
+        </div>
+        <div class="panel-footer text-xs-center" style="margin-top:20px">
+            <button type="button" class="btn btn-info" id="btnCancel">处置</button>
+
+        </div>
+    </div>
+
+</body>
+</html>

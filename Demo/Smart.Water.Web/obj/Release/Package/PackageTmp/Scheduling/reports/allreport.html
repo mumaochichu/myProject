@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>日报表</title>
+
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../../js/Bootstrap/version3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/select2/select2.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <link href="allreport.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/version3/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DatePicker/WdatePicker.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/select2/select2.min.js"></script>
+    <script src="../../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.js"></script>
+    <script src="../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="allreport.js"></script>
+</head>
+<body>
+    <!-- 导航 -->
+    <nav class="navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <form id="form1" class="navbar-form" method="post" target="_blank">
+                    <div class="nav form-group">
+                        类型：
+                        <select id="TypeList" class="form-control select2-active" style="width:150px">
+                            <!--<option value="030202">加压站</option>
+                            <option value="030201">水厂</option>
+                            <option value="030199">水源井</option>
+                            <option value="030304">监测点</option>-->
+                            <option value="0">全部</option>
+                        </select>
+                        &nbsp;&nbsp;监测项：
+                        <select id="StationList" class="form-control select2-active" style="width:150px"></select>
+                    </div>
+                    <div class="form-group">
+                        &nbsp;&nbsp;时间：
+                        <input type="text" class="form-control " id="txtTime" style="width: 100px;" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd' })" /><!-- HH:mm:ss-->
+                    </div>
+                    &nbsp;<button type="button" id="btnQuery" class="btn btn-info btn-sm">查询</button>
+                    &nbsp; <button type="button" id="btnExport" disabled="disabled" title="请先进行查询" class="btn btn-danger btn-sm">导出</button>
+                    <input type="hidden" id="hidColumn" name="hidColumn" />
+                    <input type="hidden" id="hidData" name="hidData" />
+                    <input type="hidden" id="hidAlertColumn" name="hidAlertColumn" />
+                    <input type="hidden" id="hidAlertData" name="hidAlertData" />
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- 内容显示： -->
+    <div class="container-fluid" style="">
+
+        <ul id="myTab" class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a href="#home" class="nav-link active" data-toggle="tab">基本信息</a>
+            </li>
+            <li class="nav-item">
+                <a href="#alert" class="nav-link" data-toggle="tab">预警信息 </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div id="slimScroll" style="width:980px; height: 410px;overflow-y:hidden;overflow-x:auto">
+                    <div id="resultData" class="resultData"></div>
+                    <!--<table id="psTable" class="table table-striped table-bordered" width="100%" cellspacing="0" align="center">
+        </table>-->
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="alert">
+                <table id="alertTable" class="table table-striped table-bordered" width="100%" cellspacing="0" align="center"></table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

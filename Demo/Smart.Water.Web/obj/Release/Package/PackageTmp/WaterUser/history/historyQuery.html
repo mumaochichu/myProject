@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>历史数据查询</title>
+    <link rel="stylesheet" href="../../theme/wateruser/bootstrap.min.css">
+    <link rel="stylesheet" href="../../theme/wateruser/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="../../theme/wateruser/fullcalendar.css">
+    <link rel="stylesheet" href="../../theme/wateruser/style.css">
+    <link href="../../style/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/select2/select2.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../theme/wateruser/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/jQuery/Plugins/jquery.layout/jquery-latest.js"></script>
+    <script src="../../js/jQuery/Plugins/jquery.layout/jquery.layout-latest.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DatePicker/WdatePicker.js"></script>
+    <script src="../../js/jQuery/Plugins/echarts/echarts.js"></script>
+    <script src="../../js/jQuery/Plugins/select2/select2.min.js"></script>
+    <script src="../../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../../js/jQuery/Plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <script src="../../js/Framework/robin.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.js"></script>
+    <script src="historyQuery.js"></script>
+    <style>
+        .bodyDIV {
+            background: rgb(255, 255, 255);
+            border-top: 1px solid #cdcdcd;
+            height: 95%;
+            width: 100%;
+            position: absolute;
+        }
+
+        #form1 {
+            padding: 10px 15px;
+            border-bottom: 1px solid #cdcdcd;
+        }
+
+        .containerDiv {
+            display: block;
+            height: 100%;
+            border: 1px solid #cdcdcd;          
+            background: none repeat scroll 0 0 #F9F9F9;
+            overflow: hidden;
+        }
+
+        #psTable_info {
+            visibility: hidden;            
+        }
+    
+
+        #psTable_paginate {
+            position:absolute;
+            bottom:9px;
+            width: 98.7%;
+            border-right: medium none;
+            border-top: 1px solid #D5D5D5;
+            font-weight: normal;
+            background-color: #efefef;
+            border-bottom: 1px solid #CDCDCD;           
+            margin-top: -1px;
+            height: 27px;
+            padding-top: 7px;           
+        }
+
+            #psTable_paginate a {
+                color: #AAAAAA;
+                border-radius: 0 4px 4px 0;
+                font-size: 12px;
+                padding: 4px 10px !important;
+                border-style: solid;
+                border-width: 1px;
+                border-color: #ddd;
+            }
+            #psTable_last{
+                margin-right:4px;
+             }      
+            #psTable_paginate span  a.current{
+                background: #41BEDD!important;
+                color: #ffffff;            
+            }
+           
+    </style>
+</head>
+<body>
+    <div class="ui-layout-north">历史数据查询</div>
+    <div class="ui-layout-center bodyDIV">
+        <div id="uleft" class="tab-content containerDiv">
+            <form class="form-inline" id="form1" method="post" style="padding:10px 15px;border-bottom: 1px solid #cdcdcd;">
+                <input type="hidden" id="hidData" name="hidData" />
+                <input type="hidden" id="tagKey" name="tagKey" />
+                <input type="hidden" id="sTime" name="sTime" />
+                <input type="hidden" id="eTime" name="eTime" />
+                <!--<label>类型:</label>-->
+                <select id="allList" class="select2" tabindex="-1" aria-hidden="true" style="width: 180px; height: 30px; display:none"></select>&nbsp;&nbsp;
+                <label>监测点:</label>
+                <select id="JCDList" class="select2" tabindex="-1" aria-hidden="true" style="width: 180px; height: 30px;"></select>&nbsp;&nbsp;
+                <label>监测项:</label>
+                <select id="JCXList" class="select2" tabindex="-1" aria-hidden="true" style="width: 180px; height: 30px;"></select>&nbsp;&nbsp;
+                <label>时间范围：</label>
+                <input type="text" placeholder="起始日期" class="form-control input-sm" id="startYear" style="width:130px;" disabled="disabled" onclick="WdatePicker({ dateFmt: 'dd日 HH点mm分', onpicked: TimeTree.ManageSTime })" /><!-- HH:mm:ss-->
+                <input type="text" placeholder="结束日期" class="form-control input-sm" style="width:130px" id="endYear" disabled="disabled" onclick="WdatePicker({ dateFmt: 'dd日 HH点mm分', onpicked: TimeTree.ManageETime })" /><!-- HH:mm:ss-->
+                <button id="btnQuery" type="button" class="btn btn-info" title="请先选择一个月份！">查询</button>&nbsp;
+                <button id="btnCharts" type="button" class="btn btn-success" title="请先选择一个月份！">曲线</button>&nbsp;
+                <button id="btnExcel" type="button" class="btn btn-danger" disabled="disabled" title="请先进行查询">导出</button>
+            </form>
+            <div class="widget-content nopadding" style="border-bottom:0px;height:100%;">
+                <div id="home"><table id="psTable" class="table table-bordered data-table dataTable" style="border-bottom: 1px solid #cdcdcd;width:100%;"></table></div>
+                <div id="charts" style="width:95%;height:80%; margin-top:40px;"> </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-layout-west">
+        <form class="form-inline" id="form2" method="post">
+            <label style="margin-top:5px;">时间选择</label>
+        </form>
+        <div>
+            <div class="ztree" id="treeContainer"></div>
+        </div>
+    </div>
+</body>
+</html>

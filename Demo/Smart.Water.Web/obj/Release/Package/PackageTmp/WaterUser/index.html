@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
+    <title>大用水户管理系统</title>
+    <link href="../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../theme/wateruser/bootstrap.min.css">
+    <link rel="stylesheet" href="../theme/wateruser/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="../theme/wateruser/fullcalendar.css">
+    <link rel="stylesheet" href="../theme/wateruser/style.css">
+    <link href="../js/jQuery/Theme/bootstrap/jquery-ui-1.10.3.custom.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../theme/wateruser/media.css" class="skin-color">
+    <link href="../js/jQuery/Plugins/jsPanel/jquery.jspanel.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://192.168.70.6/arcgis_js_api/library/3.14/3.14/esri/css/esri.css" />
+    <style>
+        .navbar .nav > li > .dropdown-menu:before {
+            position: absolute;
+            top: -7px;
+            left: 9px;
+            display: inline-block;
+            border-right: 0px;
+            border-bottom: 0px;
+            border-left: 0px;
+            border-bottom-color: rgba(0,0,0,0.2);
+            content: '';
+        }
+
+        .navbar .nav > li > .dropdown-menu:after {
+            position: absolute;
+            top: -6px;
+            left: 10px;
+            display: inline-block;
+            border-right: 0px;
+            border-bottom: 0px;
+            border-left: 0px;
+            content: '';
+        }
+        .esriPopup .titleButton.maximize{
+            display:none!important;
+        }
+    </style> 
+</head>
+<body style="overflow:hidden;">
+    <div id="header">
+        <img src="../images/wateruser/logo.png" style="float:left;padding:12px 0px 0px 15px" />
+    </div>
+    <div id="user-nav" class="navbar navbar-inverse" style="z-index: 2000;">
+        <ul class="nav" style="margin-right:300px;" id="tool">
+            <li id="RealtimeMonitor" class="active"><a data-toggle="tab" href="#exampleTabsOne"><i class="fa-clock-o fa" style="margin-top:1px"></i><span> 实时监测</span></a></li>
+            <li class="dropdown" id="menu-messages3">
+                <a href="#" data-toggle="dropdown" data-target="#menu-messages3" class="dropdown-toggle"><i class="fa-wrench  fa"></i> <span class="text">设备维护</span></a>
+                <ul class="dropdown-menu tabbMenu">
+                    <li id="equipmentMaintenance"><a class="dropdown-item notify-item" data-toggle="tab" href="#exampleTabsTwo"><span>设备报修</span></a></li>
+                    <li id="batteryReplacement"><a data-toggle="tab" href="#exampleTabsTwo"><span>电池更换</span></a></li>
+                    <li id="SIMMANAGER"><a data-toggle="tab" href="#exampleTabsTwo"><span>通信卡管理</span></a></li>
+                </ul>
+            </li>
+            <li class="dropdown" id="menu-messages4">
+                <a href="#" data-toggle="dropdown" data-target="#menu-messages4" class="dropdown-toggle"><i class="fa-bar-chart-o fa"></i> <span class="text">统计分析</span></a>
+                <ul class="dropdown-menu tabbMenu">
+                    <li><a id="Report" class="dropdown-item notify-item" data-toggle="tab" href="#exampleTabsTwo"><span>用水统计</span></a></li>
+                    <li><a id="matchAnalysis" data-toggle="tab" href="#exampleTabsTwo"><span>智能配表</span></a></li>
+                    <li><a id="leakageAnalysis" data-toggle="tab" href="#exampleTabsTwo"><span>漏水分析</span></a></li>
+                    <li><a id="oneAnalysis" data-toggle="tab" href="#exampleTabsTwo"><span>单点分析</span></a></li>
+                    <li><a id="onYearAnalysis" data-toggle="tab" href="#exampleTabsTwo"><span>同比分析</span></a></li>
+                    <li><a id="onMonthAlysis" data-toggle="tab" href="#exampleTabsTwo"><span>环比分析</span></a></li>
+                    <li><a id="monotoring" data-toggle="tab" href="#exampleTabsTwo"><span>节水监测分析</span></a></li>
+                </ul>
+            </li>
+            <li class="dropdown" id="menu-messages1">
+                <a href="#" data-toggle="dropdown" data-target="#menu-messages1" class="dropdown-toggle"><i class="fa-search fa"></i> <span class="text">历史查询</span></a>
+                <ul class="dropdown-menu tabbMenu">
+                    <li id="historyQuery"><a class="dropdown-item notify-item" data-toggle="tab" href="#exampleTabsTwo"><span>历史数据查询</span></a></li>
+                    <li id="alarmQuery"><a data-toggle="tab" href="#exampleTabsTwo"><span>报警数据查询</span></a></li>
+                </ul>
+            </li>            
+            <li class="dropdown" id="menu-messages2">
+                <a href="#" data-toggle="dropdown" data-target="#menu-messages2" class="dropdown-toggle"><i class="fa-laptop fa"></i> <span class="text">基础信息</span></a>
+                <ul class="dropdown-menu  tabbMenu">
+                    <li id="yysInfo"><a class="dropdown-item notify-item" data-toggle="tab" href="#exampleTabsTwo"><span>营业所信息</span></a></li>
+                    <li><a id="yysGroup" data-toggle="tab" href="#exampleTabsTwo"><span>营业所组</span></a></li>
+                    <li><a id="Archives" data-toggle="tab" href="#exampleTabsTwo"><span>用户信息</span></a></li>
+                    <li><a id="changeMeter" data-toggle="tab" href="#exampleTabsTwo"><span>换表信息</span></a></li>
+                    <li><a id="waterMeter" data-toggle="tab" href="#exampleTabsTwo"><span>水表设备</span></a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav">
+            <li class="dropdown" id="menu-messages">
+                <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="fa fa-user"></i>&nbsp;&nbsp;<span id="lblUserName" class="text"></span><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a id="userInfo" href="#" class="dropdown-item notify-item"><i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;<span>用户信息</span></a></li>
+                    <li><a id="pwdEdit" href="#"><i class="fa fa-key"></i>&nbsp;&nbsp;<span>密码修改</span></a></li>
+                    <li><a id="userLogout" href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;<span>退出登录</span></a></li>
+                </ul>
+            </li>
+
+        </ul>   
+    </div>
+
+
+    <!--报警窗体-->
+    <div id="alertWindow" style="display:none; position:absolute;top:170px;right:350px;padding:0px;">
+        <div class="dropdown-menu dropdown-menu-right" style="display:block;width:280px;padding:0px;">
+            <div style="height:38px;font-size:16px;width:100%; background-color:#2b3d51;color:#ffffff;text-align:center">
+                <span style="float:left;margin-left:6px;margin-top:9px">报警信息</span>
+                <span id="btnAlertClose" style="float:right;margin-right:6px;margin-top:9px;"><i class="fa fa-close"></i> </span>
+            </div>
+            <div data-bind="foreach: filteredRecordsWithAlert" id="alertScroll" style="height:340px;padding:4px;">
+                <a href="javascript:void(0);" data-bind="attr:{stationKey:StationKey, stationName:StationName,alertId: AlertId,tagName:TagName,tagValue: TagValue,units: Units,saveTime: SaveTime}">
+                    <p style="margin:0px; padding-left:6px;  border-bottom: 1px solid #ddd;">                        
+                        <b data-bind="text: StationName"></b>                      
+                        <span class="form-inline" style="color:#818a91">
+                            <label data-bind="text: TagName"></label>:
+                            <label data-bind="text: TagValue"> </label>
+                            <label data-bind="text: Units"> </label>
+                            <label data-bind="text: SaveTime"> </label>
+                        </span>
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" >
+        <div class="container-fluid" style="padding-left: 0px;padding-right: 0px;">
+            <div class="widget-content tab-content" style="padding:0px">
+                <div id="exampleTabsOne" class="tab-pane active"  >
+                    <div id="Main_Map_DIV">
+                    </div>
+                    <div id="ZT_DIV" style="right:40%;top:40px; width:500px; position:absolute;"></div>
+                    <div id="LayerControl_DIV" class="legend" style="left:400px;"></div>
+                    <div id="ToolBar_DIV" style="right:30px;bottom:20px;position:absolute;"></div>
+                  
+                    <!--图例-->
+                    <div id="legend" style="position:absolute;top:40px;left:43%;display:none">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div style="float:left; height:18px;width:25px;background-color:#D0F8FD"></div>   
+                                </td>
+                                <td>
+                                    东北片区
+                                </td>
+                                <td>
+                                    <div style="float:left; height:18px;width:25px;background-color:#D0CAFD"></div>
+                                </td>
+                                <td>
+                                    东南片区
+                                </td>
+                                <td>
+                                    <div style="float:left; height:18px;width:25px;background-color:#CDFDCA"></div>
+                                </td>
+                                <td>
+                                    西南片区
+                                </td>
+                                <td>
+                                    <div style="float:left; height:18px;width:25px;background-color:#FDD9D7"></div>
+                                </td>
+                                <td>
+                                    西北片区
+                                </td>                               
+                            </tr>
+                        </table>
+                    </div> 
+                </div>
+                <div id="exampleTabsTwo" class="tab-pane">
+                    <iframe id="myFrame" src="#" style="width:100%;height:99%;border:none;" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--公司名称窗体-->
+    <div id="Rowfluid" class="row-fluid">
+        <div id="footer" class="span12">正元地理信息有限责任公司</div>
+    </div>
+
+    <script src="../js/jQuery/jquery.min.js"></script>
+    <script src="../js/jQuery/Plugins/jquery-ui.min.js"></script>
+    <script src="../theme/wateruser/bootstrap.min.js"></script>
+    <script src="../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../js/jQuery/Plugins/jsPanel/jquery.jspanel.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <script src="../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../js/jQuery/Plugins/jquery.cookie.js"></script>
+    <script src="../js/Knockoutjs/knockout.js"></script>
+    <script type="text/javascript" src="http://192.168.70.6/arcgis_js_api/library/3.14/3.14/init.js"></script>
+    <script data-main="../js/portal/wateruser-robin-app" src="../js/RequireJS/require.js"></script> 
+    
+</body>
+</html>

@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>维保单位信息管理</title>
+    <meta charset="utf-8" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/jsPanel/jquery.jspanel.min.css" rel="stylesheet" />
+    <link href="../../style/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/global/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="../../js/jQuery/Plugins/jsPanel/jquery.jspanel.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/time/moment.js"></script>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: .3rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: normal;
+            line-height: 1.5;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        }
+
+        .btn-orange {
+            color: #fff;
+            background-color: rgb(210,102,19) !important;
+            border-color: rgb(210,102,19) !important;
+        }
+
+            .btn-orange:hover {
+                color: #fff;
+                background-color: rgb(196, 99, 25) !important;
+                border-color: rgb(210,102,19) !important;
+            }
+
+        input {
+            padding: .3rem 0.65rem !important;
+        }
+
+        .jsPanel-title {
+            text-align: center !important;
+        }
+    </style>
+    <script>
+        var oTable;
+        var projWin;
+        $(function () {
+            top.NProgress.start();
+            //初始化表格
+            initTable();           
+            //查询
+            $("#btnQuery").click(function () {
+                if (oTable != undefined && oTable != null) {
+                    oTable.fnClearTable(0);
+                    oTable.fnDraw();
+                }
+            });
+            top.NProgress.done();
+        })
+        //初始化表格
+        function initTable() {
+            oTable = $('#paTable').dataTable({
+                "oLanguage": {
+                    "sUrl": "../../js/jQuery/Plugins/DataTables/dataTables.chinese.txt"
+                },
+                "bServerSide": true,
+                "sAjaxSource": "Handler.ashx?Action=UnitList",      //mvc后台ajax调用接口
+                'bPaginate': true,                      //是否分页。
+                "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
+                'bFilter': false,                       //是否使用内置的过滤功能。
+                "bSort": false,
+                "iDisplayLength": 8,  //每页显示的行数
+                "bLengthChange": false,//允许用户从一个选择菜单中格式化页面大小(改变页面显示的数据数量)
+                'sPaginationType': 'full_numbers',      //分页样式
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "name_status", "value": $("#txtName_Status").val() });
+                },
+                "aoColumns": [
+                    { "mData": "ID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
+                    { "mData": "UNITNAME", "sTitle": "单位名称", "sWidth": "15%" },
+                    {
+                        "mData": "ACTIVATETIME", "sTitle": "成立时间", "sWidth": "10%",
+                        "mRender": function (data, type, full) {
+                            if (data) {
+                                var dtStart = full.ACTIVATETIME;
+                                var dtStartWrapper = moment(dtStart);
+                                return dtStartWrapper.format('YYYY-MM-DD');
+                            }
+                            else {
+                                return "";
+                            }
+                        }
+                    },
+                    { "mData": "CHARGE", "sTitle": "单位负责人", "sWidth": "10%" },
+                    { "mData": "PHONENUMBER", "sTitle": "负责人手机", "sWidth": "10%" },
+
+                    {
+                        "mData": "ADDRESS", "sTitle": "单位地址", "sWidth": "25%",
+                        "mRender": function (data, type, full) {
+                            if (data && data.length > 15) {
+                                return "<span title='" + data + "'>" + data.substr(0, 15) + ".." + "</span>";
+                            }
+                            return data;
+                        }
+                    },
+
+                    {
+                        "sTitle": "操作",
+                        "sWidth": "10%",
+                        "mRender": function (data, type, full) {
+                            var html = "<a href='#' onclick='check(\"" + full.ID + "\")'><i class='fa fa-eye fa-lg' title='查看'></i></a> ";
+                            html += "<a href='#' onclick='edit(\"" + full.ID + "\")'><i class='fa fa-pencil-square-o fa-lg' title='编辑'></i></a> ";
+                            html += "<a href='#' onclick='deleteOne(\"" + full.ID + "\")'><i class='fa fa-times fa-lg' title='删除'></i></a>";
+                            html += "&nbsp;<a href='#' onclick='locMonitorPoint(\"" + full.X + "\",\"" + full.Y + "\")'><i class='fa fa-map-marker fa-lg' title='定位'></i></a>";
+                            return html;
+                        }
+                    }
+                ]
+            });
+        }
+        //刷新方法
+        function refresh() {
+            oTable.fnDraw();
+        }
+
+        /*添加*/
+        function add() {
+            var url = '../InfoManagement/maintenanceUnitAdd.aspx';
+            projWin=$.jsPanel({
+                id: 'maintenanceUnitAdd',
+                theme: '#EF681E',
+                contentSize: { width: 700, height: 410 },
+                headerControls: { minimize: "remove", normalize: "remove", smallify: "remove", maximize: "remove" },
+                position: "center",
+                headerTitle: "维保单位添加",
+                content: '<iframe src="' + url + '"  width="100%" height="100%" frameborder="0" scrolling="no"></iframe>',
+            });
+        }
+        /*编辑*/
+        function edit(Id) {
+            var url = '../InfoManagement/maintenanceUnitEdit.aspx?Id=' + Id;
+            projWin= $.jsPanel({
+                id: 'maintenanceUnitEditPanel',
+                theme: '#EF681E',
+                contentSize: { width: 700, height: 410 },
+                headerControls: { minimize: "remove", normalize: "remove", smallify: "remove", maximize: "remove" },
+                position: "center",
+                headerTitle: "维单位编辑",
+                content: '<iframe src="' + url + '"  width="100%" height="100%" frameborder="0" scrolling="no"></iframe>',
+            });
+        }
+
+        /*查看*/
+        function check(Id) {
+            var url = '../InfoManagement/maintenanceUnitCheck.aspx?Id=' + Id
+            projWin= $.jsPanel({
+                id: 'maintenanceUnitCheckPanel',
+                theme: '#EF681E',
+                contentSize: { width: 700, height: 360 },
+                headerControls: { minimize: "remove", normalize: "remove", smallify: "remove", maximize: "remove" },
+                position: "center",
+                headerTitle: "维保单位查看",
+                content: '<iframe src="' + url + '"  width="100%" height="100%" frameborder="0" scrolling="no"></iframe>',
+            });
+        }
+        /*删除*/
+        function deleteOne(Id) {
+            confirm("<div class='notyContent'>确定要删除此条记录吗？<br>对应的维保人员信息也会删除！</div>",
+                "information", function () {
+                    $.ajax({
+                        url: "Handler.ashx?Action=unitDelete&Id=" + Id,
+                        success: function (result) {
+                            if (result == "true") {
+                                noty({ text: "删除成功！", type: "success", layout: "topCenter", timeout: 2000 });
+                                oTable.fnClearTable(0);
+                                oTable.fnDraw();
+                            } else {
+                                noty({ text: "删除失败！", type: "error", layout: "topCenter", timeout: 2000 });
+                            }
+                        }
+                    });
+                }, null,
+            '确定', '取消');
+        }
+
+
+        /*定位*/
+        function locMonitorPoint(x, y) {
+            if (x != 0 && y != 0) {
+                var listPanel = top.Robin.Window.GetInfoPanelByID("MaintenanceUnitPanel");
+                if (listPanel != null) {
+                    listPanel.smallify();
+                }
+                var p = top.Robin.Map.GetPoint(x, y);
+                parent.Robin.Portal.MapTool.flyMap(parent.Robin.Map.Map2DControl, p);
+                //标注
+                debugger;
+                var graphicsLayer = parent.Robin.Map.Map2DControl.getLayer("wbdwLayer")
+                if (graphicsLayer == null) {
+                    graphicsLayer = parent.Robin.Map.addLayer({
+                        id: "wbdwLayer"
+                    });
+                }
+                graphicsLayer.clear();
+                var picurl = "../images/hydrant/MaintenanceCompany.png";
+                var symbolConfig = {
+                    font:
+                        { 'size': "12", 'style': 'normal' },
+                    color: 'black',
+                    pic: {
+                        src: picurl,
+                        width: 45,
+                        height: 45
+                    },
+                    offset: {
+                        x: 0,
+                        y: -30
+                    }
+                };
+                parent.Robin.Map.ShowGraphic(graphicsLayer, "", x, y, picurl, "", symbolConfig);
+            } else {
+                noty({ text: "坐标信息未配置", type: "warning", layout: "topCenter", timeout: 2000 });
+            }
+        }
+
+        /**
+        * confirm提示.需要提前加载noty.这个方法放在utils里会报错
+        */
+        function confirm(message, type, okCallback, cancelCallback, lblok, lblcancel) {
+            if (!noty) {
+
+                alert("请检查插件是否加载成功！");
+                return;
+            }
+            var _default =
+            {
+                text: message || "您确定要删除所选对象吗?",
+                type: type || "alert",
+                dismissQueue: true,
+                modal: true,
+                layout: "center",
+                buttons: [
+                    {
+                        addClass: 'btn btn-primary',
+                        text: lblok || "确定",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (okCallback && $.isFunction(okCallback)) {
+
+                                okCallback();
+                            }
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-warning',
+                        text: lblcancel || "取消",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (cancelCallback && $.isFunction(cancelCallback)) {
+
+                                cancelCallback();
+                            }
+                        }
+                    }
+                ]
+            };
+            noty(_default);
+        };
+
+        /*添加成功失败，返回弹窗提示*/
+        function alertInfo(content, typeInfo) {
+            noty({ text: content, type: typeInfo, layout: "topCenter", timeout: 2000 });
+            try {
+                if (typeInfo == 'success') {
+                    projWin.close();
+                    refresh();
+                }
+            } catch (e) {
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container-fluid" style="margin-top: 2px;" id="mainDIV">
+        <form class="form-inline">
+            单位名称：
+            <input type="text" class="form-control" id="txtName_Status" />&nbsp;<input type="button" class="btn btn-sm btn-success" value="查询" id="btnQuery" />
+            <span class="pull-right">
+                <input type="button" class="btn btn-sm btn-orange" value="添加" onclick="add()" />
+            </span>
+        </form>
+        <table id="paTable" class="table table-striped table-bordered" cellspacing="0" style="width: 100%;"></table>
+    </div>
+
+</body>
+</html>

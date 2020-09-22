@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>加压站信息</title>
+    <meta charset="utf-8" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../js/Bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="jiayazhan1H5/TemplateData/style.css">
+
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/jQuery/Plugins/select2/js/select2.full.min.js"></script>
+
+    <script src="../../js/jQuery/Plugins/Highcharts/highstock.js"></script>
+    <script src="../../js/jQuery/Plugins/Highcharts/highcharts-more.src.js"></script>
+    <script src="../../js/jQuery/Plugins/Highcharts/themes/grid.js"></script>
+
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DatePicker/WdatePicker.js"></script>
+    <script src="../../js/jQuery/Plugins/echarts/echarts.js"></script>
+    <script src="../../js/Framework/robin.js"></script>
+    <script src="NewPressureStation.js"></script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="ex-page-content">
+            <div class="row">
+                <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a href="#home" style="font-size:15px" class="nav-link active" data-toggle="tab">加压站基础信息</a>
+                    </li>
+                    <li class="nav-item" id="jc">
+                        <a href="#yxjc" style="font-size:15px" class="nav-link" data-toggle="tab">运行监测 </a>
+                    </li>
+                    <li class="nav-item" id="qx">
+                        <a href="#yxqx" style="font-size:15px" class="nav-link" data-toggle="tab">运行曲线 </a>
+                    </li>
+                    <!--<li class="nav-item" id="videoDisplay">
+                        <a href="#sp" style="font-size:15px" class="nav-link" data-toggle="tab" id="videoTab">视频 </a>
+                    </li>-->
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="home">
+                        <table class="table table-bordered table-condensed table-hover" id="mainTable">
+                            <tr>
+                                <th style="width:15%;font-weight:500">泵房名称</th>
+                                <td style="width:35%" id="txt_BFMC"></td>
+                                <th style="width:15%;font-weight:500">行政区</th>
+                                <td style="width:35%" id="txt_XZQ"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">联系人</th>
+                                <td style="width:35%" id="txt_LXR"></td>
+                                <th style="width:15%;font-weight:500">供水层次</th>
+                                <td style="width:35%" id="txt_GSCC"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">泵房地址</th>
+                                <td style="width:35%" id="txt_Address"></td>
+                                <th style="width:15%;font-weight:500">供水人口(户)</th>
+                                <td style="width:35%" id="txt_GSRK"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">联系电话</th>
+                                <td style="width:35%" id="txt_LXDH"></td>
+                                <th style="width:15%;font-weight:500">竣工时间</th>
+                                <td style="width:35%" id="jgsj"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">施工单位</th>
+                                <td style="width:35%" id="txt_Unit"></td>
+                                <th style="width:15%;font-weight:500">供水范围</th>
+                                <td style="width:35%" id="txt_GSFW"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">出水压力(MPa)</th>
+                                <td style="width:35%" id="CSYL"></td>
+                                <th style="width:15%;font-weight:500">清水池容量(m³)</th>
+                                <td style="width:35%" id="QSCRL"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">无压深井数量(个)</th>
+                                <td style="width:35%" id="WYSJSL"></td>
+                                <th style="width:15%;font-weight:500">时供水量(m³)</th>
+                                <td style="width:35%" id="SGSL"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">最大日供水量(m³)</th>
+                                <td style="width:35%" id="ZDRGSL"></td>
+                                <th style="width:15%;font-weight:500">实际供水量(m³)</th>
+                                <td style="width:35%" id="SJRGSL"></td>
+                            </tr>
+                            <tr>
+                                <th style="width:15%;font-weight:500">出水高程(m)</th>
+                                <td style="width:35%" id="CSGC"></td>
+
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- 运行监测 -->
+                    <div class="tab-pane fade" id="yxjc">
+                        <iframe id="show" scrolling="no" frameborder="0" src="" marginwidth="0" marginheight="0"></iframe>
+                    </div>
+                    <!-- 运行曲线 -->
+                    <div class="tab-pane fade" id="yxqx">
+                        <!-- 滚动条 -->
+                        <div id="configDiv">
+
+                        </div>
+                    </div>
+                    <!-- 视频播放器 -->
+                    <!--<div class="tab-pane fade" id="sp">
+                        <div class="row" style="padding:0px 5px">
+                            <div class="col-md-5">
+                                <div class="portlet-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="">
+                                            <div class="mt-element-list">
+                                                <div class="mt-list-container list-simple" style="padding: 0px 0px;">
+                                                    <ul id="videoDataList"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7" id="videoPlay">
+                                <div class="portlet-body">
+                                    <object classid="clsid:9BE31822-FDAD-461B-AD51-BE1D1C159921"
+                                            width="560"
+                                            height="400"
+                                            id="vlc"
+                                            events="True">
+                                        <param name="MRL" value="" />
+                                        <param name="ShowDisplay" value="True" />
+                                        <param name="AutoLoop" value="False" />
+                                        <param name="AutoPlay" value="false" />
+                                        <param name="Volume" value="50" />
+                                        <param name="toolbar" value="false" />
+                                        <param name="StartTime" value="0" />
+                                        <embed pluginspage="http://www.videolan.org"
+                                               type="application/x-vlc-plugin"
+                                               version="VideoLAN.VLCPlugin.2"
+                                               width="560"
+                                               height="450"
+                                               toolbar="true"
+                                               loop="true"
+                                               branding="true"
+                                               text="视频加载中...."
+                                               bgcolor="#000000"
+                                               allowfullscreen="true"
+                                               name="vlc">
+                                        </embed>
+                                    </object>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

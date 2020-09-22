@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>历史统计报表</title>
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/select2/select2.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DatePicker/WdatePicker.js"></script>
+    <script src="../../js/jQuery/Plugins/Highcharts/highstock.js"></script>
+    <script src="../../js/jQuery/Plugins/Highcharts/themes/grid.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/select2/select2.min.js"></script>
+    <script src="../../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../../js/Framework/robin.js"></script>
+    <script src="../../js/jQuery/Plugins/echarts/echarts.js"></script>
+    <script src="ceshi.js"></script>
+</head>
+<body style="height:590px">
+    <div class="panel panel-default" style="background-color:white;padding-bottom:10px">
+        <div class="panel-heading">
+            <form class="form-inline" id="form1" method="post" style="padding-top:10px;padding-left:15px;">
+                <input type="hidden" id="hidData" name="hidData" />
+                <input type="hidden" id="tagKey" name="tagKey" />
+                <input type="hidden" id="sTime" name="sTime" />
+                <input type="hidden" id="eTime" name="eTime" />
+                <div class="form-group">
+                    <label>监测点:</label>
+                    <select id="JCDList" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" style="width: 180px; height: 30px;"></select>&nbsp;&nbsp;
+                    <label>监测项:</label>
+                    <select id="JCXList" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" style="width: 180px; height: 30px;"></select>&nbsp;&nbsp;
+                </div>
+                <div class="form-group">
+                    <label>时间范围：</label>
+                    <input type="text" placeholder="起始日期" class="form-control input-sm" id="startYear" style="width:130px" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH' })" /><!-- HH:mm:ss-->
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="结束日期" class="form-control input-sm" style="width:130px" id="endYear" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH' })" /><!-- HH:mm:ss-->
+                </div>
+                &nbsp;
+                <button id="btnQuery" type="button" class="btn btn-info">查询</button>&nbsp;
+                <button id="btnCharts" type="button" class="btn btn-success">曲线</button>&nbsp;
+                <button id="btnExcel" type="button" class="btn btn-danger" disabled="disabled" title="请先进行查询">导出</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="container-fluid">   
+        <div class="container-fluid" style="padding:0px 5px;">
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <table id="psTable" class="table table-striped table-bordered" width="100%" cellspacing="0" align="center"></table>
+                </div>
+                <div id="charts" style="display:none;position:relative;top:30px;width:1250px;height:500px">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

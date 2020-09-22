@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>大用水户信息</title>
+    <meta charset="utf-8" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../js/Bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/echarts/echarts.js"></script>
+    <script src="WaterFactory.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="ex-page-content">
+            <div class="row">
+                <ul id="myTab" class="nav nav-tabs m-b-10" role="tablist">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link active" data-toggle="tab">监测点基础信息</a>
+                    </li>
+                    <!--<li class="nav-item">
+                        <a href="#yxjc" class="nav-link" data-toggle="tab">运行监测 </a>
+                    </li>-->
+                    <li class="nav-item" id="qx">
+                        <a href="#yxqx" class="nav-link" data-toggle="tab">运行曲线 </a>
+                    </li>                
+                </ul>
+                <div class="tab-content ">
+                    <div class="tab-pane fade active in" id="home">
+                        <table class="table table-bordered table-condensed table-hover" id="mainTable">
+                            <tr>
+                                <td width="15%">用水户名称:</td>
+                                <td width="35%">
+                                    <label lass="form-control" id="YSHMC" ></label>                                    
+                                </td>
+                                <td width="15%">用水户户号:</td>
+                                <td width="35%">
+                                    <label lass="form-control" id="YSHHH"></label>                                      
+                                </td>                              
+                            </tr>
+                            <tr>
+                                <td>营业所:</td>
+                                <td>
+                                    <label lass="form-control" id="YYS" ></label>   
+                                </td>
+                                <td>营业所组:</td>
+                                <td>
+                                    <label lass="form-control" id="YYSZ" ></label>  
+                                </td>                                                      
+                            </tr>
+                            <tr>
+                                <td>开户时间:</td>
+                                <td>
+                                    <label lass="form-control" id="KHSJ" ></label>                                    
+                                </td>
+                                <td>联系人:</td>
+                                <td>
+                                    <label lass="form-control" id="LXR" ></label>  
+                                </td>                                                  
+                            </tr>
+                            <tr>
+                                <td>联系人电话:</td>
+                                <td>
+                                    <label lass="form-control" id="LXRDH" ></label> 
+                                </td>
+                                <td>表体编号:</td>
+                                <td>
+                                    <label lass="form-control" id="BTBH" ></label>                                   
+                                </td>                                                        
+                            </tr>
+                            <tr>
+                                <td>地址:</td>
+                                <td colspan="3">
+                                    <label lass="form-control" id="DZ"style="width:99%" ></label>
+                                </td>                                
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- 运行监测 -->
+                    <!--<div class="tab-pane fade" id="yxjc">
+                        <img src="../../images/Scheduling/plugin/WaterFactory.png" />
+                    </div>-->
+                    <!-- 运行曲线 -->
+                    <div class="tab-pane fade" id="yxqx">
+                        <div id="configDiv">
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

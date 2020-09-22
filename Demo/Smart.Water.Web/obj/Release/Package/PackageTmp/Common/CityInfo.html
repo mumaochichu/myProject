@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>区划信息</title>
+    <meta charset="utf-8" />
+
+    <link href="../js/jQuery/Plugins/zTree/css/bootstrap/metro.css" rel="stylesheet" />
+
+    <script src="../js/jQuery/jquery.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.core-3.5.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.exhide-3.5.min.js"></script>
+    <script src="../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript">
+
+        String.prototype.endsWith = function (str) {
+            var reg = new RegExp(str + "$");
+            return reg.test(this);
+        }
+    </script>
+    <script language="JavaScript">
+
+   var cityTree;
+   var setting = {
+       data: {
+           simpleData: {
+               enable: true
+           }
+       }
+   };
+   var root = [];
+
+   $(document).ready(function () {
+
+       var url = parent.Robin.Setting.GlobalSetting.RestAPIService + "/business/basic/citys/v1";
+       var cityCode = parent.Robin.Setting.GlobalSetting.CityCode;
+       $.getJSON(url, function (jsondata) {
+           $.each(jsondata.data, function (i, v) {
+               root.push({
+                   id: v.CITYCODE, pId: v.PID, name: v.CITYNAME
+               });
+           });
+           cityTree = $.fn.zTree.init($("#cityTrees"), setting, root);
+           var treeObj = $.fn.zTree.getZTreeObj("cityTrees");
+
+           var nodes = treeObj.getNodes();
+           //隐藏citycode之外的节点 展开citycode节点
+           for (var i in nodes) {
+               if (nodes[i].id.toString() != cityCode) {
+                   treeObj.hideNode(nodes[i]);
+               }
+               else treeObj.expandNode(nodes[i], true, false, true, false);
+           }
+       });
+
+       $("#cityTrees_div").slimScroll({
+           height: '400px'
+       });
+
+
+   });
+    </script>
+</head>
+<body>
+    <div  id="cityTrees_div" style="height:400px; overflow:hidden" >
+        <ul id="cityTrees" class="ztree"></ul>
+    </div>
+</body>
+</html>

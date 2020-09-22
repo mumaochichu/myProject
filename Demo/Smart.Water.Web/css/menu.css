@@ -1,0 +1,105 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+}
+
+/* 地图容器 */
+#viewDiv {
+  /* padding: 0;
+  margin: 0; */
+  float: left;
+  height: 87%;
+  width: 100%;
+  z-index: -1;
+}
+
+ul,
+li {
+    list-style: none;
+   
+}
+
+a,
+a:hover,
+a:active,
+a:link {
+    text-decoration: none;
+    color: #3d3d3d;
+}
+
+/* 菜单容器 */
+#nav_box {
+    float: left;
+    width: 100%;
+    height: 13%;
+    background: url("../img/nav_boxbg.png")no-repeat;
+
+}
+/* #mark{
+  float: left;
+  width: 15%;
+ height: 30%;
+} */
+#nav_box #nav-mainbox {
+    padding: 2%;
+  
+}
+
+/* 一级菜单栏 */
+#nav-mainbox li {
+    float:left;
+    left:50%;
+    background-color: #f2f2f2;
+    color: #333;
+    font-size: 14px;
+    position: relative; 
+    width:150px;
+    line-height: 44px;
+    cursor: pointer;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+
+}
+/* 一级菜单鼠标悬浮在上效果 */
+#nav-mainbox li:hover{
+    background-color: #ADADAD;
+}
+/* 一级菜单菜单图标 */
+.shead{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    top: 0px;
+    padding: 10px;
+
+}
+/* 一级菜单向下图标 */
+/* .sfoot{
+    float:right;
+    width: 40px;
+    height: 40px;
+} */
+
+#nav-mainbox li ul{
+    padding: 10px;
+}
+
+/* 二级菜单栏 */
+#nav-mainbox li ul li { 
+    float:none;
+    z-index: 999;
+    position: relative;
+    text-align:center;
+    left:-10px;
+    background-color: white;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+}
+/* 二级菜单鼠标悬浮在上效果 */
+#nav-mainbox li ul li:hover{
+    background-color: #ccc;
+}

@@ -1,0 +1,60 @@
+﻿<link href="templates/xfsInfo.css" rel="stylesheet" />
+<div class='mapWindow_monitor'>
+<!--    <div class='mapWindow_monitor_corner'>-->
+    <div class='tail'>
+    </div>
+    <div class="mapWindow_monitor_body">
+        <div class="mapWindow_monitor_name" data-bind="text: StationName">
+        </div>
+        <div style="color:#FFF; cursor: pointer; top: 5px; right: 10px; position: absolute; cursor: pointer;" class="closeMapWindow fa fa-close" data-bind="attr: {id : StationKey}">
+        </div>
+        <!--分为三个ul，遍历三次，速度变慢，但是为了实现整齐效果，按顺序显示"开启状态"、"压力"、"流量"-->
+        <ul class='mapWindow_monitor_content' data-bind="foreach: MonitorDatas">
+            <!-- ko if: Level()=='0'&&TagKey()=='030104_002'  -->
+            <li class="mapWindow_monitor_normal">
+                <span data-bind="text: TagName"></span>:
+                <span>关闭</span>
+            </li>
+            <!-- /ko -->
+            <!-- ko if: Level()!='0'-->
+                <!--消防栓是否开启状态-->
+                <!-- ko if: TagKey()=='030104_002'-->   
+                <li class="mapWindow_monitor_alert">
+                    <!-- ko if: TagKey()=='030104_002'&&TagValue()==0-->
+                    <span data-bind="text: TagName"></span>:
+                    <span>关闭</span>
+                    <!-- /ko -->
+                    <!-- ko if: TagKey()=='030104_002'&&TagValue()==1-->
+                    <span data-bind="text: TagName"></span>:
+                    <span >开启</span>
+                    <!-- /ko -->                
+                </li>
+                <!-- /ko -->
+            <!-- /ko -->
+        </ul>
+
+
+        <ul class='mapWindow_monitor_content' data-bind="foreach: MonitorDatas">
+            <!-- ko if: Level()=='0'&&TagKey()=='030104_001'  -->
+            <li class="mapWindow_monitor_normal">
+                <span data-bind="text: TagName" ></span>:
+                <span data-bind="text: TagValue"></span>
+                <span data-bind="text: Units"></span>
+            </li>
+            <!-- /ko -->
+            <!-- ko if: Level()!='0'-->
+                <!--消防栓压力-->
+                <!-- ko if: TagKey()=='030104_001'-->
+                <li class="mapWindow_monitor_alert">
+                    <span data-bind="text: TagName" ></span>:                 
+                    <span data-bind="text: TagValue"></span>
+                    <span data-bind="text: Units"></span>
+                </li>
+                <!-- /ko -->
+            <!-- /ko -->
+        </ul>
+
+    </div>
+</div>
+
+

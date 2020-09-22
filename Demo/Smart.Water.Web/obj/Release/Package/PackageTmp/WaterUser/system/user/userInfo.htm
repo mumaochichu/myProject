@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>用户信息</title>
+    <link href="../../../theme/Scheduling/style.css" rel="stylesheet" />
+    <script src="../../../js/jQuery/jquery.min.js"></script>
+    <style type="text/css">
+        label {
+            font-weight: 400;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+
+            //获取用户数据
+            $.ajax({
+                url: "../../../Handler/LoginAuthorize.ashx?Action=UserInfo",
+                dataType: "json",
+                //async: false,
+                error: function () { alert("get_error") },
+                success: function (result) {
+                    console.log(result);
+                    var userinfo;
+                    if (result != null) {
+                        $("#UserName").text(result.USERNAME == null ? "" : result.USERNAME);
+                        $("#AliasName").text(result.ALIASNAME == null ? "" : result.ALIASNAME);
+                        $("#Phone").text(result.PHONE == null ? "" : result.PHONE);
+                        $("#Email").text(result.EMAIL == null ? "" : result.EMAIL);
+                        $("#Address").text(result.ADDRESS == null ? "" : result.ADDRESS);
+                    }
+                }
+            });
+          
+
+            $("#btnClose").click(function () {
+                //关闭面板
+                var listPanel = top.Robin.Window.GetInfoPanelByID("userInfoPanel");
+                if (listPanel != null) {
+                    listPanel.close();
+                }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-sm-12 col-xl-6">
+            <!-- Panel Standard Mode -->
+            <div class="panel">
+                <div class="panel-body">
+                    <form id="ProForm" class="form-horizontal row-border">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td style="width: 25%">用户名</td>
+                                <td><label id="UserName"></label></td>
+                            </tr>
+                            <tr>
+                                <td>别名</td>
+                                <td><label id="AliasName"></label></td>
+                            </tr>
+                            <tr>
+                                <td>电话</td>
+                                <td><label id="Phone"></label></td>
+                            </tr>
+                            <tr>
+                                <td>邮箱</td>
+                                <td><label id="Email"></label></td>
+                            </tr>
+                            <tr>
+                                <td>地址</td>
+                                <td><label id="Address"></label></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-center" align="center">
+                                    <button id="btnClose" class="btn btn-info" value="关闭">关闭</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <!-- End Panel Standard Mode -->
+        </div>
+    </div>
+</body>
+</html>

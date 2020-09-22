@@ -1,0 +1,82 @@
+﻿.mapWindow_monitor {
+    width: 190px;
+    position: absolute;
+    /*height: 55px;*/
+    z-index: 100;
+    left: 10px;
+    top: -15px;
+    opacity: 0.80;
+}
+
+.mapWindow_monitor_corner {
+    background-image: url(../../images/Scheduling/plugin/mapwindow_tail.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    float: left;
+    width: 11px;
+    height: 31px;
+    z-index: 2;
+}
+
+.mapWindow_monitor_body {
+    float: left;
+    background-color: #051729;
+    bottom: 10px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 2;
+    border: 1px solid #7597ba;
+    border-radius: 7%;
+    box-shadow: 0px 2px 5px #888888;
+    padding: 2px;
+}
+
+.mapWindow_monitor_name {
+    height: 20px;
+    line-height: 20px;
+    /*width: 100%;*/
+    text-align: center;
+    background-color: black;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    font-size: 13px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mapWindow_monitor_content {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mapWindow_monitor_normal {
+  
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    background-color: #3db9dc !important;
+    font-family: 'Microsoft YaHei';
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid #817f7f;
+    border-right: 1px solid #817f7f;
+    border-bottom: 1px solid #817f7f;
+}
+
+
+.mapWindow_monitor_alert {
+    
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    background-color: #f00;
+    font-family: 'Microsoft YaHei';
+    border-left: 1px solid #817f7f;
+    border-right: 1px solid #817f7f;
+    border-bottom: 1px solid #817f7f;
+}

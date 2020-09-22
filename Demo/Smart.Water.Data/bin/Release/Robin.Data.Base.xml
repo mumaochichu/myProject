@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Robin.Data.Base</name>
+    </assembly>
+    <members>
+        <member name="T:Robin.Data.Base.DbHelper">
+            <summary>
+            Robin通用数据访问类
+            <remarks>
+            <para>暂时只支持SQLSERVER与ORACLE，可以根据需要添加别的支持</para>
+            <para>该访问类目前默认是输出执行语句到日志文件</para>
+            </remarks>
+            </summary>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekSet(System.String)">
+            <summary>
+            系统通用的查询接口，可以利用开放的SQL进行数据访问。返回DataSet
+            <remarks>
+            <para>
+            针对拼接好的SQL语句
+            </para>
+            </remarks>
+            <example>
+            <para>
+               执行一条查询语句
+            </para>
+            <code lang="C#">
+            <![CDATA[
+                string sql = "SELECT LOGINID FROM SYS_INNERUSER";
+                DataSet ds = CDS_Base.PublicSeekSet(sql);
+            ]]>
+            </code>
+            </example>
+            </summary>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekSet(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            系统通用的查询接口，可以利用开放的SQL进行数据访问。返回DataSet
+            <remarks>
+            <para>
+            针对参数数组,用于条件查询
+            </para>
+            </remarks>
+            <example>
+            <para>
+               执行一条查询语句
+            </para>
+            </example>
+            </summary>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekSet(System.String,System.String,System.Data.DbType,System.Object)">
+            <summary>
+            系统通用的查询接口，可以利用开放的SQL进行数据访问。返回DataSet
+            <remarks>
+            <para>
+            针对单个参数，无需定义大小的时候
+            </para>
+            </remarks>
+            <example>
+            <para>
+               执行一条查询语句
+            </para>
+            <code lang="C#">
+            <![CDATA[
+                string sql = "SELECT LOGINID FROM SYS_INNERUSER WHERE USERID=$USERID";
+                DataSet ds = CDS_Base.PublicSeekSet(sql,"$USERID",DbType.Int32,1);
+            ]]>
+            </code>
+            </example>
+            </summary>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekSet(System.String,System.String,System.Data.DbType,System.Int32,System.Object)">
+            <summary>
+            系统通用的查询接口，可以利用开放的SQL进行数据访问。返回DataSet
+            <remarks>
+            <para>
+            针对单个参数，需定义大小的时候
+            </para>
+            </remarks>
+            <example>
+            <para>
+               执行一条查询语句
+            </para>
+            <code lang="C#">
+            <![CDATA[
+                string sql = "SELECT LOGINID FROM SYS_INNERUSER WHERE USERID=$USERID";
+                DataSet ds = CDS_Base.PublicSeekSet(sql,"$USERID",DbType.Int32,4,1);
+            ]]>
+            </code>
+            </example>
+            </summary>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekReader(System.String)">
+            <summary>
+            返回reader
+            </summary>
+            <param name="pamSql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekReader(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            返回reader
+            </summary>
+            <param name="pamSql"></param>
+            <param name="pamParmes"> </param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicCountSeek(System.String)">
+            <summary>
+            针对于SQL方式查询记录数
+            暂时不增加重载，需要特别处理的话，封装SQL来实现
+            </summary>
+            <param name="pamSql">查询记录数的SQL语句,"select count(*) ...."</param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicSeekScalar(System.String)">
+            <summary>
+            查询单对象
+            </summary>
+            <param name="pamSql">查询的SQL语句"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicChange(System.String)">
+            <summary>
+            针对于SQL方式返回记录影响的行数（增删改查）
+            </summary>
+            <param name="pamSql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicChange(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            针对于SQL方式返回记录影响的行数（增删改查）
+            </summary>
+            <param name="pamSql"></param>
+            <param name="dic"> </param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicProc(System.String,System.String,System.Data.DbType,System.Object)">
+            <summary>
+            执行存储过程
+            只有一个参数的时候
+            </summary>
+            <param name="pamProcName">存储过程名称</param>
+            <param name="pamParamName">参数名</param>
+            <param name="pamType">参数类型</param>
+            <param name="pamValue">值</param>
+            <returns>返回执行存储过程影响的条数</returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicTrans(System.String[])">
+            <summary>
+            支持事务处理的非查询语句,使用数组方式
+            </summary>
+            <param name="pamSqlList"></param>
+            <returns>无异常返回true</returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.PublicTrans(System.Collections.ArrayList,System.Boolean)">
+            <summary>
+            支持事务处理的非查询语句,使用ArrayList方式 ,pamSign无实际意义
+            </summary>
+            <param name="pamSqlList"></param>
+            <param name="pamSign"> </param>
+            <returns>无异常返回true</returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.EntryInsert``1(``0)">
+            <summary>
+            插入一个实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.EntryInsert``1(``0,System.Int32@)">
+            <summary>
+            插入一个实体，返回自增字段值
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <param name="identityValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.EntryInsertTrans``1(System.Collections.Generic.List{``0})">
+            <summary>
+            支持事务处理的非查询语句,使用泛型方式
+            </summary>
+            <param name="list"> </param>
+            <returns>无异常返回true</returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.EntryUpdate``1(``0)">
+            <summary>
+            更新一个实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.EntryExists``1(Robin.EntLib.Data.WhereClip)">
+            <summary>
+            是否存在指定条件的记录
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="where"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.EntryCount``1(Robin.EntLib.Data.WhereClip)">
+            <summary>
+            按条件获取记录条数
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="where"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.GetEntryList``1(Robin.EntLib.Data.WhereClip)">
+            <summary>
+            根据条件获取实体列表
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="where"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.GetEntrySingle``1(Robin.EntLib.Data.WhereClip)">
+            <summary>
+            根据条件获取实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="where"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.GetPagedSql(System.String,System.Int32,System.Int32)">
+            <summary>
+            Oracle分页方法，该方法不通用，切勿在其它类型的数据库中使用
+            </summary>
+            <param name="pamStrSql">原sql</param>
+            <param name="pamStartRecord">从其开始的从零开始的记录号。如前十条则值为0</param>
+            <param name="pamPageSize">每页最大记录数</param>
+            <returns>可分页的sql</returns>
+        </member>
+        <member name="M:Robin.Data.Base.DbHelper.GetEntrySingle``1(System.Object[])">
+            <summary>
+            根据主键获取实体，只针对于定义主键的实体
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pkValues"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

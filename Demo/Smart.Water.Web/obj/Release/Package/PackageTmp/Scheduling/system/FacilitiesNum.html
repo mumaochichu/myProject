@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>设施统计</title>
+    <meta charset="utf-8" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/Highcharts/highcharts.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script> 
+
+    <script type="text/javascript">
+        $(function () {
+            var html = "";
+            var data = [];
+            $.each(parent.Robin.Setting.GlobalSetting.MonitorType, function (i, v) {
+                var result = [];
+                $.each(parent.Robin.Data.monitor, function (ii, vv) {
+                    if (vv.BMID.substring(6, 12) == v.key) {
+                        result.push(vv);
+                    }
+                });
+                html += '<tr><td>' + v.name + '</td>'
+                html += '<td>' + result.length + '</td></tr>'
+                data.push([v.name, result.length]);
+            });
+            $("#mybody").html(html);
+            var chart = Highcharts.chart('container', {
+                credits: {
+                    enabled: false // 禁用版权信息
+                },
+                chart: {
+                    type: 'column',
+                    style: {
+                        'fontSize': '14px'
+                    },
+                },
+                title: {
+                    text: ''
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: '管<br/>网<br/>设<br/>施<br/>数<br/>量<br/>(个)',
+                        rotation: 0,
+                        x: -10,
+                        y: -70
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    column: {
+                        pointWidth: 30
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            //  format: '{point.y:.1f}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:14px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> <br/>'
+                },
+                series: [{
+                    name: '管网设施',
+                    colorByPoint: true,
+                    data: data
+                }],
+            });
+        })
+      
+    </script>
+</head>
+<body style="background-color:rgb(255, 255, 255)">
+    <div>
+        <label style="font-weight:bold;color:#000;font-size:18px;">管网设施数量统计表</label>
+        <div class="leftTablecontent" style="float:left; width:300px;margin-top: 60px;margin-left: 20px;">
+            <table id="paTable" class="table table-striped table-bordered dataTable no-footer" cellspacing="0" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style='width:50%;'>类型</th>
+                        <th style='width:50%;'>数量(个)</th>
+                    </tr>
+                </thead>
+                <tbody id="mybody"></tbody>
+            </table>               
+        </div>
+        <div class="rightChartContent" style="float:left;width:500px;height:270px;">
+            <div id="container" style="min-width: 290px; height: 270px; margin: 0 auto"></div>
+        </div>
+    </div>    
+</body>
+</html>

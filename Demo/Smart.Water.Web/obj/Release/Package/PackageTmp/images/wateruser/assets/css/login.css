@@ -1,0 +1,299 @@
+body
+{
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+.logo {
+	width: 430px;
+	height: 150px;
+	position: absolute;
+	left: 50px;
+	top: 30px;
+	z-index: 6;
+	background-image: url(../img/login/logo2.png);
+	}
+ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.clear
+{
+	clear: both;
+}
+
+.frame
+{
+
+	/*-webkit-box-shadow: 0px 4px 9px rgba(5,5,5,0.56);*/
+	-moz-box-shadow: 0px 4px 9px rgba(5,5,5,0.56);
+	-o-box-shadow: 0px 4px 9px rgba(5,5,5,0.56);
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-o-border-radius: 6px;
+}
+
+.logo h1
+{
+	font-size: 0.9em;
+	color: #FFF;
+	text-shadow: 0 1px rgba(0,0,0,0.41);
+	font-weight: bold;
+	padding-top: 20px;
+	padding-right: 0;
+	padding-bottom: 0px;
+	padding-left: 0;
+}
+
+.login
+{
+	padding-top: 0;
+	padding-right: 1.9em;
+	padding-bottom: 15px;
+	padding-left: 2em;
+}
+
+.login ul
+{
+	text-align: center;
+	margin: 0px auto;
+}
+
+.login li
+{
+	float: left;
+	width: 100%;
+	height: 35px;
+	outline: none;
+	font-weight: 600;
+	margin-top: 10%;
+	position: relative;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	text-align: center;
+	color: #555;
+	background-image: none;
+	border-radius: 5px;
+	border: 1px solid #32a3fe;
+}
+
+.username {
+	background-color: #FFFFFF;
+	}
+.username:hover {
+	background-color: #EBEBEB;
+	}
+.password	{
+	background-color: #FFFFFF;
+	}
+.password:hover {
+	background-color: #ebebeb;
+	}	
+.login li input
+{
+	font-family: 'Open Sans', sans-serif;
+	/*float: left;*/
+	font-size: 0.9em;
+	width: 70%;
+	border: none;
+	outline: none;
+	color: #666666;
+	background: none;
+	padding-right: 0px;
+	padding-left: 0px;
+	height: 35px;
+}
+
+.login li label
+{
+	float: left;
+	width: 20%;
+	height: 40px;
+}
+
+.login p a:hover
+{
+	color: #FAF19D;
+}
+
+.login li.style
+{
+	color: #fff;
+	background-color: #1f9bff;
+
+	
+}
+
+.login li.style:hover
+{
+	color: #fff;
+	background-color: #4aaeff;
+}
+
+.login li.style input
+{
+	text-align: center;
+	width: 100%;
+	font-size: 0.9em;
+	font-family: 'Open Sans', sans-serif;
+	padding: 8px 0px;
+	border: none;
+	outline: none;
+	color: #FFF;
+	cursor: pointer;
+}
+.warning
+{
+	text-align: center;
+	width: 300px;
+	border-radius: 3px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-o-border-radius: 6px;
+	background-repeat: no-repeat;
+	position: relative;
+	margin-top: 15%;
+	z-index: 3;
+	background-color: rgba(255, 255, 255, 0.6);
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+}
+
+.alert-close
+{
+	background: url('../images/into.png') no-repeat 0px 6px;
+	cursor: pointer;
+	height: 25px;
+	position: absolute;
+	right: 14px;
+	top: 6px;
+	-webkit-transition: color 0.2s ease-in-out;
+	-moz-transition: color 0.2s ease-in-out;
+	-o-transition: color 0.2s ease-in-out;
+	transition: color 0.2s ease-in-out;
+	width: 22px;
+}
+
+.logos
+{
+	position: absolute;
+	left: 50px;
+	top: 39px;
+	width: 600px;
+	height: 80px;
+	z-index: 1;
+	background-image: url(../../assets/img/login/logo2.png);
+}
+
+div.Background
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: -1;
+}
+
+div.Background > img
+{
+	height: 100%;
+	width: 100%;
+	border: 0;
+}
+
+.Remember
+{
+	width: 100%;
+	margin-top: 7%;
+	float: left;
+	height: 15px;
+}
+
+.R_Check
+{
+	width: 15px;
+	height: 15px;
+	text-align: center;
+	float: left;
+	margin-top: 0px;
+	margin-left: 0px;
+}
+
+.R_frame
+{
+	float: right;
+	height: 15px;
+	width: 15px;
+	margin-left: 10px;
+}
+
+.R_password
+{
+	float: right;
+	height: 15px;
+	width: 60px;
+	font-size: 12px;
+	color: #666;
+	text-align: left;
+	padding-left: 10px;
+	line-height: 15px;
+	cursor: default;
+}
+
+.copyright
+{
+	position: fixed;
+	width: 200px;
+	height: 16px;
+	z-index: 1;
+	bottom: 20px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #CBE4EF;
+	font-family: "Microsoft YaHei";
+	text-align: center;
+	right: 10px;
+}
+  .img_ws {
+	width: 474px;
+	height: 500px;
+	z-index: 2;
+	position: absolute;
+	top: 50%;
+	background-image: url(../../assets/img/login/1.png);
+	left: 50%;
+	margin-top: -250px;
+	margin-left: -440px;
+}
+  .img_bk {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	height: 230px;
+	z-index: 1;
+	background-image: url(../../assets/img/login/01.png);
+	background-repeat: repeat-x;
+	margin-top: -115px;
+}
+.ccc {
+	
+    width: 300px;
+	height: 230px;
+	background-color:#039;
+	}
+input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-transition-delay: 99999s;
+        -webkit-transition: color 99999s ease-out, background-color 99999s ease-out;
+    }

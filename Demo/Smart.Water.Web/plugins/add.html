@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>EasyUI表单提交</title>
+
+
+
+  <link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
+  <link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
+  <!-- <script src="js/jspanel.jquery.min.js"></script> -->
+  <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+  <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+  <script type="text/javascript">
+
+
+    //提交表单
+    function submitForm() {
+
+      /*添加数据*/
+      $.ajax({
+        url: url,//url就是要递交数据的地址,自己定义
+        data: $('#addEquipmentForm').serialize(),
+        type: "POST",
+        success: function (data) {
+
+          if (data == "false") {
+            alert("提交失败");
+          }
+          else {
+            alert("提交成功");
+          }
+        },
+        error: function (error) {
+          console.log("error" + error)
+        }
+      });
+      // $('#addEquipmentForm').form('submit', {
+      //   url: "add.html",
+      //   onSubmit: function () {
+      //     // do some check   
+      //     // return false to prevent submit;   
+      //   },
+      //   success: function (data) {
+      //     alert(data);
+      //   }
+      // });
+    };
+    //清空表单数据
+    function clearForm() {
+      $('#addEquipmentForm').form('clear');
+    }
+    //表单日期框显示格式化
+    // function myformatter(date) {
+    //   var y = date.getFullYear();
+    //   var m = date.getMonth() + 1;
+    //   var d = date.getDate();
+    //   return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+    // }
+    // function myparser(s) {
+    //   if (!s) return new Date();
+    //   var ss = (s.split('-'));
+    //   var y = parseInt(ss[0], 10);
+    //   var m = parseInt(ss[1], 10);
+    //   var d = parseInt(ss[2], 10);
+    //   if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+    //     return new Date(y, m - 1, d);
+    //   } else {
+    //     return new Date();
+    //   }
+    // }
+  </script>
+</head>
+
+<body>
+  <!--添加表单-->
+  <form role="form" id="addEquipmentForm">
+    <div style="margin-top:10px;margin-left:50px">
+      <label class="label_font">编号：</label>
+      <input class="easyui-textbox" type="text" name="CODE" data-options="required:true,missingMessage:'必填项'"
+        style="width:300px" />
+    </div>
+    <div style="margin-top:10px;margin-left:50px">
+      <label class="label_font">点号：</label>
+      <input class="easyui-textbox" type="text" name="EXPNUM" data-options="required:true,missingMessage:'必填项'"
+        style="width:500px" />
+    </div>
+    <div style="margin-top:10px;margin-left:50px">
+      <label class="label_font">添加日期：</label>
+      <!-- formatter:myformatter,parser:myparser, -->
+      <input class="easyui-datebox" type="text" name="INSTALDATE" data-options="required:true,missingMessage:'必填项'"
+        panelWidth="200px" panelHeight="200px" style="width:200px" />
+      <label class="label_font">生产厂家：</label>
+      <input class="easyui-textbox" type="text" name="MANUFACTURE" data-options="required:true,missingMessage:'必填项'"
+        style="width:200px" />
+    </div>
+    <div style="margin-top:10px;margin-left:50px">
+      <label class="label_font">安装单位：</label>
+      <input class="easyui-textbox" type="text" name="INSTALLTIONUNIT" data-options="required:true,missingMessage:'必填项'"
+        style="width:200px" />
+      <label class="label_font">管理单位：</label>
+      <input class="easyui-textbox" type="text" name="OWNERSHIPUNIT" data-options="required:true,missingMessage:'必填项'"
+        style="width:200px" />
+    </div>
+    <div style="margin-top:10px;margin-left:50px">
+      <label class="label_font">备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+      <input class="easyui-textbox" type="text" name="NOTE" data-options="required:true,missingMessage:'必填项'"
+        style="height:60px;width:500px;" />
+    </div>
+
+  </form>
+  <div style="text-align:center;padding:5px">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提交</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清除</a>
+  </div>
+</body>
+
+</html>

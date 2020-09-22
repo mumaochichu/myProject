@@ -1,0 +1,51 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>大用户管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="Bookmark" href="favicon.ico" />
+    <link rel="Shortcut Icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <script src="js/jQuery/jquery.min.js"></script>
+    <script data-main="js/portal/manager-login" src="js/RequireJS/require.js"></script>
+    <link href="images/wateruser/assets/css/login.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+    <div class="logo"></div>
+    <div class="Background">
+        <img src="images/wateruser/assets/img/login/bg.png" />
+    </div>
+    <div class="message warning">
+        <div class="frame">
+            <div class="login" action="#" method="post" name="contact_login">
+                <ul>
+                    <li class="username">
+                        <label><img src="images/Scheduling/login/contact.png" style="margin-left: -0px;" /></label>
+                        <input placeholder="用户名"  id="txtUserName"   />                       
+                    </li>
+                    <li class="password">
+                        <label><img src="images/Scheduling/login/lock.png" style="margin-left: -0px;" /></label>
+                        <input type="Password" name="Password"  placeholder="密码" id="txtPassword"  />
+                    </li>
+                    <li class="style"> <input type="Submit" value="登  录" onclick="LoginSend(); " /> </li>
+
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="copyright">
+            正元地理信息有限责任公司
+        </div>
+        <script>
+        // 主页地址
+        IndexUrl = "WaterUser/index.html";
+        // 服务平台地址<请同时更改setting文件中配置>
+        SystemService = "http://192.168.70.6:8000";
+        </script>
+</body>
+</html>

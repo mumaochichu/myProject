@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>水源井信息列表</title>
+    <meta charset="utf-8" />
+       <link href="../../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../../js/jQuery/Plugins/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+    <link href="../../../style/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="../../../js/jQuery/jquery.min.js"></script>
+    <script src="../../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="../../../js/jQuery/Plugins/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../../js/jQuery/Plugins/time/moment.js"></script>
+
+    <script>
+        var table;
+        /*列表信息*/
+        $(function () {
+            table = $("#syjTable").DataTable({
+                "oLanguage": {
+                    "sUrl": "../../../js/jQuery/Plugins/DataTables/dataTables.chinese.txt"
+                },
+                "bServerSide": true,
+                "sAjaxSource": "SYJHandler.ashx?Action=List",      //mvc后台ajax调用接口
+                'bPaginate': true,                      //是否分页。
+                "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
+                'bFilter': false,                       //是否使用内置的过滤功能。
+                "bSort": false,
+                "iDisplayLength": 10,  //每页显示的行数
+                "bLengthChange": false,//允许用户从一个选择菜单中格式化页面大小(改变页面显示的数据数量)
+                'sPaginationType': 'full_numbers',      //分页样式
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "name", "value": $("#txtName").val() });
+                },
+                "aoColumns": [
+                    { "mData": "SYJID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
+                    {
+                        "mData": "BFMC", "sTitle": "泵房名称", "sWidth": "20%",
+                        "mRender": function (data, type, full) {
+                            if (data && data.length > 16) {
+                                return "<span title='" + data + "'>" + data.substr(0, 16) + ".." + "</span>";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "mData": "BFDZ", "sTitle": "泵房地址", "sWidth": "30%",
+                        "mRender": function (data, type, full) {
+                            if (data && data.length > 26) {
+                                data = "<span title='" + data + "'>" + data.substr(0, 26) + ".." + "</span>"
+                                // return "<a href='#' onclick=\"loc('" + full.X + "','" + full.Y + "')\">" + data + "</a>";
+                            } else {
+                                return "<a href='#' onclick=\"loc('" + full.X + "','" + full.Y + "')\">" + data + "</a>";
+                            }
+
+                        }
+                    },
+                    {
+                        "mData": "LXR", "sTitle": "联系人", "sWidth": "20%",
+                        "mRender": function (data, type, full) {
+                            if (data && data.length > 14) {
+                                return "<span title='" + data + "'>" + data.substr(0, 14) + ".." + "</span>";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "mData": "XZQ", "sTitle": "行政区", "sWidth": "15%",
+                        "mRender": function (data, type, full) {
+                            if (data && data.length > 14) {
+                                return "<span title='" + data + "'>" + data.substr(0, 14) + ".." + "</span>";
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        "sTitle": "操作",
+                        "sWidth": "15%",
+                        "mRender": function (data, type, full) {
+                            var html = "<a href='#' title='编辑' onclick='edit(\"" + full.SYJID + "\")'><i class='fa fa-pencil'></i>&nbsp&nbsp</a>";
+                            html += "<a href='#' title='详情' onclick='detail(\"" + full.SYJID + "\")'><i class='fa fa-table'></i>&nbsp&nbsp</a> ";
+                            html += "<a href='#' title='删除' onclick='deleteOne(\"" + full.SYJID + "\",\"" + full.BFMC + "\")'><i class='fa fa-remove'></i>&nbsp&nbsp</a>";
+                            html += "<a href='#' title='水泵信息' onclick='sbInfo(\"" + full.SYJID + "\",\"2\")'><i class='fa fa-adjust'></i>&nbsp&nbsp</a> ";
+                            return html;
+                        }
+                    }
+
+                ]
+            });
+            $("#btnQuery").click(function () {
+                if (table != undefined && table != null) {
+                    refresh();
+                }
+            });
+        });
+        /*水源井信息添加*/
+        function Add() {
+            parent.Robin.Window.InfoPanel("水源井信息添加", '<iframe src="../Scheduling/system/syj/SYJAdd.aspx" width="100%" height="100%" frameborder="0"   tabindex="9999"></iframe>',
+                {
+                    id: 'SYJAdd',
+                    paneltype: 'hint',
+                    contentSize: { width: 1000, height: 500 },
+                    minimizeOthers: false,
+                    theme: '#2B3D51'
+                });
+        }
+        /*水源井信息编辑*/
+        function edit(Id) {
+            parent.Robin.Window.InfoPanel("水源井信息修改", '<iframe src="../Scheduling/system/syj/SYJEdit.aspx?Id=' + Id + '" width="100%" height="100%" frameborder="0"   tabindex="9999"></iframe>', {
+                id: 'SYJEdit',
+                contentSize: { width: 1000, height: 500 },
+                paneltype: 'hint',
+                minimizeOthers: false,
+                theme: '#2B3D51'
+               
+            });
+        }
+        /*水源井信息详情*/
+        function detail(Id) {
+            parent.Robin.Window.InfoPanel("水源井信息详情", '<iframe src="../Scheduling/system/syj/SYJDetail.aspx?Id=' + Id + '" width="100%" height="100%" frameborder="0"   tabindex="9999"></iframe>',
+            {
+                id: 'SYJDetail',
+                contentSize: { width: 1000, height: 500 },
+                paneltype: 'hint',
+                minimizeOthers: false,
+                theme: '#2B3D51'
+            });
+        }
+        /*删除功能*/
+        function deleteOne(Id, name) {
+            confirm("<div class='notyContent'>确定要删除【" + name + "】吗？</div>",
+                "information", function () {
+                    $.ajax({
+                        url: "SYJHandler.ashx?Action=Delete&Id=" + Id,
+                        success: function (result) {
+                            if (result == "true") {
+                                table.draw(true);//刷新table
+                                noty({ text: "删除成功！", type: "success", layout: "topCenter", timeout: 2000 });                          
+                            } else {
+                                noty({ text: "删除失败！", type: "error", layout: "topCenter", timeout: 2000 });
+                            }
+                        }
+                    });
+                }, null,
+            '确定', '取消');
+        }
+        /*水泵信息*/
+        function sbInfo(Id,Type) {
+            parent.Robin.Window.InfoPanel("水泵列表", '<iframe id="sbFrame" src="../Scheduling/system/jyz/SBList.html?Id=' + Id + '&Type=' + Type + '" width="100%" height="100%" frameborder="0"   tabindex="9999"></iframe>',
+                       {
+                           id: 'SBList',
+                           contentSize: { width: 900, height: 500 },
+                           minimizeOthers: false,
+                           paneltype: 'hint',
+                           theme: '#2B3D51'
+                       });
+        }
+        /*列表刷新方法*/
+        function refresh() {
+            table.draw(true);
+        }
+        /*noty信息提示*/
+        function confirm(message, type, okCallback, cancelCallback, lblok, lblcancel) {
+            if (!noty) {
+                alert("请检查插件是否加载成功！");
+                return;
+            }
+            var _default =
+            {
+                text: message || "您确定要删除所选对象吗?",
+                type: type || "alert",
+                dismissQueue: true,
+                modal: true,
+                layout: "center",
+                buttons: [
+                    {
+                        addClass: 'btn btn-primary',
+                        text: lblok || "确定",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (okCallback && $.isFunction(okCallback)) {
+
+                                okCallback();
+                            }
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-warning',
+                        text: lblcancel || "取消",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (cancelCallback && $.isFunction(cancelCallback)) {
+
+                                cancelCallback();
+                            }
+                        }
+                    }
+                ]
+            };
+
+            noty(_default);
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <form class="form-inline" style="padding-top:10px;padding-left:15px;">
+            水源井名称：
+            <input type="text" class="form-control" id="txtName" />&nbsp;&nbsp;<input type="button" class="btn btn-info" value="查询" id="btnQuery" />
+            <span class="pull-right"><input type="button" class="btn btn-info" value="添加" onclick="Add()" /></span>
+        </form>
+        <!--<div class="row pull-right" style="padding:10px">
+            <input type="button" class="btn btn-info" value="添加" onclick="Add()" />
+        </div>-->
+        <table id="syjTable" class="table table-striped display" cellspacing="0" style="width:100%"></table>
+    </div>
+</body>
+</html>

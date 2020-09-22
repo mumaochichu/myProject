@@ -1,0 +1,28 @@
+﻿input.valid {
+    border-color: #7edc7f !important;
+    background: #dff0d8 !important;
+}
+
+input .warning {
+    border-color: #dcb359 !important;
+    background: #fcf8e3 !important;
+}
+
+input.error {
+    border-color: #db4c4a !important;
+    background: #f2dede !important;
+}
+
+.validatetip {
+    color: #d56161;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 15px;
+    margin-top: 6px;
+    padding: 0 1px;
+}
+
+label.error {
+    display: none;
+    margin-bottom: 0px;
+}

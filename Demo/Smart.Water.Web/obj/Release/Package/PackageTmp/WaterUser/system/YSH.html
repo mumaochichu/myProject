@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <style>
+        .inbox-item-author {
+            color: #212325;
+            display: block;
+            margin: 0;
+        }
+
+        .inbox-item-text {
+            color: #818a91;
+            display: block;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .list-group-item:hover {
+            background-color: #3db9dc !important;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            var result = parent.Robin.Portal.Page.YSH.query();
+            var showContent = ""
+            $.each(result, function (i, item) {
+                showContent += "<li class='list-group-item'id=" + item.BMID + "><a href='#'>";
+                showContent += "<p class='inbox-item-author'>" + item.BMMC + "</p>";
+                showContent += "<p class='inbox-item-text'>" + item.BMMS + "</p>";
+                showContent += "</a></li>";
+            });           
+            $("#work").append(showContent);
+
+            $("#work").slimScroll({
+                height: '410px'
+            });
+            $(document).on("click", ".list-group-item", function () {
+                var stationKey = $(this).attr("id");
+                parent.Robin.Portal.Page.YSH.locate(stationKey);
+            });
+            $("#search").click(function () {
+                var keyword = $("#sstext").val().trim();
+                var html = "";
+                $.each(result, function (i, item) {
+                    if (item.BMMC.indexOf(keyword) == -1) {
+                        return true;
+                    }
+                    html += "<li class='list-group-item'id=" + item.BMID + "><a href='#'>"
+                    html += "<p class='inbox-item-author'>" + item.BMMC + "</p>";
+                    html += "<p class='inbox-item-text'>" + item.BMMS + "</p>";
+                    html += "</a></li>";
+                });
+                $("#work").html(html);
+            });
+
+            //判断result是否是空，定位显示第一个用水户位置,否则设置地图显示级别
+            if(result.length!=0){
+                parent.Robin.Portal.Page.YSH.locate(result[0].BMID);
+            } else {
+                var map = top.Robin.Map.Map2DControl;       
+                map.setZoom(4);
+            }
+            //回车事件
+            $(document).keyup(function (e) {
+                if (e.keyCode == 13) {
+                    var keyword = $("#sstext").val().trim();
+                    var html = "";
+                    $.each(result, function (i, item) {
+                        if (item.BMMC.indexOf(keyword) == -1) {
+                            return true;
+                        }
+                        html += "<li class='list-group-item'id=" + item.BMID + "><a href='#'>"
+                        html += "<p class='inbox-item-author'>" + item.BMMC + "</p>";
+                        html += "<p class='inbox-item-text'>" + item.BMMS + "</p>";
+                        html += "</a></li>";
+                    });
+                    $("#work").html(html);               
+                }
+            });
+
+        })
+    </script>
+</head>
+<body style="height:445px">   
+    <div class="input-group inp_search" style="width:99%">       
+        <input class="form-control" type="text" placeholder="请输入关键词" style="padding: 6px 12px;height:34px" id="sstext">
+        <span class="input-group-addon pm_search" id="search"><a href="javascript:void(0);" title="搜索"><i class="fa fa-search"></i></a></span>
+    </div>
+    <ul id="work" class="list-group "></ul>
+</body>
+</html>

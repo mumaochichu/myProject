@@ -1,0 +1,12 @@
+[
+{"ITEMID": "301", "ITEMKEY": "covertype", "ITEMVALUE": "供水"},
+{"ITEMID": "302", "ITEMKEY": "covertype", "ITEMVALUE": "弱电"},
+{"ITEMID": "303", "ITEMKEY": "covertype", "ITEMVALUE": "雨水"},
+{"ITEMID": "304", "ITEMKEY": "covertype", "ITEMVALUE": "公安"},
+{"ITEMID": "305", "ITEMKEY": "covertype", "ITEMVALUE": "电信"},
+{"ITEMID": "306", "ITEMKEY": "covertype", "ITEMVALUE": "移动"},
+{"ITEMID": "307", "ITEMKEY": "covertype", "ITEMVALUE": "供电"},
+{"ITEMID": "308", "ITEMKEY": "covertype", "ITEMVALUE": "污水"},
+{"ITEMID": "309", "ITEMKEY": "covertype", "ITEMVALUE": "广电"},
+{"ITEMID": "310", "ITEMKEY": "covertype", "ITEMVALUE": "联通"}
+]

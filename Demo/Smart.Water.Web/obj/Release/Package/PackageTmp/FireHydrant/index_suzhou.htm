@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>消火栓管理系统</title>
+    <meta charset="utf-8" />
+    <!--移动端特属标签-->
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!--针对IOS系统的专属标签-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black" />
+    <!--如果安装了GCF，则使用GCF来渲染页面，如果为安装GCF，则使用最高版本的IE内核进行渲染-->
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--允许所有域名的脚本访问该资源-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta name="Keywords" content="消火栓监控系统" />
+    <meta name="Description" content="消火栓监控系统" />
+    <link rel="Bookmark" href="favicon.ico" />
+    <link rel="Shortcut Icon" href="favicon.ico" />
+    <link href="../js/Bootstrap/version3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../js/jQuery/Theme/bootstrap/jquery-ui-1.10.3.custom.css" rel="stylesheet" />
+    <link href="../style/animate.min.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/jsPanel/jquery.jspanel.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="../style/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <!--后引用，防止冲突-->
+    <link rel="stylesheet" href="../theme/hydrant/fireDemo/css/animate.css" />
+    <link rel="stylesheet" href="../theme/hydrant/fireDemo/css/index.css" />
+    <link rel="stylesheet" href="../theme/hydrant/fireDemo/css/wavebtn/style.css" />
+    <link rel="stylesheet" href="../theme/hydrant/fireDemo/font-awesome-4.7.0/css/font-awesome.css" />
+    <link href="../theme/hydrant/header.css" rel="stylesheet" />
+    <!--宿州-->
+    <!--<link rel="stylesheet" href="http://192.168.70.6/arcgis_js_api/library/3.14/3.14/esri/css/esri.css" />-->
+    <!--公司-->
+    <link rel="stylesheet" href="http://172.30.16.248/arcgis_js_api/library/3.14/3.14/esri/css/esri.css" />
+    <style type="text/css">
+        /*监测点列表*/
+        .left_Monitoring_expansion {
+            position: absolute;
+            top: 40%;
+            left: 0px;
+            width: 20px;
+            background-image: url('../images/hydrant/index/expansion.png');
+            cursor: pointer;
+            z-index: 10;
+        }
+
+            .left_Monitoring_expansion:hover {
+                background-image: url('../images/hydrant/index/expansion-hover.png');
+            }
+
+        .eye_normal {
+            position: absolute;
+            top: 40%;
+            left: 0px;
+            width: 20px;
+            background-image: url('../images/hydrant/plugin/eye_grey.png');
+            cursor: pointer;
+            z-index: 10;
+        }
+
+            .eye_normal:hover {
+                background-image: url('../images/hydrant/index/eye_black.png');
+            }
+
+        #alertWindowClose {
+            color: #efecec;
+        }
+
+            #alertWindowClose:hover {
+                color: black;
+            }
+
+        .alertScroll_a :hover {
+            background-color: #f3ba9f;
+        }
+
+        #eye {
+            /*color: black;*/
+            color:#F7E47D;
+        }
+
+            #eye:hover {
+                /*color: black;*/
+                color:#F7E47D;
+            }
+
+        #windowClose {
+            color: #efecec;
+        }
+
+            #windowClose:hover {
+                color: #F7E47D;
+            }
+
+        .inbox-item-author {
+            color: #212325;
+            display: block;
+            margin: 0;
+        }
+
+        .inbox-item-text {
+            color: #50575d;
+            display: block;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .list-group-item {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border-bottom: 1px solid #c5bebe;
+            border-top: 1px solid #b1a8a8;
+        }
+
+            .list-group-item:hover {
+                /*background-color: #f3f1f0 !important;*/
+                background-color: #f5f3f3 !important;
+            }
+
+        .fa {
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #animatedDIV {
+            animation: flash 2.5s infinite;
+        }
+
+        #fireHydrantMark:hover {
+            color: rgb(255, 255, 255) !important;
+            background-color: rgb(223, 82, 5);
+        }
+
+        #DataDisplay:hover {
+            color: rgb(255, 255, 255) !important;
+            background-color: rgb(223, 82, 5);
+        }
+
+        #option1 a:hover {
+            border-bottom: 4px solid #f79065;
+        }
+
+        #option2 a:hover {
+            border-bottom: 4px solid #f79065;
+        }
+
+        #FireHydrantList > .nav-tabs > li > a.active {
+            border-bottom: 4px solid #fb6425;
+            color:#3d95e2;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+            border: none; 
+        }
+
+        .nav-tabs>li>a {
+            line-height: 0.7;
+            color: #59626b;
+        }
+
+        .ui-widget-content {
+            background: none;
+        }
+
+        .ui-tabs .ui-tabs-nav li {
+            margin-bottom: 0px;
+        }
+        .maximize{
+            display:none!important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav style="position: fixed; top: 0px; margin: 0px; z-index: 1; width: 100%;z-index:2000" role="navigation" class="navbar navbar-default navbar-static-top">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#" style="cursor:default;"> 
+                    <img src="../images/hydrant/Login/logo2.png" />      
+                </a>
+            </div>
+            <a href="#" id="fireHydrantMark" style="position: absolute;right: 590px;color: white;text-decoration: none;width:105px;height:48px;text-align:center;">
+                <div style="margin-top: 3px;">
+                    <span class="fa fa-map-o fa-fw" aria-hidden="true" style="margin-top: 13px;"></span><strong style="font-size: 13px;margin-top: 13px;font-family:'Microsoft YaHei'; ">&nbsp;地图标注</strong>
+                </div>
+            </a>
+            <!-- 导航条 -->
+            <ul class="nav navbar-top-links navbar-right mega-menu hidden-xs"  style="position: absolute;right:160px;">
+                <li class="dropdown ">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" >
+                        <span class="fa fa-info-circle fa-fw" aria-hidden="true"></span><strong style="font-size: 13px;font-family:'Microsoft YaHei';">&nbsp;信息管理</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks animated flipInY">
+                        <li id="infoManagement">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-hydrant.png" />
+                                    消火栓列表
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li id="maintenanceUnit">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/maintenanceUnit.png" />
+                                    维保单位
+                                </div>
+                            </a>
+                        </li>
+                        
+                        <li class="divider"></li>
+                        <li id="maintenancePerson">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/maintenanceperson.png" />
+                                    维保人员
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li id="tableInput">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-list.png" />
+                                    数据导入
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown ">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <span class="fa fa-th-large fa-fw" aria-hidden="true"></span><strong style="font-size: 13px;font-family:'Microsoft YaHei';">&nbsp;维保管理</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts animated flipInY">
+                        <li id="maintenanceRecord">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-Record.png" />
+                                    维保记录
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li id="maintenanceRemind">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-Remind.png" />
+                                    养护提醒
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown ">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <span class="fa fa-search fa-fw" aria-hidden="true"></span><strong style="font-size: 13px;font-family:'Microsoft YaHei';">&nbsp;历史查询</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks animated flipInY">
+                        <li id="searchAlarmData">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-search.png" />
+                                    报警数据查询
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li id="searchHistoryData">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-search.png" />
+                                    历史数据查询
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown ">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+                        <span class="fa fa-calculator fa-fw" aria-hidden="true"></span><strong style="font-size: 13px;font-family:'Microsoft YaHei';">&nbsp;数据统计</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks animated flipInY">
+                        <li id="fireHydrantSta">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-Record.png" />
+                                    基础信息统计
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li id="maintenanceSta">
+                            <a href="#">
+                                <div>
+                                    <img src="../images/hydrant/index/menu-Statistics.png" />
+                                    维保统计
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <a href="#" id="DataDisplay" style="position: absolute;right:55px;color: white;text-decoration: none;width:105px;height:48px;text-align:center;">
+                <div style="margin-top:12px;">
+                    <span class="fa fa-fire-extinguisher fa-fw" aria-hidden="true"></span><strong style="font-size: 13px;font-family:'Microsoft YaHei';">&nbsp;抢险分析</strong>
+                </div>
+            </a>
+
+            <a href="javascript:;" id="btn_warning" title="数据报警" style="position: absolute;right:0px;color: white;text-decoration: none;width:55px;height:48px;text-align:center;">
+                <div style="margin-top:15px;">
+                    <i class="icon-bell" style="color: #fff;font-size: 15px;"></i>
+                    <span style="margin-top: -8px;position: absolute;margin-left: 0px;font-size: 12px;border-radius: 12px!important;padding: 3px 6px;display: inline-block;background-color:red;line-height: 1;" id="warningNum" data-bind="text: filteredRecordsWithAlertNum"></span>
+                </div>
+            </a>
+            <!-- 导航条结束 -->
+        </nav>
+
+        <!--
+            作者：447639483@qq.com
+            时间：2017-11-21
+            描述：地图工具
+        -->
+        <div class="fire-toolbar" id="ToolBarDIV">
+            <div class="toolbar-btn"><i class="fa fa-bars"></i></div>
+        </div>
+
+        <!--消火栓监测列表-->
+        <div class="left_Monitoring_expansion animated zoomIn" id="Monitoring_expansion" style="display: none;width:20px;height:40px;">
+        </div>
+        <div id="HydrantList" style="float:left;position:absolute;top:147px;left:30px;padding:0px;">
+            <div class="dropdown-menu" style="display:block;width:280px;padding:0px;background-color: rgba(236, 234, 232, 0.8);">
+                <div style="height:38px;font-size:16px;width:280px; background-color:#FA6525;color:#ffffff;text-align:center;">
+                    <span style="float:left;margin-left:10px;margin-top:9px;text-align:center;">消火栓列表</span>
+                    <span id="btnHydrantInfoClose" style="cursor:pointer;float:right;margin-right:6px;margin-top:9px;"><i id="windowClose" class="fa fa-close"></i> </span>
+                    <i id="eye" class="fa fa-eye" style="cursor:pointer;margin-right:10px;margin-top:13px;float:right;" title="关闭标注"></i>
+                </div>
+                <div id="FireHydrantList" style="height:360px;padding:0px;width:280px;background-color: rgba(247, 243, 240, 0.6);border: 1px solid #b1a4a4;">
+                    <ul class="nav nav-tabs" style="padding-left: 0px;background-color:transparent;border-bottom: 1px solid #c5bebe;">
+                        <li id="option1" style="background-color:transparent;"><a class="active" href="#MonitorDiv" style="background-color:transparent;cursor:pointer;">监测列表</a></li>
+                        <li id="option2" class="" style="background-color:transparent;"><a href="#WarningDiv" style="background-color:transparent;cursor:pointer;">报警列表</a></li>
+                    </ul>
+                    <div id="MonitorListDIV">
+                        <ul id="MonitorList" class="list-group" data-bind="foreach: MonitorDatas">
+                            <li class='list-group-item' style='height:65px;cursor:pointer;background-color: transparent;' data-bind="attr:{BMID:BMID, BMMC:BMMC,BMMS: BMMS}">
+                                <div href='#' data-bind="attr: {id : BMID}">
+                                    <p class='inbox-item-author' data-bind="text: BMMC"></p>
+                                    <p  class='inbox-item-text' data-bind="text: BMMS" style="height:auto;max-width:260px;text-decoration: none; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="WarningListDIV" style="display:none;height:320px;">
+                        <ul id="WarningList" class="list-group" data-bind="foreach: filteredRecordsWithAlert" style="margin-bottom:0px;">
+                            <li class='list-group-item' style='height:65px;cursor:pointer;background-color: transparent;' data-bind="attr:{stationKey:StationKey, stationName:StationName,alertId: AlertId,tagName:TagName,tagValue: TagValue,units: Units,saveTime: SaveTime}">
+                                <div style="height:65px;" data-bind="attr: {id : StationKey}">
+                                    <div id="animatedDIV" class="animated flash" style="width:40px;height:40px;float:left;margin-top: 8px;">
+                                        <i class="icon-bell" style="color: red;font-size: 30px;"></i>
+                                    </div>
+                                    <p>
+                                        <span data-bind="text: StationName" style="color:#585555;"></span>
+                                        <span class="form-inline">
+                                            <label data-bind="text: moment(SaveTime()).format('YY-MM-DD HH:mm')" style="color:#585555;float:right;padding-right:10px;font-family:sans-serif;font-weight: inherit;"></label>
+                                        </span>
+                                        <span class="form-inline">
+                                            <div style="margin-top:-5px;">
+                                                <label data-bind="text: TagName" style="color:#dc4646;font-family:sans-serif;font-weight: inherit;"></label>
+                                                <label style="color:#dc4646;font-family:sans-serif;font-weight: inherit;">:</label>
+                                                <!-- ko if: TagValue()==1&& TagName()=="开启状态"-->
+                                                <label style="color:#dc4646;font-family:sans-serif;font-weight: inherit;margin-left: 2px;">开启</label>
+                                                <!--/ko-->
+                                                <!-- ko if: TagName()=="压力"-->
+                                                <label data-bind="text: TagValue" style="color:#dc4646;font-family:sans-serif;font-weight: inherit;margin-left: 2px;"></label>
+                                                <label data-bind="text: Units" style="color:#dc4646;font-family:sans-serif;font-weight: inherit;margin-left: 2px;"></label>
+                                                <!--/ko-->                                            
+                                            </div>
+                                        </span>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+            作者：
+            时间：2017-11-29
+            描述：地图DIV
+        -->
+        <div id="Main_Map_DIV" style="background-color:rgb(234,233,220)"></div>
+        <div id="LayerControl_DIV" class="" style="position:absolute;width:280px;top:150px;left:340px; display:none;"></div>
+    </div>
+    <script src="../js/jQuery/jquery.min.js"></script>
+    <script src="../theme/hydrant/fireDemo/js/jquery-accordion-menu.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../theme/hydrant/fireDemo/js/index.js"></script>
+    <script src="../js/jQuery/Plugins/jquery-ui.min.js"></script>
+    <script src="../js/Bootstrap/version3/js/bootstrap.min.js"></script>
+    <script src="../js/jQuery/Plugins/jquery.cookie.js"></script>
+    <script src="../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../js/jQuery/Plugins/jsPanel/jquery.jspanel.min.js"></script>
+    <script src="../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../js/jQuery/Plugins/DatePicker/WdatePicker.js"></script>
+    <script src="../js/Knockoutjs/knockout.js"></script>
+    <script src="../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <!--宿州-->
+    <!--<script type="text/javascript" src="http://192.168.70.6/arcgis_js_api/library/3.14/3.14/init.js"></script>-->
+    <!--公司-->
+    <script type="text/javascript" src="http://172.30.16.248/arcgis_js_api/library/3.14/3.14/init.js"></script>
+    <script data-main="../js/portal/hydrant-robin-app-suzhou" src="../js/RequireJS/require.js"></script>
+    <script src="../js/plugin/ClusterHeatmap/cluster.js"></script>  
+    <script src="../js/jQuery/Plugins/fire/fire.js"></script>
+</body>
+</html>

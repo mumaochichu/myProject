@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Unity Web Player | jiayazhan1</title>
+        <script src="../../../js/jQuery/jquery.min.js"></script>
+        <script src="../../../js/Framework/robin-utils.js"></script>
+        <script src="../../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+        <link href="../../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+		<script type="text/javascript">
+		var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+		if (document.location.protocol == 'https:')
+			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+		</script>
+		<script type="text/javascript">
+			var config = {
+				width: 1000, 
+				height: 450,
+				params: { enableDebugging:"0" }
+				
+			};
+			var u = new UnityObject2(config);
+
+			jQuery(function() {
+
+				var $missingScreen = jQuery("#unityPlayer").find(".missing");
+				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+				$missingScreen.hide();
+				$brokenScreen.hide();
+				
+				u.observeProgress(function (progress) {
+					switch(progress.pluginStatus) {
+						case "broken":
+							$brokenScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$brokenScreen.show();
+						break;
+						case "missing":
+							$missingScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$missingScreen.show();
+						break;
+						case "installed":
+							$missingScreen.remove();
+						break;
+						case "first":
+						break;
+					}
+				});
+				u.initPlugin(jQuery("#unityPlayer")[0], "jiayazhan1.unity3d");
+			});
+		</script>
+		<script>
+            var Id = Robin.Utils.GetQueryObject().Id;
+            function htmlfunc() {
+                // 默认加载数据
+                updataJYZ(Id);
+                //实时刷新数据
+                NProgress.done();
+                setInterval(function () {
+                    updataJYZ(Id);
+                }, 10 * 1000);
+            }
+		//<!-- 更改水源井水位井深0-100米，所有参数为string数值，无单位。-->
+			function ChangeSyjWaterLevel(value){
+				if(value){
+					u.getUnity().SendMessage("Main Camera","ChangeSyjWaterLevel",value);
+				}else{
+					u.getUnity().SendMessage("水源井水面","ChangeSyjWaterLevel","100");
+				}
+			}
+			//<!-- 更改蓄水池水位井深0-10米，所有参数为string数值，无单位。-->
+			function ChangeXscWaterLevel(value){
+				if(value){
+					u.getUnity().SendMessage("Main Camera","ChangeXscWaterLevel",value);
+				}else{
+					u.getUnity().SendMessage("蓄水池水面","ChangeXscWaterLevel","100");
+				}
+			}
+			//<!-- 更新压力值-->
+			function ChangeValuePressure(value){
+				u.getUnity().SendMessage("Main Camera","ChangeValuePressure",value);
+			}
+			//<!-- 更新流量值-->
+			function ChangeValueFlow(value){
+				u.getUnity().SendMessage("Main Camera","ChangeValueFlow",value);
+			}
+			//<!-- 打开4个水泵-->
+			function BtnTurnOnShuibengClick(){
+				u.getUnity().SendMessage("Main Camera","BtnTurnOnShuibengClick","");
+			}
+			//<!-- 关闭4个水泵-->
+			function BtnTurnOffShuibengClick()
+			{
+				u.getUnity().SendMessage("Main Camera","BtnTurnOffShuibengClick","");
+			}
+			//<!-- 打开水泵1-->
+			function TurnOnShuibeng1()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOnShuibeng1","");
+			}
+            //<!-- 关闭水泵1-->
+			function TurnOffShuibeng1()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOffShuibeng1","");
+			}
+            //<!-- 打开水泵2-->
+			function TurnOnShuibeng2()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOnShuibeng2","");
+			}
+            //<!-- 关闭水泵2-->
+			function TurnOffShuibeng2()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOffShuibeng2","");
+			}
+            //<!-- 打开水泵3-->
+			function TurnOnShuibeng3()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOnShuibeng3","");
+			}
+            //<!-- 关闭水泵3-->
+			function TurnOffShuibeng3()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOffShuibeng3","");
+			}
+            //<!-- 打开水泵4-->
+			function TurnOnShuibeng4()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOnShuibeng4","");
+			}
+            //<!-- 关闭水泵4-->
+			function TurnOffShuibeng4()
+			{
+				u.getUnity().SendMessage("Main Camera","TurnOffShuibeng4","");
+			}
+			function ChangeTextSYJState(value) {
+			    u.getUnity().SendMessage("Main Camera", "ChangeTextSYJState", value);
+			}
+			function ChangeTextSYJFlow(value) {
+			    u.getUnity().SendMessage("Main Camera", "ChangeTextSYJFlow", value);
+			}
+			function ChangeTextSYJTotalFlow(value) {
+			    u.getUnity().SendMessage("Main Camera", "ChangeTextSYJTotalFlow", value);
+			}
+			function ChangeTextXSCFlow(value) {
+			    u.getUnity().SendMessage("Main Camera", "ChangeTextXSCFlow", value);
+			}
+			function ChangeTextXSCTotalFlow(value) {
+			    u.getUnity().SendMessage("Main Camera", "ChangeTextXSCTotalFlow", value);
+			}
+			function Change3DPressureValue(value) {
+			    u.getUnity().SendMessage("Main Camera", "Change3DPressureValue", value);
+			}
+			function updataJYZ(Id) {
+			    //请求数据
+			    $.each(top.tmodel.monitorData(), function (i, v) {
+			        if (v.StationKey() == Id) {
+			            //加测项配置数据
+			            switch (v.TagCode()) {
+			                case Id + "_003_1":
+			                    //出口压力
+			                    Change3DPressureValue(v.TagValue());
+			                    break;
+			                case Id + "_005_1":
+			                    //蓄水池水位
+			                    ChangeXscWaterLevel(v.TagValue());
+			                    break;
+			                case Id + "_008_1":
+			                    //6#泵状态，水源井信息，流量累计
+			                    ChangeTextSYJTotalFlow(v.TagValue());
+			                    break;
+			                case Id + "_004_1":
+			                    //6#泵瞬时流量
+			                    ChangeTextSYJFlow(v.TagValue());
+			                    break;
+			                case Id + "_007_2":
+			                    //6#泵工频，判断运行状态
+			                    if (v.TagValue() == 1) {
+			                        ChangeTextSYJState("运行");
+			                    } else {
+			                        ChangeTextSYJState("停止");
+			                    }
+			                    break;
+			                case Id + "_004_2":
+			                    //1#泵入口瞬时流量为蓄水池瞬时流量
+			                    ChangeTextXSCFlow(v.TagValue());
+			                    break;
+			                case Id + "_008_2":
+			                    //1#泵累计流量，蓄水池累计流量
+			                    ChangeTextXSCTotalFlow(v.TagValue());
+			                    break;
+			                case Id + "_006_1":
+			                    //1#泵的运行状态
+			                    if (v.TagValue() == 1) {
+			                        TurnOnShuibeng1();//1#泵打开
+			                    } else {
+			                        TurnOffShuibeng1();//1#泵关闭
+			                    }
+			                    break;
+			                case Id + "_006_2":
+			                    //2#泵的运行状态
+			                    if (v.TagValue() == 1) {
+			                        TurnOnShuibeng2();//2#泵打开
+			                    } else {
+			                        TurnOffShuibeng2();//2#泵关闭
+			                    }
+			                    break;
+			                case Id + "_006_3":
+			                    //3#泵的运行状态
+			                    if (v.TagValue() == 1) {
+			                        TurnOnShuibeng3();//3#泵打开
+			                    } else {
+			                        TurnOffShuibeng3();//3#泵关闭
+			                    }
+			                    break;
+			                case Id + "_007_1":
+			                    //4#泵的运行状态
+			                    if (v.TagValue() == 1) {
+			                        TurnOnShuibeng4();//4#泵打开
+			                    } else {
+			                        TurnOffShuibeng4();//4#泵关闭
+			                    }
+			                    break;
+			                case Id + "_002_1":
+			                    //1#泵故障判断
+			                    if (v.TagValue() == 1) {
+			                        TurnFaultShuibeng1();
+			                    }
+			                    break;
+			                case Id + "_002_2":
+			                    //2#泵故障判断
+			                    if (v.TagValue() == 1) {
+			                        TurnFaultShuibeng2();
+			                    }
+			                    break;
+			                case Id + "_002_3":
+			                    //3#泵故障判断
+			                    if (v.TagValue() == 1) {
+			                        TurnFaultShuibeng3();
+			                    }
+			                    break;
+			            }
+			        }
+			    });
+			}
+		</script>
+		<style type="text/css">
+		<!--
+		body {
+			font-family: Helvetica, Verdana, Arial, sans-serif;
+			background-color: white;
+			color: black;
+			text-align: center;
+		}
+		a:link, a:visited {
+			color: #000;
+		}
+		a:active, a:hover {
+			color: #666;
+		}
+		p.header {
+			font-size: small;
+		}
+		p.header span {
+			font-weight: bold;
+		}
+		p.footer {
+			font-size: x-small;
+		}
+		div.content {
+			margin: auto;
+			width: 960px;
+		}
+		div.broken,
+		div.missing {
+			margin: auto;
+			position: relative;
+			top: 50%;
+			width: 193px;
+		}
+		div.broken a,
+		div.missing a {
+			height: 63px;
+			position: relative;
+			top: -31px;
+		}
+		div.broken img,
+		div.missing img {
+			border-width: 0px;
+		}
+		div.broken {
+			display: none;
+		}
+		div#unityPlayer {
+			cursor: default;
+			height: 600px;
+			width: 960px;
+		}
+		-->
+		</style>
+	</head>
+	<body>
+		<div class="content">
+			<div id="unityPlayer">
+				<div class="missing">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+					</a>
+				</div>
+				<div class="broken">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+						<img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+					</a>
+				</div>
+			</div>
+		</div>
+		<p class="footer">&laquo; created with <a href="http://unity3d.com/unity/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+	</body>
+</html>

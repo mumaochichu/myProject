@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Water.Web", "Smart.Water.Web\Smart.Water.Web.csproj", "{A8E376A5-FB34-4F1D-8F03-19F4BA73C59D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Water.Data", "Smart.Water.Data\Smart.Water.Data.csproj", "{B49353A6-5943-4A79-95EE-A73D50C0BBE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8E376A5-FB34-4F1D-8F03-19F4BA73C59D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E376A5-FB34-4F1D-8F03-19F4BA73C59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8E376A5-FB34-4F1D-8F03-19F4BA73C59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8E376A5-FB34-4F1D-8F03-19F4BA73C59D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B49353A6-5943-4A79-95EE-A73D50C0BBE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B49353A6-5943-4A79-95EE-A73D50C0BBE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B49353A6-5943-4A79-95EE-A73D50C0BBE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B49353A6-5943-4A79-95EE-A73D50C0BBE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

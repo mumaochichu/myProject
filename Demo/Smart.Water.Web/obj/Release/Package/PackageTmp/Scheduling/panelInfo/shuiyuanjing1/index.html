@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | shuiyuanjing</title>
+
+    <script src="../../../js/jQuery/jquery.min.js"></script>
+    <script src="../../../js/Framework/robin-utils.js"></script>
+    <script src="../../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <link href="../../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <script>
+        function changeWaterLevel(value) {
+            if (value) {
+                SendMessage("Main Camera", "WaterLevelClick", value);
+            } else {
+                SendMessage("水井水位", "WaterLevelClick", "0");
+            }
+        }
+        function ShuibengStateTxt(value) {
+            SendMessage("Main Camera", "ShuibengStateTxt", value);
+        }
+        function ChangeValuePressure(value) {
+            SendMessage("Main Camera", "ChangeValuePressure", value);
+        }
+        function ChangeValueTotalFlow(value) {
+            SendMessage("Main Camera", "ChangeValueTotalFlow", value);
+        }
+        function ChangeValueInstantFlow(value) {
+            SendMessage("Main Camera", "ChangeValueInstantFlow", value);
+        }
+        function ChangeWellValue(value1, value2, value3) {
+            SendMessage("Main Camera", "ChangeValuePressure", value1);
+            SendMessage("Main Camera", "WaterLevelClick", value2);
+            SendMessage("Main Camera", "ChangeValueFlow", value3);
+        }
+        //获取Id;
+        var Id = Robin.Utils.GetQueryObject().Id;
+        
+        function htmlfunc() {        
+            syjUpdata(Id);
+            NProgress.done();
+            //实时更新数据
+            setInterval(function () {
+                syjUpdata(Id);
+            }, 10 * 1000);
+        }
+        //默认加载
+        function syjUpdata(Id) {
+            $.each(top.tmodel.monitorData(), function (i, v) {
+                if (v.StationKey() == Id) {
+                    //更新
+                    switch (v.TagKey()) {
+                        case "030199_006":
+                            if (v.TagValue() == 1) {
+                                ShuibengStateTxt("运行");
+                            } else{
+                                ShuibengStateTxt("停止");
+                            }                           
+                            break;
+                        case "030199_004"://压力
+                            //出口压力
+                            ChangeValuePressure(v.TagValue());
+                            break;
+                        case "030199_007"://累计
+                            //累计流量
+                            ChangeValueTotalFlow(v.TagValue());
+                            break;
+                        case "030199_005"://瞬时
+                            //瞬时流量
+                            ChangeValueInstantFlow(v.TagValue());
+                            break;
+                        case "030199_001"://水位
+                            //水位
+                            changeWaterLevel(v.TagValue());
+                            break;
+                    }
+
+                   // return false;
+                }
+            });
+        }
+    </script>
+</head> 
+           
+<body onload="NProgress.start();">
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="450px" width="1000px"></canvas>
+    <!--<input type="button" value="水泵状态" onclick="ShuibengStateTxt('运行')"/>
+        <input type="button" value="出口压力" onclick="ChangeValuePressure('0.24')"/>
+        <input type="button" value="累计流量" onclick="ChangeValueTotalFlow('80')"/>
+        <input type="button" value="瞬时流量" onclick="ChangeValueInstantFlow('10')"/>
+        <input type="button" value="水位" onclick="changeWaterLevel('6')"/>-->
+    <script type='text/javascript'>
+        var Module = {
+            TOTAL_MEMORY: 268435456,
+            errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+            compatibilitycheck: null,
+            dataUrl: "Release/shuiyuanjing.data",
+            codeUrl: "Release/shuiyuanjing.js",
+            memUrl: "Release/shuiyuanjing.mem",
+        };
+    </script>
+    <script src="Release/UnityLoader.js"></script>
+
+</body>
+</html>

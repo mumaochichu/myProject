@@ -1,0 +1,4 @@
+1，应安装好oracle及plsql、VS2019
+2，照图片字段新建一个名为DEMO的表
+3，在Web.config文件中的<add name="OracleDSN" connectionString="User ID=orcl3;Password=123456;Data Source=localhost/liu" providerName="Robin.EntLib.Data.Oracle.OracleProvider" />修改成你的数据库信息(orcl3替换成你的数据库用户名；123456改成你相对应用户名的口令；localhost表示本地数据库，如果你要连接远程数据库再做修改，如果也是本地数据库就不需要改动了；liu改成你的数据库实例名)
+4,在VS2019下运行

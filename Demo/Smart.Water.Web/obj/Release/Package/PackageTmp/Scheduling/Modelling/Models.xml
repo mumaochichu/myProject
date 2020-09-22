@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModelConfigInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!--系统名称-->
+  <Name>供水模型结果调用接口</Name>
+  <!--系统唯一编号-->
+  <Code>Model</Code>
+  <!--数据库类型 SqlServer-->
+  <DbType>SqlServer</DbType>
+  <!--数据库名称-->
+  <DbName>localhost</DbName>
+  <!--数据库连接字符串-->
+  <DbConnStr>Data Source = localhost; Initial Catalog = DatabaseName; Persist Security Info = True; User ID = sa; Password = 123456</DbConnStr>
+  <!--开发模式WebForm-->
+  <DevMode>WebForm</DevMode>
+
+  <!--项目名称与表对应关系-->
+  <Tables >
+    <table name="模型测试" databasename="watermodel_caogao" tablename="T1_GIS_OBJ_CALC_RESULT_23"/>
+    <table name="阜阳城市供水模型-2" databasename="watermodel_fy" tablename="T1_GIS_OBJ_CALC_RESULT_2"/>
+    <table name="阜阳城市供水模型-3" databasename="watermodel_fy" tablename="T1_GIS_OBJ_CALC_RESULT_3"/>
+    <table name="阜阳城市供水模型-4" databasename="watermodel_fy" tablename="T1_GIS_OBJ_CALC_RESULT_4"/>
+    <table name="阜阳城市供水模型-5" databasename="watermodel_fy" tablename="T1_GIS_OBJ_CALC_RESULT_5"/>
+  </Tables>
+  <Models>
+     <model name="基本节点" parentname="模型测试" databasename="watermodel_caogao" tablename="T0_GIS_OBJ_GERNERAL_NODE_23"/>
+     <model name="管段" parentname="模型测试" databasename="watermodel_caogao" tablename="T0_GIS_OBJ_PIPE_23"/>
+     <model name="基本节点" parentname="阜阳城市供水模型-2" databasename="watermodel_caogao" tablename=""/>
+     <model name="基本节点" parentname="阜阳城市供水模型-3" databasename="watermodel_caogao" tablename=""/>
+     <model name="基本节点" parentname="阜阳城市供水模型-4" databasename="watermodel_caogao" tablename=""/>
+     <model name="基本节点" parentname="阜阳城市供水模型-5" databasename="watermodel_caogao" tablename=""/>
+  </Models>
+  <Fields>
+    <field layername="水池" propertyname="追踪物比例" layercode="65538" fieldname="R_7"/>
+    <field layername="水池" propertyname="输出物质浓度" layercode="65538" fieldname="R_6"/>
+    <field layername="水池" propertyname="动态水龄" layercode="65538" fieldname="R_5"/>
+    <field layername="水池" propertyname="绝对水压" layercode="65538" fieldname="R_0"/>
+    <field layername="水池" propertyname="当前水位" layercode="65538" fieldname="R_2"/>
+    <field layername="水池" propertyname="进出水状态" layercode="65538" fieldname="R_1"/>
+    <field layername="水池" propertyname="进出水量" layercode="65538" fieldname="R_4"/>
+    <field layername="水池" propertyname="总水量" layercode="65538" fieldname="R_3"/>
+
+    <field layername="水库" propertyname="动态水龄" layercode="65539" fieldname="R_3"/>
+    <field layername="水库" propertyname="输出物质浓度" layercode="65539" fieldname="R_4"/>
+    <field layername="水库" propertyname="绝对水压" layercode="65539" fieldname="R_1"/>
+    <field layername="水库" propertyname="当前水位" layercode="65539" fieldname="R_0"/>
+    <field layername="水库" propertyname="进出水状态" layercode="65539" fieldname="R_1"/>
+    <field layername="水库" propertyname="进出水量" layercode="65539" fieldname="R_2"/>
+    <field layername="水库" propertyname="追踪物比例" layercode="65539" fieldname="R_5"/>
+
+    <field layername="已知压力点" propertyname="追踪物比例" layercode="65540" fieldname="R_5"/>
+    <field layername="已知压力点" propertyname="绝对水压" layercode="65540" fieldname="R_1"/>
+    <field layername="已知压力点" propertyname="自由水压" layercode="65540" fieldname="R_0"/>
+    <field layername="已知压力点" propertyname="当前流量" layercode="65540" fieldname="R_2"/>
+    <field layername="已知压力点" propertyname="输出物质浓度" layercode="65540" fieldname="R_4"/>
+    <field layername="已知压力点" propertyname="动态水龄" layercode="65540" fieldname="R_3"/>
+
+    <field layername="基本节点" propertyname="动态水龄" layercode="65542" fieldname="R_3"/>
+    <field layername="基本节点" propertyname="追踪物比例" layercode="65542" fieldname="R_5"/>
+    <field layername="基本节点" propertyname="输出物质浓度" layercode="65542" fieldname="R_4"/>
+    <field layername="基本节点" propertyname="绝对水压" layercode="65542" fieldname="R_1"/>
+    <field layername="基本节点" propertyname="自由水压" layercode="65542" fieldname="R_0"/>
+    <field layername="基本节点" propertyname="当前水量" layercode="65542" fieldname="R_2"/>
+
+    <field layername="转输节点" propertyname="绝对水压" layercode="65543" fieldname="R_1"/>
+    <field layername="转输节点" propertyname="自由水压" layercode="65543" fieldname="R_0"/>
+    <field layername="转输节点" propertyname="输出物质浓度" layercode="65543" fieldname="R_4"/>
+    <field layername="转输节点" propertyname="动态水龄" layercode="65543" fieldname="R_3"/>
+    <field layername="转输节点" propertyname="追踪物比例" layercode="65543" fieldname="R_5"/>
+
+    <field layername="水表" propertyname="追踪物比例" layercode="65544" fieldname="R_5"/>
+    <field layername="水表" propertyname="动态水龄" layercode="65544" fieldname="R_3"/>
+    <field layername="水表" propertyname="输出物质浓度" layercode="65544" fieldname="R_4"/>
+    <field layername="水表" propertyname="绝对水压" layercode="65544" fieldname="R_1"/>
+    <field layername="水表" propertyname="自由水压" layercode="65544" fieldname="R_0"/>
+    <field layername="水表" propertyname="当前流量" layercode="65544" fieldname="R_2"/>
+
+    <field layername="消火栓" propertyname="绝对水压" layercode="65545" fieldname="R_1"/>
+    <field layername="消火栓" propertyname="自由水压" layercode="65545" fieldname="R_0"/>
+    <field layername="消火栓" propertyname="当前流量" layercode="65545" fieldname="R_2"/>
+    <field layername="消火栓" propertyname="输出物质浓度" layercode="65545" fieldname="R_4"/>
+    <field layername="消火栓" propertyname="追踪物比例" layercode="65545" fieldname="R_5"/>
+    <field layername="消火栓" propertyname="动态水龄" layercode="65545" fieldname="R_3"/>
+
+    <field layername="流量控制阀" propertyname="当前状态" layercode="65546" fieldname="R_0"/>
+    <field layername="流量控制阀" propertyname="当前流量" layercode="65546" fieldname="R_1"/>
+    <field layername="流量控制阀" propertyname="局部水头损失" layercode="65546" fieldname="R_2"/>
+
+    <field layername="压力平衡阀" propertyname="当前状态" layercode="65547" fieldname="R_0"/>
+    <field layername="压力平衡阀" propertyname="当前流量" layercode="65547" fieldname="R_1"/>
+    <field layername="压力平衡阀" propertyname="局部水头损失" layercode="65547" fieldname="R_2"/>
+
+    <field layername="普通控制阀" propertyname="当前状态" layercode="65548" fieldname="R_0"/>
+    <field layername="普通控制阀" propertyname="当前流量" layercode="65548" fieldname="R_1"/>
+    <field layername="普通控制阀" propertyname="局部水头损失" layercode="65548" fieldname="R_2"/>
+
+    <field layername="节流控制阀" propertyname="当前状态" layercode="65549" fieldname="R_0"/>
+    <field layername="节流控制阀" propertyname="当前流量" layercode="65549" fieldname="R_1"/>
+    <field layername="节流控制阀" propertyname="局部水头损失" layercode="65549" fieldname="R_2"/>
+
+    <field layername="降压阀" propertyname="当前状态" layercode="65550" fieldname="R_0"/>
+    <field layername="降压阀" propertyname="当前流量" layercode="65550" fieldname="R_1"/>
+    <field layername="降压阀" propertyname="局部水头损失" layercode="65550" fieldname="R_2"/>
+
+    <field layername="减压阀" propertyname="当前状态" layercode="65551" fieldname="R_0"/>
+    <field layername="减压阀" propertyname="当前流量" layercode="65551" fieldname="R_1"/>
+    <field layername="减压阀" propertyname="局部水头损失" layercode="65551" fieldname="R_2"/>
+
+    <field layername="止回阀" propertyname="当前状态" layercode="65552" fieldname="R_0"/>
+    <field layername="止回阀" propertyname="当前流量" layercode="65552" fieldname="R_1"/>
+    <field layername="止回阀" propertyname="局部水头损失" layercode="65552" fieldname="R_2"/>
+
+    <field layername="定速泵" propertyname="当前状态" layercode="65554" fieldname="R_0"/>
+    <field layername="定速泵" propertyname="通过流量" layercode="65554" fieldname="R_2"/>
+    <field layername="定速泵" propertyname="提升水头" layercode="65554" fieldname="R_3"/>
+
+    <field layername="调速泵" propertyname="当前状态" layercode="65555" fieldname="R_0"/>
+    <field layername="调速泵" propertyname="通过流量" layercode="65555" fieldname="R_2"/>
+    <field layername="调速泵" propertyname="提升水头" layercode="65555" fieldname="R_3"/>
+    <field layername="调速泵" propertyname="运行转速" layercode="65555" fieldname="R_1"/>
+
+    <field layername="管段" propertyname="管段流向" layercode="65556" fieldname="R_6"/>
+    <field layername="管段" propertyname="管段流量" layercode="65556" fieldname="R_1"/>
+    <field layername="管段" propertyname="管段流速" layercode="65556" fieldname="R_2"/>
+    <field layername="管段" propertyname="当前状态" layercode="65556" fieldname="R_0"/>
+    <field layername="管段" propertyname="局部水头损失" layercode="65556" fieldname="R_3"/>
+    <field layername="管段" propertyname="沿程水头损失" layercode="65556" fieldname="R_4"/>
+    <field layername="管段" propertyname="水力坡度" layercode="65556" fieldname="R_5"/>
+  </Fields>
+
+
+
+
+</ModelConfigInfo>

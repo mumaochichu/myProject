@@ -1,0 +1,128 @@
+[
+  {
+    "navId": 1,
+    "id": "map_operation",
+    "navTitle": "地图基础功能",
+    "navUrl": "#",
+    "navParentId": 0
+  },
+  {
+    "navId": 2,
+    "id": "plugins",
+    "navTitle": "一些插件",
+    "navUrl": "#",
+    "navParentId": 0
+  },
+  {
+    "navId": 3,
+    "id": "basemapToggle",
+    "navTitle": "地图切换",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 4,
+    "id": "Sketch",
+    "navTitle": "绘图工具",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 5,
+    "id": "5",
+    "navTitle": "综合模块",
+    "navUrl": "#",
+    "navParentId": 0
+  },
+  {
+    "navId": 6,
+    "id": "jspanel",
+    "navTitle": "jsPanel弹窗",
+    "navUrl": "#",
+    "navParentId": 2
+  },
+  {
+    "navId": 7,
+    "id": "dataManagement",
+    "navTitle": "数据管理",
+    "navUrl": "#",
+    "navParentId": 5
+  },
+  {
+    "navId": 8,
+    "id": "viewer",
+    "navTitle": "Viewer.js图片查看",
+    "navUrl": "#",
+    "navParentId": 2
+  },
+  {
+    "navId": 9,
+    "id": "about",
+    "navTitle": "说明",
+    "navUrl": "#",
+    "navParentId": 0
+  },
+  {
+    "navId": 10,
+    "id": "instruction",
+    "navTitle": "文件说明",
+    "navUrl": "#",
+    "navParentId": 9
+  },
+  {
+    "navId": 11,
+    "id": "selectFilter",
+    "navTitle": "过滤查询",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 12,
+    "id": "Search",
+    "navTitle": "搜索小部件",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 13,
+    "id": "LayerList",
+    "navTitle": "图层列表",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 14,
+    "id": "Legend",
+    "navTitle": "图例",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 15,
+    "id": "distance",
+    "navTitle": "距离测量",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 16,
+    "id": "area",
+    "navTitle": "面积测量",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 17,
+    "id": "basemapGallery",
+    "navTitle": "底图库",
+    "navUrl": "#",
+    "navParentId": 1
+  },
+  {
+    "navId": 18,
+    "id": "zTree",
+    "navTitle": "zTree树",
+    "navUrl": "#",
+    "navParentId": 2
+  }
+]

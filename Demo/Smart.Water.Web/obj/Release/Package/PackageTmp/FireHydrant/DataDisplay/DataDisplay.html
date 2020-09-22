@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>抢险分析</title>
+    <meta charset="utf-8" />
+    <link href="../../js/Bootstrap/version3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/jquery-ui.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/version3/js/bootstrap.min.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="DataDisplay.js"></script>
+</head>
+<body>
+    <div class="container-fluid" style="margin-top: 5px;">
+        <div class="input-group">
+            <span class="input-group-addon" style="width:100px;">起火位置</span>
+            <input type="text" class="form-control"  id="txtXY" readonly="readonly">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" id="btnSelect">拾取</button>               
+            </div>
+        </div>
+        <div style="height:8px">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" style="width:100px;">查找半径/m</span>
+            <input type="text" class="form-control" id="txtR" />
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" id="btnQuery">查询</button>
+            </div>
+        </div>
+        <div style="height:8px">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" style="width:100px;">救援位置</span>
+            <input type="text" class="form-control" id="txtHydrantCenterXY" readonly="readonly">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" id="btnSelectHydrantCenter">拾取</button>
+                <button type="button" class="btn btn-default" id="btnNavigation" disabled="disabled">导航</button>
+            </div>
+        </div>
+        <div style="height:8px">
+        </div>
+        <div id="scroll" style="height:300px;" width="100%">
+            <table id="ResultTable" class="table table-striped table-bordered" border="1" width="100%">
+                <thead>
+                    <tr align="center">
+                        <td width="20%">消火栓名称</td>
+                        <!--<td width="10%">材质</td>
+                        <td width="20%">地面高程(m)</td>-->
+                        <td width="15%">井深(m)</td>
+                        <td width="10%">状态</td>
+                        <td width="15%">距离(m)</td>
+                        <td width="10%">定位</td>
+                    </tr>
+                </thead>
+                <tfoot></tfoot>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

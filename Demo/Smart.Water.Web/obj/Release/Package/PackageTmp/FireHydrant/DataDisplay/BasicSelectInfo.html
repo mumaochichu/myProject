@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>关联监测点选择</title>
+    <meta charset="utf-8" />
+
+    <link href="../../js/Bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet" />
+   
+    <link href="../../js/jQuery/Plugins/zTree/css/bootstrap/metro.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/global/vendor/zTree/jquery.ztree.all-3.5.min.js"></script>
+     <script src="../../js/portal/hydrant-robin-setting.js"></script>
+    <script>
+        $(function () {
+            var HyantCode = top.Robin.Setting.GlobalSetting.HyrantCode;
+            var serviceUrl = top.Robin.Setting.GlobalSetting.RestAPIService + "/iot/monitors/v1";
+            var treeData = [];
+            var setting = {
+                treeId: 'tree',
+                check: {
+                    enable: true,
+                    chkStyle: 'radio',
+                    radioType: 'all'
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                }
+            };
+            $.getJSON(serviceUrl, function (data) {
+                $.each(data.data, function (i, v) {
+                    if (v.BMID.substring(6, 12) == HyantCode) {
+                        treeData.push({
+                            id: v.BMID + "|" + v.BMX + "|" + v.BMY, pId: '-1', name: v.BMMC
+                        });
+                    }
+                });
+                $.fn.zTree.init($("#tree"), setting, treeData);
+            });
+            $("#btnSave").click(function () {
+                var treeObj = $.fn.zTree.getZTreeObj("tree");
+                var selectobjs = treeObj.getCheckedNodes(true);
+                console.log(selectobjs);
+                if (selectobjs.length == 0) {
+                    alert("请选择监测点");
+                    return;
+                }
+                parent.CloseMonitorSelect(selectobjs[0].id, selectobjs[0].name);
+            });
+        });
+      
+    </script>
+</head>
+<body>
+    <div style="height: 300px; overflow-y: hidden" id="tree_div">
+        <table class="table">
+            <tr>
+                <td>
+                    <ul id="tree" class="ztree"></ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <a class="btn btn-info btn-sm center-block" style="width:80px" id="btnSave">确定</a>
+    </div>
+</body>
+</html>

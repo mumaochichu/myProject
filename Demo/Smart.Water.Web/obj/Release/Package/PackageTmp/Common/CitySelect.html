@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>区划选择</title>
+    <meta charset="utf-8" />
+    <link href="../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/zTree/css/bootstrap/metro.css" rel="stylesheet" />
+    <script src="../js/jQuery/jquery.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.core-3.5.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.excheck-3.5.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.exhide-3.5.min.js"></script>
+    <script src="../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+     <script  type="text/javascript">
+
+        String.prototype.endsWith = function (str) {
+            var reg = new RegExp(str + "$");
+            return reg.test(this);
+        }
+    </script>
+
+    <script language="JavaScript">
+
+   var cityTree;
+   var setting = {
+
+       check: {
+         enable: true,
+         chkStyle: "radio",
+         radioType: "all"
+       },
+       data: {
+         simpleData: {
+         enable: true
+         }
+       }     
+   };
+   var root = [];
+
+   $(document).ready(function () {
+
+       var url = top.Robin.Setting.GlobalSetting.RestAPIService + "/business/basic/citys/v1";
+       var cityCode = top.Robin.Setting.GlobalSetting.CityCode;
+      
+       $.getJSON(url, function (jsondata) {
+           $.each(jsondata.data, function (i, v) {
+               root.push({
+                   id: v.CITYCODE, pId: v.PID, name: v.CITYNAME
+               });
+           });
+           cityTree = $.fn.zTree.init($("#cityTrees"), setting, root);
+           var treeObj = $.fn.zTree.getZTreeObj("cityTrees");
+           
+           var nodes = treeObj.getNodes();
+           //隐藏citycode之外的节点 展开citycode节点
+           for (var i in nodes) {
+               if (nodes[i].id.toString() != cityCode) {
+                   treeObj.hideNode(nodes[i]);
+               }
+               else treeObj.expandNode(nodes[i], true, false, true, false);
+           }    
+       });
+
+
+       $("#cityTrees_div").slimScroll({
+           height: '360px'
+       });
+
+       $("#btnSave").click(function () {
+
+           var treeObj = $.fn.zTree.getZTreeObj("cityTrees");
+           var node = treeObj.getCheckedNodes(true);
+
+           parent.setCodeName(node[0].code, node[0].name);
+           parent.document.querySelector('#citySelectPanel').jspanel.close();
+       });
+
+     });
+
+
+
+    </script>
+</head>
+<body>
+    <div id="cityTrees_div" style="height:360px; overflow:hidden" >
+        <table class="table" >
+            <tr>
+                <td >              
+                <ul id="cityTrees" class="ztree"></ul>             
+                </td>
+            </tr>       
+        </table>
+        
+    </div>
+    <div style="width:100%;height:50px;bottom:10px;position:fixed">
+        <table class="table">
+            <tr>
+                <td align="center">
+                    <button id="btnSave" class="btn btn-info" value="确定">确定</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+   
+</body>
+</html>

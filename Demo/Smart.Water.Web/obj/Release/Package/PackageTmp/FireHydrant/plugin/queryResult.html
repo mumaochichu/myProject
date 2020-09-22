@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../../js/jQuery/Plugins/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="../../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/zTree/jquery.ztree.all-3.5.js"></script>
+    <script src="../../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/jquery.dataTables.min.js"></script>
+    <script src="../../js/jQuery/Plugins/DataTables/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <!--宿州-->
+    <script src="http://192.168.70.6/arcgis_js_api/library/3.14/3.14/init.js"></script>
+    <!--公司-->
+    <script src="http://172.30.16.248/arcgis_js_api/library/3.14/3.14/init.js"></script>
+
+    <script type="text/javascript">
+        var list = [];
+        var tablelist = [];
+        dojo.require("esri.map");
+        var oTable, queryResultObj = [], ztreeDataSource = [];
+        var array = [];
+        $(function () {
+            var setting = {
+                data: {
+                    simpleData:
+                        {
+                            enable: true
+                        }
+                },
+                callback: {
+                    onClick: zTreeOnClick,
+                    onAsyncSuccess: zTreeOnAsyncSuccess
+                }
+            };
+            $.getJSON(top.Robin.Setting.GlobalSetting.RestAPIService + top.Robin.Setting.GlobalSetting.ArcGISMapServices + "?callback=?", function (data) {
+                $.each(data.data, function (i, item) {
+                    var list = {};
+                    list.name = item.LAYERNAME;
+                    list.aliasname = item.ALIASNAME;
+                    list.url = item.URL;
+                    list.item = [];
+                    $.each(item.FiledModel, function (j, feature) {
+                        var tem = {};
+                        if (feature.SHOWHIDDEN == 1) {
+                            tem.name = feature.FIELDNAME;
+                            tem.aliasname = feature.ALIASNAME;
+                            list.item.push(tem);
+                        }
+                    })
+                    array.push(list);
+                })
+                //资源目录父类
+                var resouceCodes = [];
+                $.each(parent.Robin.ToolBar.LayerNames, function (i, v) {
+                    $.each(array, function (ii, vv) {
+                        if (v.replace("-", "") == vv.aliasname)
+                            //if (v == vv.aliasname)
+                            ztreeDataSource.push({ id: v, name: vv.aliasname, pId: "-1" });
+                        return;
+                    });
+                });
+                $.fn.zTree.init($("#layer_tree"), setting, ztreeDataSource);
+                var treeObj = $.fn.zTree.getZTreeObj("layer_tree");
+                if (ztreeDataSource[0] != null) {
+                    var node = treeObj.getNodeByParam("id", ztreeDataSource[0].id);
+                    treeObj.selectNode(node);
+                    setting.callback.onClick = zTreeOnClick(null, ztreeDataSource[0].id, node);
+                } else {
+                    parent.noty({ text: "查询完毕,该区域没有数据", type: "warning", layout: "center", timeout: 2000 });
+                    parent.Robin.Window.GetInfoPanelByID("pnlQueryResult").close();
+                }
+                $("#btnQuery").click(function () {
+                    oTable = $('#psTable').dataTable();
+                    oTable.fnFilter($("#searchbox").val());
+                });
+            });
+            function zTreeOnClick(event, treeId, treeNode) {
+                if (treeNode.children != null && treeNode.children.length > 0) {
+                    return;
+                }
+                var data = [];
+                NProgress.start();
+                $.each(parent.Robin.ToolBar.QueryResult, function (i, v) {
+                    if (v.layerName == treeNode.id) {
+                        data.push(v);
+                    }
+                });
+                tablelist = [];
+                $.each(array, function (i, v) {
+                    if (v.aliasname == treeNode.id.replace("-","")) {
+                    //if (v.aliasname == treeNode.id) {
+                        $.each(v.item, function (ii, vv) {
+                            tablelist.push(vv);
+                        })
+                    }
+                });
+                BindFiled(data);
+                NProgress.done();
+
+            };
+            //绑定字段列表
+            function BindFiled(data) {
+                queryResultObj = [];
+                var columns = [];
+                var SXM = [];
+                for (var property in data[0].attributes) {
+                    $.each(tablelist, function (i, v) {
+                        if (property == v.aliasname) {
+                            columns.push({ "title": v.aliasname, "width": "100" });
+                            SXM.push(property);
+                        }
+                    })
+                }
+                var dataset = [];
+                $.each(data, function (i, v) {
+                    var linedata = [];
+                    $.each(SXM, function (ii, vv) {
+                        linedata.push(v.attributes[vv]);
+                    })
+                    queryResultObj.push({ columns: columns, currentGeometry: v.geometry, data: linedata });
+                    dataset.push(linedata);
+                });
+                if (oTable != undefined && oTable != null) {
+                    oTable = $('#psTable').dataTable();
+                    oTable.fnDestroy();
+                    $('#psTable').empty();
+                }
+                oTable = $('#psTable').DataTable({
+                    "oLanguage": {
+                        "sUrl": "../../js/jQuery/Plugins/DataTables/dataTables.chinese.txt"
+                    },
+                    'bFilter': true,
+                    'bLengthChange': false,
+                    'sPaginationType': 'full_numbers',
+                    "columns": columns,
+                    "scrollX": true,
+                    "scrollY": "280px",
+                    "iDisplayLength": 10,
+                    "bSort": false,
+                    'sPaginationType': 'full_numbers',
+                    "scrollCollapse": true,
+                    "data": dataset,
+                    "destroy":true,
+                    "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                        $.each(aData, function (i, v) {
+                            if (v == "Null") {
+                                $("td:eq(" + i + ")", nRow).html("");
+                            }
+                        })
+                    },
+                    "fnDrawCallback": function (oSettings) {
+                        $(".dataTables_filter").css({ "display": "none" });
+                        $('#psTable tbody tr').bind('dblclick', function () {
+                            oTable = $('#psTable').dataTable();
+                            var aData = oTable.fnGetData(this);
+                            var rIndex = (parseInt($(".active > a").text()) - 1) * 10 + this.rowIndex;
+                            postSelectedRow(rIndex);
+                        });
+                    }
+                });
+            }
+            function postSelectedRow(rowIndex) {
+                debugger;
+                require([
+              "esri/map",
+              "esri/dijit/InfoWindowLite",
+              "esri/InfoTemplate",
+              "esri/layers/FeatureLayer",
+              "dojo/dom-construct",
+              "dojo/domReady!"], function () {
+                  parent.Robin.Map.Map2DControl.infoWindow.hide();
+                  var temInfo = parent.Robin.Map.Map2DControl.infoWindow;
+                  var tempItem = queryResultObj[rowIndex - 1];
+                  var geometry = tempItem.currentGeometry.setSpatialReference(new esri.SpatialReference({ wkid: parent.Robin.Setting.GlobalSetting.wkid }));
+                  parent.Robin.Map.Map2DControl.infoWindow.resize(300, 168);
+                  temInfo.setTitle("<center><b>详细信息<b></center>");
+                  var htmlcontent = '';
+                  $.each(tempItem.columns, function (i, v) {
+                      htmlcontent += "<tr><td width='100'>" + v.title + "</td><td width='210'>" + tempItem.data[i] + "</td></tr>";
+                  });
+                  temInfo.setContent("<center><table class='bordered'>" + htmlcontent + "</table></center>");
+                  parent.Robin.Map.Map2DControl.infoWindow = temInfo;
+                  if (parent.Robin.Map.Map2DControl.graphics != null) {
+                      parent.Robin.Map.Map2DControl.graphics.clear();
+                  }
+                  switch (geometry.type) {
+                      case "point":
+                          var redGraphic = new esri.Graphic(
+                          geometry,
+                          new esri.symbol.PictureMarkerSymbol({
+                              "type": "esriPMS",
+                              "url": "../images/Map/warning.gif",
+                              "color": null,
+                              "width": 58, // 警告图片尺寸
+                              "height": 58,
+                              "xoffset": 0,
+                              "yoffset": 0
+                          }));
+                          // parent.Robin.Map.Map2DControl.graphics.add(redGraphic);
+                          //画点
+                          var MarkerSymbol = new esri.symbol.SimpleMarkerSymbol(esri.symbol.SimpleMarkerSymbol.STYLE_SOLID, new dojo.Color([102, 0, 51]));
+                          var graphic = new esri.Graphic(geometry, MarkerSymbol);
+                          parent.Robin.Map.Map2DControl.graphics.add(graphic);
+                          parent.Robin.Map.Map2DControl.infoWindow.show(geometry);
+                          parent.Robin.Map.Map2DControl.centerAndZoom(geometry, parent.Robin.Map.Map2DControl.getMaxZoom());
+                          break;
+                      case "polygon":
+                      case "polyline":
+                      default:
+                          var polylineSymbol = new esri.symbol.SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new dojo.Color([102, 0, 51]), 4);
+                          var graphic = new esri.Graphic(geometry, polylineSymbol);
+                          parent.Robin.Map.Map2DControl.graphics.add(graphic);
+                          var extent = geometry.getExtent().expand(1.3);
+                          parent.Robin.Map.Map2DControl.infoWindow.show(geometry.getExtent().getCenter());
+                          parent.Robin.Map.Map2DControl.setExtent(extent);
+                          break;
+                  }
+                  parent.Robin.Portal.Page.IsShowInfo = true;
+                  //窗口最小化
+                  var pa = parent.Robin.Window.GetInfoPanelByID("pnlQueryResult");
+                  pa.smallify();
+              });
+
+            }
+            function zTreeOnAsyncSuccess(event, treeId, treeNode, msg) {
+                alert(msg);
+            };
+            function OnClick() {
+
+            }
+        });
+    </script>
+    <style>
+        .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+            min-height: 1px;
+            padding-left: 5px;
+            padding-right: 5px;
+            position: relative;
+        }
+        .pagination {
+            margin-top: 5px !important;
+            margin-left: 20px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2" style="height: 450px; overflow-y: auto;">
+                <div class="card-box">
+                    <h4 class="header-title m-t-0 m-b-20">图层选择</h4>
+                    <div class="inbox-widget ">
+                        <div id="layer_tree" class="ztree"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="listDiv" class="col-sm-10">
+                <div class="card-box">
+                    <div class="header-title">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input class="form-control" type="text" id="searchbox">
+                            </div>
+                            <button type="button" id="btnQuery" class="btn btn-info ">查询</button>
+                        </form>
+                    </div>
+                    <div class="portlet-body">
+                        <table id="psTable" class="table table-striped table-bordered dataTable no-footer" width="100%" height="100%" cellspacing="0" align="center">
+                            <thead>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

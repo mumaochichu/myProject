@@ -1,0 +1,204 @@
+﻿<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | jiayazhan2</title>
+    <script src="../../../js/jQuery/jquery.min.js"></script>
+    <script src="../../../js/Framework/robin-utils.js"></script>
+    <script src="../../../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <link href="../../../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <style>
+        /* a style sheet needs to be present for cursor hiding and custom cursors to work. */
+    </style>
+    <script>
+
+        //获取Id
+        var Id = Robin.Utils.GetQueryObject().Id;
+        function htmlfunc() {
+            //初始化数据
+            jyzUpdata(Id);
+            //实时刷新
+            NProgress.done();
+            setInterval(function () {
+                jyzUpdata(Id);
+            }, 10 * 1000)
+        }
+        function ChangeXscWaterLevel(value) {
+            if (value) {
+                SendMessage("Main Camera", "ChangeXscWaterLevel", value);
+            } else {
+                SendMessage("蓄水池水面", "ChangeXscWaterLevel", "100");
+            }
+        }
+        function Change3DPressureValue(value) {
+            SendMessage("Main Camera", "Change3DPressureValue", value);
+        }
+        function ChangeSYJState(value) {
+            SendMessage("Main Camera", "ChangeSYJState", value);
+        }
+        function ChangeSyjWaterLevel(value) {
+            if (value) {
+                SendMessage("Main Camera", "ChangeSyjWaterLevel", value);
+            } else {
+                SendMessage("水源井水面", "ChangeSyjWaterLevel", "100");
+            }
+        }
+        function ChangeSYJ2State(value) {
+            SendMessage("Main Camera", "ChangeSYJ2State", value);
+        }
+        function ChangeSyj2WaterLevel(value) {
+            if (value) {
+                SendMessage("Main Camera", "ChangeSyj2WaterLevel", value);
+            } else {
+                SendMessage("水源井水面", "ChangeSyj2WaterLevel", "100");
+            }
+        }
+        function ChangeSYJ2Flow(value) {
+            SendMessage("Main Camera", "ChangeSYJ2Flow", value);
+        }
+        function ChangeSYJ2TotalFlow(value) {
+            SendMessage("Main Camera", "ChangeSYJ2TotalFlow", value);
+        }
+        function BtnTurnOnShuibengClick() {
+            SendMessage("Main Camera", "BtnTurnOnShuibengClick", "");
+        }
+        function BtnTurnOffShuibengClick() {
+            SendMessage("Main Camera", "BtnTurnOffShuibengClick", "");
+        }
+        function TurnOnShuibeng1() {
+            SendMessage("Main Camera", "TurnOnShuibeng1", "");
+        }
+        function TurnOffShuibeng1() {
+            SendMessage("Main Camera", "TurnOffShuibeng1", "");
+        }
+        function TurnFaultShuibeng1() {
+            SendMessage("Main Camera", "TurnFaultShuibeng1", "");
+        }
+        function TurnOnShuibeng2() {
+            SendMessage("Main Camera", "TurnOnShuibeng2", "");
+        }
+        function TurnOffShuibeng2() {
+            SendMessage("Main Camera", "TurnOffShuibeng2", "");
+        }
+        function TurnFaultShuibeng2() {
+            SendMessage("Main Camera", "TurnFaultShuibeng2", "");
+        }
+        function TurnOnShuibeng3() {
+            SendMessage("Main Camera", "TurnOnShuibeng3", "");
+        }
+        function TurnOffShuibeng3() {
+            SendMessage("Main Camera", "TurnOffShuibeng3", "");
+        }
+        function TurnFaultShuibeng3() {
+            SendMessage("Main Camera", "TurnFaultShuibeng3", "");
+        }
+        function TurnOnShuibeng4() {
+            SendMessage("Main Camera", "TurnOnShuibeng4", "");
+        }
+        function TurnOffShuibeng4() {
+            SendMessage("Main Camera", "TurnOffShuibeng4", "");
+        }
+        function TurnFaultShuibeng4() {
+            SendMessage("Main Camera", "TurnFaultShuibeng4", "");
+        }
+
+        //定义函数，用于获取实时数据
+        function jyzUpdata(Id) {
+            //进行数据过滤
+            $.each(top.tmodel.monitorData(), function (i, v) {
+                if (v.StationKey() == Id) {
+                    switch (v.TagCode()) {
+                        case Id + "_005_3":
+                            //蓄水池水位
+                            ChangeXscWaterLevel(v.TagValue());
+                            break;
+                        case Id + "_003_1":
+                            //出口压力
+                            Change3DPressureValue(v.TagValue());
+                            break;
+                        case Id + "_005_2":
+                            //2#泵水位(北泵)
+                            ChangeSyjWaterLevel(v.TagValue());
+                            break;
+                        case Id + "_007_6":
+                            //02#北泵工频
+                            if (v.TagValue() == 1) {
+                                ChangeSYJState("运行");
+                            } else {
+                                ChangeSYJState("停止");
+                            }
+                            break;
+                        case Id + "_005_1":
+                            //01#南泵水位
+                            ChangeSyj2WaterLevel(v.TagValue());
+                            break;
+                        case Id + "_007_5":
+                            //01#水泵的工频
+                            if (v.TagValue() == 1) {
+                                ChangeSYJ2State("运行");
+                            } else {
+                                ChangeSYJ2State("停止");
+                            }
+                            break;
+                        case Id + "_004_1":
+                            //01#水泵瞬时流量
+                            ChangeSYJ2Flow(v.TagValue());
+                            break;
+                        case Id + "_008_1":
+                            //01#泵累计流量
+                            ChangeSYJ2TotalFlow(v.TagValue());
+                            break;
+                        case Id + "_007_1":
+                            //1#泵状态
+                            if (v.TagValue() == 1) {
+                                TurnOnShuibeng1("运行");
+                            } else {
+                                TurnOnShuibeng1("停止");
+                            }
+                            break;
+                        case Id + "_007_2":
+                            //2#泵状态
+                            if (v.TagValue() == 1) {
+                                TurnOnShuibeng1("运行");
+                            } else {
+                                TurnOnShuibeng1("停止");
+                            }
+                            break;
+                        case Id + "_007_3":
+                            //3#泵状态
+                            if (v.TagValue() == 1) {
+                                TurnOnShuibeng1("运行");
+                            } else {
+                                TurnOnShuibeng1("停止");
+                            }
+                            break;
+                        case Id + "_007_4":
+                            //4#泵状态
+                            if (v.TagValue() == 1) {
+                                TurnOnShuibeng1("运行");
+                            } else {
+                                TurnOnShuibeng1("停止");
+                            }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body onload="NProgress.start();">
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="450px" width="1000px"></canvas>
+    <script type='text/javascript'>
+        var Module = {
+            TOTAL_MEMORY: 268435456,
+            errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+            compatibilitycheck: null,
+            dataUrl: "Release/jiayazhan2.data",
+            codeUrl: "Release/jiayazhan2.js",
+            memUrl: "Release/jiayazhan2.mem",
+        };
+    </script>
+    <script src="Release/UnityLoader.js"></script>
+
+</body>
+</html>

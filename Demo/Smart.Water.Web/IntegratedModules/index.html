@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <title>DataTable</title>
+    <!-- DataTables CSS -->
+    
+   
+    <style>
+        /*部分列样式*/
+        .hide_column {
+            display: none;
+        }
+
+        /*表格中字体格式*/
+        .table_font {
+            /*left: 100px;*/
+            font-size: 4px;
+        }
+    </style>
+    <script type="text/javascript">
+        var oTable;
+        $(function () {
+            oTable = $("#paTable").DataTable({
+                "oLanguage": {
+                    "sUrl": "IntegratedModules/dataTables.chinese.txt"
+                },
+                "columnDefs":
+                    [{
+                        className: "hide_column",
+                        //"targets": [5, 6, 7, 8] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
+                    }],
+                "bServerSide": true,
+                "sAjaxSource": "../Handler/DEMOHandler.ashx?Action=GetList",      //mvc后台ajax调用接口
+                'bPaginate': true,                      //是否分页。
+                // "bLengthChange": false,                    //是否允许终端用户从一个选择列表中选择分页的页数，页数为10，25，50和100，需要分页组件bPaginate的支持
+                "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
+                'bFilter': false,                       //是否使用内置的过滤功能。
+                "bSort": false,
+                //"bScrollInfinite": true,
+                "bAutoWidth": false,                          //是否自动计算列宽，计算列宽会花费一些时间
+                "bDeferRender": true,                         //是否延迟渲染,该属性设置为true时，表格每一行新增的元素只有在需要被画出来时才会被DataTable创建出来
+                "iDisplayLength": 20,  //每页显示的行数
+                "bLengthChange": false,//允许用户从一个选择菜单中格式化页面大小(改变页面显示的数据数量)
+                "sPaginationType": "extStyle",
+                'sPaginationType': 'full',      //分页样式 (full_numbers：除首页、上一页、下一页、末页四个按钮还有页数按钮)
+                "sScrollX": "100%",                        //水平滚动条
+                "sScrollXInner": "150%",
+                "bScrollCollapse": true,
+                "sScrollY": 200,                     //是否开启垂直滚动
+                "info": true,                      //是否开启底部文字
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "name", "value": $("#txtName").val() });
+                },
+                "aoColumns": [
+                    {
+                        "mData": "NVFID", "sTitle": "选择", "sWidth": "10px", "sClass": "text-center", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                            $(nTd).html("<input type='checkbox'  name='checkList'  value='" + sData + "'>");
+                        }
+                    },
+                    { "mData": "NVFID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
+                    {
+                        "mData": "MACHINECODE", "sTitle": "设备编号", "className": "table_font", 
+
+                    },
+                    {
+                        "mData": "EXPNUM", "sTitle": "井盖编号", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "OWNERSHIPUNIT", "sTitle": "管理单位", "className": "table_font", 
+
+                    },
+                    {
+                        "mData": "MANUFACTURE", "sTitle": "生产厂家", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "INSTALLTIONUNIT", "sTitle": "安装单位", "className": "table_font", 
+
+                    },
+                    {
+                        "mData": "INSTALDATE", "sTitle": "安装日期", "className": "table_font", 
+
+                    },
+                    {
+                        "mData": "SERVICELIFE", "sTitle": "使用寿命", "className": "table_font", 
+
+                    },
+                    
+                    {
+                        "mData": "BATTERYLIFE", "sTitle": "电池寿命", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "TIMESLOT", "sTitle": "时段", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "NOTE", "sTitle": "备注", "className": "table_font",
+
+                    }
+
+
+
+                ],
+                "drawCallback": function () {
+                    appendSkipPage();
+                }
+            });
+            //点击查询
+            $("#btnQuery").click(function () {
+                $('#home').show();
+                query();
+                //初始化
+                oTable.draw(true);
+            });
+            //刷新
+            $("#refresh").click(function () {
+                //$('#home').show();
+                //bindData1_open();
+                oTable.draw(true);
+            });
+            //删除事件
+            $("#delete").click(function () {
+                var ckValues = [];
+                $("#paTable [type='checkbox']:checked").each(function () {
+                    if ($(this).val()) {
+                        ckValues.push($(this).val());
+                        //console.log($(this).context);
+                        var NVFID = $(this).val();
+                       
+                        confirm("确定要删除设备【" + NVFID + "】吗？",
+                            "information", function () {
+                                $.ajax({
+                                    url: "../Handler/DEMOHandler.ashx?Action=Delete&NVFID=" + NVFID,
+                                    type: "POST",
+                                    success: function (data) {
+                                        if (data == "false") {
+                                            alert("设备删除失败");
+                                        }
+                                        else {
+
+                                            $('#home').show();
+                                            //bindData1_open();
+                                            oTable.draw(true);
+                                            alert("设备删除成功");
+
+                                        }
+                                    }
+                                });
+                            }, null,
+                            '确定', '取消');
+                    }
+                });
+                if (ckValues.length <= 0) {
+                    alert("请先选择数据");
+                    return;
+                }
+            });
+            //添加设备
+            $("#addEquipment").click(function () {
+                //console.log($.jsPanel);
+                top.addjpanel = $.jsPanel({
+                        id:"add",
+                        position: { my: "center-top", at: "center-top", offsetY: 140 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
+                        theme: "primary", //颜色，这里使用了原色
+                        contentSize: { width: 550, height: 400 }, //面板内容div的宽度和高度
+                        //headerTitle: "标题", //标题文本
+                        //content: "<p>一些文本内容</p>",
+                        callback: [
+                            function () {
+                                this.content.css("padding", "15px");
+
+                            },
+                            function () {
+                                this.headerTitle('添加数据')
+                                this.content.load('IntegratedModules/addEquipment.html');
+                            },
+                        ]
+                    });
+                });
+            //编辑
+            $("#edit").click(function () {
+                var ckValues = [];
+                $("#paTable [type='checkbox']:checked").each(function () {
+                    
+                    if ($(this).val()) {
+                        ckValues.push($(this).val());
+                        var num = $(this).val();
+                        top.editjpanel = $.jsPanel({//定义一个最顶层的变量存储窗口信息
+                            id: "edit2",
+                            position: { my: "center-top", at: "center-top", offsetY: 140 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
+                            theme: "primary", //颜色，这里使用了原色
+                            contentSize: { width: 550, height: 400 }, //面板内容div的宽度和高度
+                            headerTitle: "编辑数据", //标题文本
+                            //content: "<p>一些文本内容</p>",
+                            content: '<iframe src="IntegratedModules/editSCList.html?' + num + '" width="100%" height="100%" frameborder="0" tabindex="9999"></iframe>',
+                            //回调函数
+                            //    callback: [
+                            //        function () {
+                            //            this.content.css("padding", "15px");
+                            //        },
+                            //        function () {
+                            //            this.headerTitle('编辑数据')
+                            //            //this.content.load("IntegratedModules/editSCList.html");
+                            //          
+                            //        },
+                            //    ]
+                        });
+                        
+                        //console.log(top.addjpanel);
+                    }
+                });
+                if (ckValues.length <= 0) {
+                    alert("请先选择数据");
+                    return;
+                }
+            });
+        });
+
+        function appendSkipPage() {
+            var table = $("#paTable").dataTable();
+            var template =
+                $("<li class='paginate_button active'>" +
+                    "   <div class='input-group' style='margin-left:3px;'>" +
+                    "       <span class='input-group-addon' style='padding:0px 10px;background-color:#fff;font-size: 12px;'>跳转至</span>" +
+                    "       <input type='text' class='form-control' style='text-align:center;padding: 8px 2px;height:34px;width:40px;' />" +
+                    "       <span class='input-group-addon active' style='padding:0px 10px;'><a style='text-decoration:none' href='javascript:void(0)'> 确定 </a></span>" +
+                    "   </div>" +
+                    "</li>");
+
+            template.find("a").click(function () {
+                var pn = template.find("input").val();
+                if (pn > 0) {
+                    --pn;
+                } else {
+                    pn = 0;
+                }
+                console.log(pn);
+                table.fnPageChange(pn);
+            });
+
+            $("ul.pagination").append(template);
+        }
+        function loc(name) {
+            // alert(name);
+            //收缩面板
+            var listPanel = top.Robin.Window.GetInfoPanelByID("scList");
+            if (listPanel != null) {
+                listPanel.smallify();
+            }
+            top.Robin.Portal.Page.SC.locate(name);
+        }
+        //表格刷新方法
+        function refresh() {
+            oTable.draw(true);
+        }
+        //查询历史数据
+        function query() {
+
+            //获取查询条件
+            var cNum = $("#txtName").val();
+            if (!cNum) {
+                noty({ text: "查询条件不能为空！", type: "warning", layout: "topCenter", timeout: 2000 });
+                return;
+            }
+            bindData2(cNum);
+        };
+        //查询显示
+        function bindData2(num) {
+            //初始化表格
+            if (oTable != null) {
+                //oTable.fnDestroy();
+                oTable.destroy();//摧毁旧表
+                oTable = null;
+            };
+            //debugger;
+            //初始化表格
+            oTable = $("#paTable").DataTable({
+                "oLanguage": {
+                    "sUrl": "IntegratedModules/dataTables.chinese.txt"
+                },
+                "columnDefs":
+                    [{
+                        className: "hide_column",
+                        //"targets": [5, 6, 7, 8] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
+                    }],
+                "bServerSide": true,
+                "sAjaxSource": "../Handler/DEMOHandler.ashx?Action=GetList&coverNum=" + num,      //mvc后台ajax调用接口
+                'bPaginate': true,                      //是否分页。
+                // "bLengthChange": false,                    //是否允许终端用户从一个选择列表中选择分页的页数，页数为10，25，50和100，需要分页组件bPaginate的支持
+                "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
+                'bFilter': false,                       //是否使用内置的过滤功能。
+                "bSort": false,
+                //"bScrollInfinite": true,
+                "bAutoWidth": false,                          //是否自动计算列宽，计算列宽会花费一些时间
+                "bDeferRender": true,                         //是否延迟渲染,该属性设置为true时，表格每一行新增的元素只有在需要被画出来时才会被DataTable创建出来
+                "iDisplayLength": 20,  //每页显示的行数
+                "bLengthChange": false,//允许用户从一个选择菜单中格式化页面大小(改变页面显示的数据数量)
+                "sPaginationType": "extStyle",
+                'sPaginationType': 'full',      //分页样式 (full_numbers：除首页、上一页、下一页、末页四个按钮还有页数按钮)
+                "sScrollX": "100%",                        //水平滚动条
+                "sScrollXInner": "150%",
+                "bScrollCollapse": true,
+                "sScrollY": 200,                     //是否开启垂直滚动
+                "info": true,                      //是否开启底部文字
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "name", "value": $("#txtName").val() });
+                },
+                "aoColumns": [
+                    {
+                        "mData": "NVFID", "sTitle": "选择", "sWidth": "10px", "sClass": "text-center", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                            $(nTd).html("<input type='checkbox'  name='checkList'  value='" + sData + "'>");
+                        }
+                    },
+                    { "mData": "NVFID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
+                    {
+                        "mData": "MACHINECODE", "sTitle": "设备编号", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "EXPNUM", "sTitle": "井盖编号", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "OWNERSHIPUNIT", "sTitle": "管理单位", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "MANUFACTURE", "sTitle": "生产厂家", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "INSTALLTIONUNIT", "sTitle": "安装单位", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "INSTALDATE", "sTitle": "安装日期", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "SERVICELIFE", "sTitle": "使用寿命", "className": "table_font",
+
+                    },
+
+                    {
+                        "mData": "BATTERYLIFE", "sTitle": "电池寿命", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "TIMESLOT", "sTitle": "时段", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "NOTE", "sTitle": "备注", "className": "table_font",
+
+                    }
+                ],
+                "drawCallback": function () {
+                    append();
+
+                },
+
+            });
+        }
+        function append() {
+            var table = $("#paTable").dataTable();
+            var template =
+                $("<li class='paginate_button active'>" +
+                    "   <div class='input-group' style='margin-left:3px;'>" +
+                    "       <span class='input-group-addon' style='padding:0px 10px;background-color:#fff;font-size: 12px;'>跳转至</span>" +
+                    "       <input type='text' class='form-control' style='text-align:center;padding: 8px 2px;height:34px;width:40px;' />" +
+                    "       <span class='input-group-addon active' style='padding:0px 10px;'><a style='text-decoration:none' href='javascript:void(0)'> 确定 </a></span>" +
+                    "   </div>" +
+                    "</li>");
+
+            template.find("a").click(function () {
+                var pn = template.find("input").val();
+                if (pn > 0) {
+                    --pn;
+                } else {
+                    pn = 0;
+                }
+                console.log(pn);
+                table.fnPageChange(pn);
+            });
+
+            $("ul.pagination").append(template);
+        }
+        /**
+         * confirm提示.需要提前加载noty.这个方法放在utils里会报错
+         * 需要引用js/jquery.noty.packaged.min.js
+         * @param message 提示的内容
+         * @param type 类型information,alert,error,success,warning
+         * @param okCallback yes执行的方法
+         * @param cancelCallback no执行的方法
+         * @param lblok yes显示的内容
+         * @param lblcancel no显示的内容
+         * @constructor
+        */
+        function confirm(message, type, okCallback, cancelCallback, lblok, lblcancel) {
+            if (!noty) {
+                alert("请检查插件是否加载成功！");
+                return;
+            }
+            var _default =
+            {
+                text: message || "您确定要删除所选对象吗?",
+                type: type || "alert",
+                dismissQueue: true,
+                modal: true,
+                layout: "center",
+                buttons: [
+                    {
+                        addClass: 'btn btn-primary',
+                        text: lblok || "确定",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (okCallback && $.isFunction(okCallback)) {
+
+                                okCallback();
+                            }
+                        }
+                    },
+                    {
+                        addClass: 'btn btn-warning',
+                        text: lblcancel || "取消",
+                        onClick: function ($noty) {
+                            $noty.close();
+                            if (cancelCallback && $.isFunction(cancelCallback)) {
+
+                                cancelCallback();
+                            }
+                        }
+                    }
+                ]
+            };
+            noty(_default);
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container-fluid">
+        <form class="form-inline" style="padding-top:10px;padding-left:15px;">
+            <span class="pull-left"><input type="button" id="addEquipment" class="btn btn-info" value="添加设备" />&nbsp;&nbsp;<input type="button" id="edit" class="btn btn-info" value="编辑" />&nbsp;&nbsp;<input type="button" id="delete" class="btn btn-info" value="删除" />&nbsp;&nbsp;<input type="button" id="refresh" class="btn btn-info" value="刷新" /></span>
+            <div style="float:right">
+                <h6 style="float:left">模糊查询:</h6>
+                <input type="text" class="form-control" id="txtName" style="float:left;width: 80px;" /><input type="button" class="btn btn-info" value="查询" id="btnQuery" style="float:left;" />
+            </div>
+        </form>
+        <!--<div class="row pull-right" style="padding:10px">
+        <input type="button" class="btn btn-info" value="添加" onclick="Add()" /></div>-->
+        <table id="paTable" class="table table-striped table-bordered dataTable no-footer" cellspacing="0" style="width: 100%;"></table>
+        <table id="paTable" class="table display hover"></table>
+    </div>
+</body>
+</html>

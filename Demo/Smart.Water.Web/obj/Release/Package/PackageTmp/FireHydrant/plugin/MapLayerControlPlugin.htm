@@ -1,0 +1,113 @@
+﻿<!--图层控制-->
+<div id="LayerControl_DIV_tabs">
+    <div class="T_close"></div>
+    <ul id="layerControl_title">
+        <!--<li><a href="#tabs-MapServer">专题图层</a></li>-->
+        <li><a href="#tabs-LayerControl">图层控制</a></li>
+
+    </ul>
+    <!--<div id="tabs-MapServer" style="overflow-y: auto; height: 270px;">
+    </div>-->
+    <div id="tabs-LayerControl" style="overflow-y: auto; height: 270px;background-color: rgba(245, 241, 236, 0.9);margin-top: -5px;">
+        <div id="tabs-LayerControl_tree" class="ztree"></div>
+    </div>
+
+</div>
+<style>
+    #LayerControl_DIV_tabs .mapone
+    {
+        background-color:#EEE;
+        border: 1px solid #AAA;
+        width: 110px;
+        height: 130px;
+        float: left;
+        margin-left: 5px;
+        margin-bottom: 5px;
+    }
+
+        #LayerControl_DIV_tabs .mapone img
+        {
+            margin:3px;
+            width:102px;
+            height:100px;
+        }
+
+    #LayerControl_DIV_tabs .sid_box
+    {
+        margin-top: -48px;
+        /*padding-left: 20px;
+        padding-right: 20px;*/
+    }
+
+    #LayerControl_DIV_tabs .btn-mini
+    {
+        /*background-color: #fff;*/
+        /*border-color: #ccc;*/
+        /*color: #333;
+        -moz-user-select: none;
+        background-image: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 1.0;*/
+        margin-bottom: 10px;
+        /*padding: 1px 1px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;*/
+    }
+
+    .slider
+    {
+        margin:20px;
+    }
+
+        #LayerControl_DIV_tabs .btn-mini:hover, #LayerControl_DIV_tabs .btn-mini:focus
+        {
+            background-color: #e6e6e6;
+            /*border-color: #adadad;
+            color: #333;*/
+        }
+
+    #LayerControl_DIV_tabs .maptwo
+    {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bolder;
+        color: #666666;
+    }
+    .T_close
+    {
+        position: absolute;
+        top: 5px;
+        width: 28px;
+        height: 28px;
+        z-index: 100;
+        right: 0px;
+        background-image: url(../images/common/portlet-remove-icon-white.png);
+        background-repeat: no-repeat;
+    }
+    .T_close:hover
+    {
+        background-image: url(../images/common/portlet-remove-icon-white.png);
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+     .ui-tabs .ui-tabs-nav {
+        background: #EF681E !important;
+    }
+
+        .ui-tabs .ui-tabs-nav li a {
+            color: white;
+            border: none !important;
+        }
+
+        .ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+            background-color: #ef671e;
+            border-radius: 0px;
+            color: white;
+        }
+</style>

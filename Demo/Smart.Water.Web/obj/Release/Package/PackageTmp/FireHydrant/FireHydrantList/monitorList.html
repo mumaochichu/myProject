@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="../../theme/Scheduling/style.css" rel="stylesheet" />
+    <link href="../../fonts/font-awesome/font-awesome.min.css" rel="stylesheet" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../../js/Bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+    <script src="../../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <style>
+        .inbox-item-author {
+            color: #212325;
+            display: block;
+            margin: 0;
+        }
+
+        .inbox-item-text {
+            color: #50575d;
+            display: block;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .list-group-item:hover {
+            background-color: #3db9dc !important;
+        }
+
+        #eye {
+            color: #efecec;
+        }
+
+        #eye:hover {
+            color: black;
+        }
+        #windowClose {
+            color: #efecec;
+        }
+
+        #windowClose:hover {
+            color: black;
+        }
+        
+    </style>
+
+</head>
+<body style="height:428px;background-color: rgb(193, 151, 129)">
+    <div style="height:38px;font-size:16px;width:280px; background-color:#FA6525;color:#ffffff;">
+        <span style="float:left;margin-left:10px;margin-top:9px;">消火栓监测列表</span>
+        <span id="btnHydrantInfoClose" style="cursor:pointer;float:right;margin-right:6px;margin-top:9px;"><i id="windowClose" class="fa fa-close"></i> </span>
+        <i id="eye" class="fa fa-eye" style="cursor:pointer;margin-right:10px;margin-top:14px;float:right;" title="全部标注"></i>
+    </div>
+    <ul id="work" class="list-group "></ul>
+    <script type="text/javascript">
+        var eyebool = false;//默认不打开全部标注功能
+        $(function () {
+            var result = parent.Robin.Portal.Page.XFS.query();
+            var showContent = ""
+            $.each(result, function (i, item) {
+                showContent += "<li class='list-group-item'id=" + item.BMID + " style='height:65px;'><a href='#'>";
+                showContent += "<p class='inbox-item-author'>" + item.BMMC + "</p>";
+                showContent += "<p class='inbox-item-text'>" + item.BMMS + "</p>";
+                showContent += "</a></li>";
+            });
+            $("#work").append(showContent);
+            $("#work").slimScroll({
+                height: '390px'
+            });
+            $(document).on("click", ".list-group-item", function () {
+                var stationKey = $(this).attr("id");
+                parent.Robin.Portal.Page.XFS.locate(stationKey);
+            });
+        })
+
+        function NullToString(itemName) {
+            return (itemName == null || itemName == undefined) ? "" : itemName;
+        }
+
+        //jsPanel关闭事件--监测点列表关闭
+        $("#btnHydrantInfoClose").click(function () {
+            //调用父页面关闭jspanel的方法
+            parent.FireHydrantListClose();
+        })
+
+        $("#eye").click(function () {
+            if (!eyebool) {//打开全部标注
+                eyebool = true;
+                parent.fireHydrantMonitorClick();
+                $("#eye").css({ "color": 'black' });
+                $("#eye").attr("title", "关闭标注");
+            }
+            else {//关闭全部标注
+                eyebool = false;
+                parent.fireHydrantMonitorClick();
+                $("#eye").css({ "color": '#efecec' });
+                $("#eye").attr("title", "全部标注");
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+﻿body {
+}
+
+.resultData {
+    /*overflow-y: hidden;*/
+}
+
+.itemUl {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /*去除缩进*/
+    margin: 0;
+    padding: 0;
+}
+
+    .itemUl > li:first-child {
+        list-style: none;
+        float: left;
+        width: 90px;
+        height: 28px;
+        border: 1px solid #ddd;
+    }
+
+.itemList {
+    list-style: none;
+    float: left;
+    width: 450px;
+    text-align: center;
+    border: 1px solid #ddd;
+    /*border-left:1px solid #dddddd;
+        border-top:1px solid #dddddd;
+        border-bottom:1px solid #dddddd;*/
+    height: 28px;
+    font-weight: 700;
+    line-height: 28px;
+}
+
+.columnUl {
+    margin: 0;
+    padding: 0;
+}
+
+    .columnUl > li {
+        list-style: none;
+        float: left;
+        width: 90px;
+        text-align: center;
+        border: 1px solid #ddd;
+        /*border-bottom:1px solid #dddddd;*/
+        height: 28px;
+        font-weight: 600;
+        line-height: 28px;
+    }
+
+.dataUl {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+}
+
+    .dataUl > li {
+        list-style: none;
+        float: left;
+        width: 90px;
+        text-align: center;
+        height: 32px;
+        line-height: 32px;
+    }
+
+        .dataUl > li :nth-child(5n+1) {
+            border-left: 1px solid #dddddd;
+        }
+
+.backcolor-odd {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+
+.backcolor-even {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+}
+
+.left-border {
+    border-left: 1px solid #dddddd;
+}

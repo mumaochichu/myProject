@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="../../js/jQuery/jquery.min.js"></script>
+    <script src="../../js/jQuery/Plugins/echarts/echarts.js"></script>
+    <script src="../../js/Framework/robin-utils.js"></script>
+    <script>
+        $(function () {
+            var urlParams = Robin.Utils.GetQueryObject();
+            var rIndex = urlParams.rIndex;
+            var xdata = [];
+            var ydata = [];
+            for (var i = 0; i < parent.modelSQL.TimeResult.length; i++) {
+                var tempItem = parent.modelSQL.TimeResult[i][rIndex];
+                xdata.push(tempItem.time);
+                ydata.push(tempItem.value);
+            }           
+            var myChart = echarts.init(document.getElementById('charts'));
+            option = {
+                title: {
+                    text: "结果曲线图",
+                    x: 'center',
+                    padding: [10, 0, 0, 0]
+                },
+                grid: {
+                    left: "5%",
+                    right: "5%",
+                    top: 50,
+                },
+                toolbox: {
+                    feature: {
+                        dataZoom: {},
+                        restore: {},
+                        saveAsImage: {}
+                    },
+                    right: 15,
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: xdata.map(function (str) {
+                        return str.replace(' ', '\n')
+                    })
+                },
+                yAxis: {
+                    type: 'value',              
+                    scale: true,
+                },
+                series: [{
+                    type: 'line',
+                    itemStyle: {
+                        normal: {
+                            color: '#89A54E',
+                            lineStyle: {
+                                color: '#89A54E'
+                            }
+                        }
+                    },
+                    data: ydata
+                }]
+            };
+            myChart.setOption(option);
+        })
+    </script>
+</head>
+<body>
+    <div id="charts" style="width:820px; height:320px;"></div>
+</body>
+</html>

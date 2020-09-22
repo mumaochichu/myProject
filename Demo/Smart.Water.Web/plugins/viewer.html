@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta charset="utf-8">
+  <title>JS/jQuery图片查看器viewer.js演示</title>
+  <link rel="stylesheet" href="../css/viewer.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .link {
+      text-decoration: none;
+    }
+
+    #jqhtml {
+      width: 700px;
+      margin: 0 auto;
+      font-size: 0;
+    }
+
+    #jqhtml li {
+      display: inline-block;
+      width: 32%;
+      margin-left: 1%;
+      padding-top: 1%;
+    }
+
+    #jqhtml li img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>图片查看js版本</h1>
+  <ul>
+    <li><a href="https://fengyuanchen.github.io/viewerjs/" target="_blank" class="link">Viewer.js官网</a></li>
+    <li><a href="https://blog.csdn.net/cxxc1976549895/article/details/82895892" target="_blank"
+        class="link">Viewer.js的使用1</a>
+    </li>
+    <li><a href="https://blog.csdn.net/liujun_for_java/article/details/83150290" target="_blank"
+        class="link">Viewer.js的使用2</a></li>
+  </ul>
+  <ul id="jqhtml">
+    <li><img data-original="../img/tibet-1.jpg" src="../img/thumbnails/tibet-1.jpg" alt="图片1"></li>
+    <li><img data-original="../img/tibet-2.jpg" src="../img/thumbnails/tibet-2.jpg" alt="图片2"></li>
+    <li><img data-original="../img/tibet-3.jpg" src="../img/thumbnails/tibet-3.jpg" alt="图片3"></li>
+    <li><img data-original="../img/tibet-4.jpg" src="../img/thumbnails/tibet-4.jpg" alt="图片4"></li>
+    <li><img data-original="../img/tibet-5.jpg" src="../img/thumbnails/tibet-5.jpg" alt="图片5"></li>
+    <li><img data-original="../img/tibet-6.jpg" src="../img/thumbnails/tibet-6.jpg" alt="图片6"></li>
+  </ul>
+  <p>另外按钮不需要的可以在viewer.min.js里找到对应地方修改样式，譬如要去掉下一张按钮，在viewer.min.js查找viewer-next，添加样式style="display:none"</p>
+  <script src="../js/viewer.min.js"></script>
+  <script>
+    var viewer = new Viewer(document.getElementById('jqhtml'), {
+      url: 'data-original'
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

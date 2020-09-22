@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>设备添加</title>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.jspanel.min.css" />
+
+    <link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="../css/themes/default/easyui.css">
+    <!-- <script src="js/jquery.min.js"></script> -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.jspanel.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.dataTables.min.js"></script>
+    <script src="../js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#select").click(function () {
+                //在拾取坐标前先将窗体上卷
+                top.addjpanel.smallify();
+                top.datapanel.smallify();
+                //console.log(document.getElementById("viewDiv"));
+                
+                //click(function (x, y) {
+                //    $("#lat").textbox('setValue', x);
+                //    $("#lon").textbox('setValue', y);
+                //});
+               
+                $("#viewDiv").click(function () {
+                    setTimeout(function () {
+                        var x = top.lat;
+                        var y = top.lon;
+                        $("#lat").textbox('setValue', x);
+                        $("#lon").textbox('setValue', y);
+                 }, 1000);
+                    
+                   
+
+                    top.datapanel.smallify();
+                    top.addjpanel.smallify();
+                });
+
+            });
+        });
+
+        //提交表单
+        function submitForm() {
+            /*添加数据*/
+            $.ajax({
+                url: "../../../Handler/DEMOHandler.ashx?Action=Create",
+                data: $('#addEquipmentForm').serialize(),
+                type: "POST",
+                success: function (data) {
+                    if (data == "false") {
+                        alert("设备添加失败");
+                    }
+                    else {
+                        alert("设备添加成功");
+                    }
+                }
+            });
+        };
+        //清空表单数据
+        function clearForm() {
+            $('#addEquipmentForm').form('clear');
+        }
+        //表单日期框显示格式化
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+        function myparser(s) {
+            if (!s) return new Date();
+            var ss = (s.split('-'));
+            var y = parseInt(ss[0], 10);
+            var m = parseInt(ss[1], 10);
+            var d = parseInt(ss[2], 10);
+            if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                return new Date(y, m - 1, d);
+            } else {
+                return new Date();
+            }
+        }
+    </script>
+</head>
+<body>
+    <!--设备添加表单-->
+    <form role="form" id="addEquipmentForm">
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">设备编号：</label>
+            <input class="easyui-textbox" type="text" name="MACHINECODE" data-options="required:true,missingMessage:'必填项'" style="width:150px" />
+            <label class="label_font">设备时段：</label>
+            <input class="easyui-textbox" type="text" name="TIMESLOT" data-options="required:true,missingMessage:'必填项'" style="width:150px" />
+        </div>
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">物探点号：</label>
+            <input class="easyui-textbox" type="text" name="EXPNUM" data-options="required:true,missingMessage:'必填项'" style="width:365px" />
+        </div>
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">坐标X轴：&nbsp;</label>
+            <input id="lat" class="easyui-textbox" type="text" name="PROJECTAREA" data-options="required:true,missingMessage:'必填项'" style="width:150px" />
+            <label class="label_font">坐标Y轴：&nbsp;</label>
+            <input id="lon" class="easyui-textbox" type="text" name="PROJECTAREA" data-options="required:true,missingMessage:'必填项'" style="width:150px" />
+            <input type="button" id="select"  class="easyui-linkbutton"value="坐标拾取" />
+        </div>
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">设备寿命：</label>
+            <input class="easyui-textbox" type="text" name="SERVICELIFE" data-options="required:true,missingMessage:'必填项'"style="width:120px"  />（年）
+            <label class="label_font">电池寿命：</label>
+            <input class="easyui-textbox" type="text" name="BATTERYLIFE" data-options="required:true,missingMessage:'必填项'"style="width:120px"  />（年）
+        </div>
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">安装日期：</label>
+            <input class="easyui-datebox" type="text" name="INSTALDATE" data-options="formatter:myformatter,parser:myparser,required:true,missingMessage:'必填项'" panelWidth="200px" panelHeight="200px" style="width:150px" />
+            <label class="label_font">生产厂家：</label>
+            <input class="easyui-textbox" type="text" name="MANUFACTURE" data-options="required:true,missingMessage:'必填项'"style="width:146px"  />
+        </div>
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">安装单位：</label>
+            <input class="easyui-textbox" type="text" name="INSTALLTIONUNIT" data-options="required:true,missingMessage:'必填项'" style="width:150px" />
+            <label class="label_font">管理单位：</label>
+            <input class="easyui-textbox" type="text" name="OWNERSHIPUNIT" data-options="required:true,missingMessage:'必填项'"style="width:146px"  />
+        </div>
+        <div style="margin-top:10px;margin-left:50px">
+            <label class="label_font">备注：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <input class="easyui-textbox" type="text" name="NOTE" data-options="required:true,missingMessage:'必填项'" style="height:60px;width:365px;" />
+        </div>
+
+    </form>
+    <div style="text-align:center;padding:5px">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提交</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">清除</a>
+    </div>
+</body>
+</html>

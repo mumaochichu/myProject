@@ -1,0 +1,33 @@
+﻿<link href="templates/yshInfo.css" rel="stylesheet" />
+
+<div class='mapWindow_monitor'>
+    <div class='mapWindow_monitor_corner'>
+    </div>
+
+    <div class="mapWindow_monitor_body">
+        <div class="mapWindow_monitor_name" data-bind="text: StationName"></div>
+        <ul class='mapWindow_monitor_content' data-bind="foreach: MonitorDatas">
+
+            <!-- ko if: Level()=='0'  -->          
+            <li class="mapWindow_monitor_normal">
+                <span data-bind="text: TagName"></span>:              
+            
+                <span data-bind="text: TagValue"></span>
+                <span data-bind="text: Units"></span>
+              
+            </li>                   
+            <!-- /ko -->
+            <!-- ko if: Level()!='0'  -->
+            <li class="mapWindow_monitor_alert">
+                <span data-bind="text: TagName"></span>:
+                <span data-bind="text: TagValue"></span>
+                <span data-bind="text: Units"></span>
+                <!-- /ko -->
+            </li>
+            <!-- /ko -->
+
+        </ul>
+    </div>
+
+
+</div>

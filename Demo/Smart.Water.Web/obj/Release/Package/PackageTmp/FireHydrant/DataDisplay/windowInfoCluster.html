@@ -1,0 +1,110 @@
+﻿<style type="text/css">
+    .mapWindowCluster {
+        height: 235px;
+        width: 300px;
+        left: -150px;
+        top: -250px;
+        position: absolute;
+    }
+
+    .mapWindow_body {
+        position: absolute;
+        bottom: 30px;
+        margin: 0;
+        padding: 0;
+        border: 1px solid rgb(153, 153, 153);
+    }
+
+    .mapWindow_corner {
+        background-image: url(../images/hydrant/plugin/iw_tail.png);
+        height: 31px;
+        background-repeat: no-repeat;
+        background-position: 100px;
+        position: absolute;
+        bottom: 0px;
+        left: 50px;
+        right: 0px;
+        z-index: 2;
+    }
+
+    .panel-body {
+        padding: 0px;
+        margin: 0;
+    }
+
+    #ulDiv ul li {
+        list-style: none;
+    }
+
+    #ulDiv ul {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #ulDiv table tr {
+        font-size: 13px;
+    }
+
+    .shortTd {
+        width: 35%;
+    }
+
+    .LongTd {
+        width: 65%;
+    }
+</style>
+
+<script type="text/javascript">
+    //关闭按钮
+    $(function () {
+        var result = top.Robin.Portal.MapTool.data;
+        $("#GDBH").html(result.POINTNO);
+        $("#KJ").html(result.SIZES == "null" ? "" : result.SIZES);
+        $("#TMFS").html(result.EMBED == "null" ? "" : result.EMBED);
+        $("#DZ").html(result.ADDRESS == "null" ? "" : result.ADDRESS);
+        $("#DZ").attr("title", result.ADDRESS == "null" ? "" : result.ADDRESS);
+        $("#ZT").html(result.STATUS == "null" ? "" : result.STATUS);
+        var time = (result.LASTYHTIME == "null" ? "" : result.LASTYHTIME);
+        if (time != null) {
+            time = time.substr(0, time.indexOf('T'));
+        }
+        $("#ZHWBSJ").html(time);
+    });
+</script>
+
+<div class="mapWindowCluster">
+    <div class="panel panel-primary panel-line mapWindow_body" style="z-index: 999999999; width: 100%; height: 106%;">
+        <div class="panel-heading" style="color: #fff; border-top-color: #fff; border-top: 0;border:none;border-bottom: none; background-color: #C26613; height: 35px">
+            <button type="button" class="close WindowInfoClusterClose" aria-label="Close" style="margin-right: -10px;" data-bind="attr: {id : StationKey}">
+                <span aria-hidden="true" style="color: #fff">×</span>
+            </button>
+            <h4 class="panel-title" style="color: #fff;">消火栓信息</h4>
+        </div>
+        <div class="panel-body">
+            <div id="ulDiv">
+                <table class="table table-hover">
+                    <tr>
+                        <td class="shortTd" id="gdbh">管&nbsp;&nbsp;点&nbsp;&nbsp;编&nbsp;&nbsp;号</td>
+                        <td class="LongTd" id="GDBH"></td>
+                    </tr>
+                    <tr><td class="shortTd" id="kj">口&nbsp;&nbsp;&nbsp;&nbsp;径(mm)</td><td class="LongTd" id="KJ"></td></tr>
+                    <tr><td class="shortTd" id="zt">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</td><td class="LongTd" id="ZT"></td></tr>
+                    <tr><td class="shortTd" id="tmfs">填&nbsp;&nbsp;埋&nbsp;&nbsp;方&nbsp;&nbsp;式</td><td class="LongTd" id="TMFS"></td></tr>
+                    <tr><td class="shortTd" id="jcsj">最后维保时间</td><td class="LongTd" id="ZHWBSJ"></td></tr>
+                    <tr><td class="shortTd" id="dz">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址</td>
+                    <td class="LongTd" id="DZ" style="cursor:pointer;height:auto;width: 45px;max-width:45px;line-height:20px; text-decoration: none; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></td></tr>
+                </table>
+                <!-- <ul class="">
+                     <li id="GDBH"></li>
+                     <li id="KJ">口径:</li>
+                     <li id="ZT">状态:</li>
+                     <li id="TMFS">填埋方式:</li>
+                     <li id="DZ">地址:</li>
+                     <li id="JCNY">建成年月:</li>
+                 </ul>-->
+            </div>
+        </div>
+
+    </div>
+    <div class="mapWindow_corner"></div>
+</div>

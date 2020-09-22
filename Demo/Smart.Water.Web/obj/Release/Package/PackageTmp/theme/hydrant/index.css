@@ -1,0 +1,184 @@
+body {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+/*头部*/
+.Header {
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 65px;
+    z-index: 4;
+    float: left;
+    position: absolute;
+    background-image: url(../../images/hydrant/index/bk.png);
+    background-repeat: repeat-x;
+}
+/*头部结束*/
+/*logo*/
+.logo {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 400px;
+    height: 65px;
+    z-index: 5;
+    background-image: url(../../images/hydrant/index/logo.png);
+    background-repeat: no-repeat;
+}
+/*logo结束*/
+/*头部图标*/
+.menu {
+    float: left;
+    height: 65px;
+    width: 100%;
+}
+
+.user {
+    float: right;
+    height: 65px;
+    width: 80px;
+    cursor: pointer;
+}
+
+.division {
+    float: right;
+    height: 65px;
+    width: 1px;
+    background-image: url(../../images/hydrant/index/division.png);
+}
+
+.equipment {
+    background-image: url(../../images/hydrant/index/fireHydrant.png);
+}
+
+    .equipment:hover {
+        background-image: url(../../images/hydrant/index/fireHydrant_hover.png);
+    }
+
+/*消火栓导入*/
+.lotimport{
+    background-image: url(../../images/hydrant/index/lotImport.png);
+}
+.lotimport:hover{
+    background-image: url(../../images/hydrant/index/loyImport_hover.png);
+}
+/*维护保养*/
+.hyrantAssert{
+    background-image: url(../../images/hydrant/index/assert.png);
+}
+.hyrantAssert:hover{
+    background-image: url(../../images/hydrant/index/assert_hover.png);
+}
+/*数据统计*/
+.Statistics{
+    background-image: url(../../images/hydrant/index/statistics.png);
+}
+.Statistics:hover{
+    background-image: url(../../images/hydrant/index/statistics_hover.png);
+}
+/*空间分布*/
+.spaceSpread{
+    background-image: url(../../images/hydrant/index/spacePr.png);
+}
+.spaceSpread:hover{
+    background-image: url(../../images/hydrant/index/spacePr_hover.png);
+}
+.statistics {
+    background-image: url(../../images/hydrant/index/maintain.png);
+}
+
+    .statistics:hover {
+        background-image: url(../../images/hydrant/index/maintain_hover.png);
+    }
+
+.data_display {
+    background-image: url(../../images/hydrant/index/analysis.png);
+}
+
+    .data_display:hover {
+        background-image: url(../../images/hydrant/index/analysis_hover.png);
+    }
+
+
+.alarm {
+    background-image: url(../../images/hydrant/index/alert.png);
+}
+
+    .alarm:hover {
+        background-image: url(../../images/hydrant/index/alert_hover.png);
+    }
+
+.curing {
+    background-image: url(../../images/hydrant/index/curing.png);
+}
+
+    .curing:hover {
+        background-image: url(../../images/hydrant/index/curing_hover.png);
+    }
+/*头部图标结束*/
+.ermenu {
+    float: left;
+    height: 35px;
+    width: 100%;
+}
+
+.eruser {
+    float: right;
+    height: 35px;
+    width: 65px;
+}
+
+.tlmenu {
+    top: 62px;
+    width: auto;
+    height: 60px;
+    z-index: 6;
+    right: 0px;
+    background-image: url(../../images/hydrant/index/bk.png);
+    background-repeat: repeat-x;
+}
+/*图层控制*/
+.legend {
+    display: none;
+    position: absolute;
+    top: 250px;
+    left: 300px;
+    width: 380px;
+    height: 330px;
+    z-index: 1001;
+    bottom: 27%;
+    background-repeat: no-repeat;
+    /*background-image: url(../../images/Portal/submenu/S_legend.png);*/
+    padding: 4px;
+   box-shadow:1px 1px 2px #909090; 
+   
+}
+/*工具条的样式*/
+#bar_Empty{
+    font-size:20px;
+    width:40px;
+}
+#bar_Query{
+    font-size:20px;
+     width:40px;
+}
+
+#bar_Roam{
+    font-size:20px;
+     width:40px;
+}
+
+#bar_map{
+    font-size:20px;
+     width:40px;
+}
+
+#btn_LayerControl{
+    font-size:20px;
+     width:40px;
+}
+
+

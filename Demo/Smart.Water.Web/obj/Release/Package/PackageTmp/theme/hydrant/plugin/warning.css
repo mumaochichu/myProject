@@ -1,0 +1,256 @@
+body {
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.main_left {
+    position: absolute;
+    top: 190px;
+    width: 320px;
+    height: auto;
+    z-index: 1;
+    left: 40px;
+}
+
+.w_header {
+    float: left;
+    height: 44px;
+    width: 318px;
+    /*background-color: rgba(17,96,142,0.9);*/
+    background-color: rgb(195,102,19);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.w_name {
+    float: left;
+    height: 44px;
+    width: 180px;
+    font-size: 17px;
+    line-height: 44px;
+    font-weight: 500;
+    color: #fff;
+    margin-left: 20px;
+    text-align:left;
+}
+
+.w_maximum {
+    float: right;
+    height: 40px;
+    width: 40px;
+    background-image: url(../../../images/hydrant/plugin/maximum_hover.png);
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+    .w_maximum:hover {
+        background-image: url(../../../images/hydrant/plugin/maximum.png);
+        cursor: pointer;
+    }
+
+.w_eye {
+    float: right;
+    height: 40px;
+    width: 28px;
+    background-image: url(../../../images/hydrant/plugin/eyey.png);
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+    .w_eye:hover {
+        background-image: url(../../../images/hydrant/plugin/eyey_hover.png);
+        cursor: pointer;
+    }
+  .w_eye.selected{
+        background-image: url(../../../images/hydrant/plugin/eyey_hover.png);
+    }
+
+.w_content {
+    float: left;
+    height: 346px;
+    width: 318px;
+    background-color: rgba(236,240,241,0.9);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #CCC;
+}
+
+.a_content {
+    width: 318px;
+    float: left;
+    height: 50px;
+    background-color: #deebf1;
+}
+
+.source_plant {
+    width: 318px;
+    float: left;
+    /*height: 70px;*/
+    cursor: default;
+}
+
+    .source_plant:hover {
+        background-color: #E1ECEE;
+    }
+
+.s_bk {
+    background-image: url(../../../images/hydrant/plugin/bk.png);
+    background-repeat: repeat-x;
+    background-position: bottom;
+}
+/*列表内部*/
+.b_name {
+    width: 260px;
+    float: left;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 20px;
+    font-size: 15px;
+    color: #4D4D4D;
+    text-align: left;
+    cursor: pointer;
+}
+
+.w_temperature {
+    width: 80px;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    margin-left: 20px;
+    font-size: 13px;
+    color: #4D4D4D;
+    text-align: left;
+}
+.w_tempvalue {
+    width: 40px;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    margin-left: 20px;
+    font-size: 13px;
+    color: #4D4D4D;
+    text-align: left;
+}
+.w_time {
+    width: 120px;
+    float: right;
+    height: 25px;
+    line-height: 25px;
+    margin-left: 10px;
+    font-size: 13px;
+    color: #0099FF;
+    text-align: left;
+}
+
+.monitor {
+    width: 30px;
+    float: left;
+    height: 30px;
+    background-image: url(../../../images/hydrant/plugin/monitor.png);
+    cursor: pointer;
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
+
+.information {
+    width: 30px;
+    float: left;
+    height: 30px;
+    background-image: url(../../../images/hydrant/plugin/information.png);
+    cursor: pointer;
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
+
+    .information:hover {
+        background-image: url(../../../images/hydrant/plugin/information_hover.png);
+    }
+
+.red {
+    color: #DB0918;
+}
+
+/*头部右侧LED、视频、短信*/
+.m_tip {
+	position: absolute;
+	top: 140px;
+	width: 300px;
+	height: 340px;
+	z-index: 6;
+	right:100px;
+    display:none;
+}
+.m_tname {
+    float: left;
+    height: 44px;
+    width: 300px;
+    background-color: rgba(17,96,142,0.9);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.m_list {
+	float: left;
+	height: 299px;
+	width: 300px;
+	background-color: #EEE;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+    
+}
+.m_li {
+	float: left;
+	height: 40px;
+	width: 297px;
+	font-size: 14px;
+	line-height: 40px;
+	color: #666;
+	padding-left: 15px;
+	cursor: pointer;
+	margin-right: 1px;
+	margin-left: 1px;
+	background-image: url(../../images/waterlogging/index/t_backgrund.png);
+	font-family:"Microsoft YaHei";
+	}
+.m_li:hover {
+	background-color: #fff;
+	}	
+
+.m_title {
+    float: left;
+    height: 44px;
+    width: 180px;
+    font-size: 17px;
+    line-height: 44px;
+    font-weight: 500;
+    color: #E7E7E7;
+    margin-left: 20px;
+}
+.m_close {
+	float: right;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+	/*background-image: url(../../images/waterlogging/index/close.png);*/
+       background-image: url(../../../images/hydrant/plugin/maximum_hover.png);
+	margin-left: 25px;
+}
+.m_close:hover {
+	/*background-image: url(../../images/waterlogging/index/close_hover.png);*/
+      background-image: url(../../../images/hydrant/plugin/maximum.png);
+
+}
+

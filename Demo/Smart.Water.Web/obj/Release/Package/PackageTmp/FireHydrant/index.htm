@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=uft-8" />
+    <title>消火栓信息管理系统</title>
+    <!--移动端特属标签-->
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!--针对IOS系统的专属标签-->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="translucent-black" />
+    <!--如果安装了GCF，则使用GCF来渲染页面，如果为安装GCF，则使用最高版本的IE内核进行渲染-->
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--允许所有域名的脚本访问该资源-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta name="Keywords" content="消火栓监控系统" />
+    <meta name="Description" content="消火栓监控系统" />
+    <link rel="Bookmark" href="favicon.ico" />
+    <link rel="Shortcut Icon" href="favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link href="../theme/hydrant/index.css" rel="stylesheet" type="text/css" />
+    <link href="../js/Bootstrap/version3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../style/animate.min.css" rel="stylesheet" />
+    <link href="../js/jQuery/Theme/bootstrap/jquery-ui-1.10.3.custom.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/nprogress/nprogress.css" rel="stylesheet" />
+    <link href="../style/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/jsPanel/jquery.jspanel.css" rel="stylesheet" />
+    <link href="../js/jQuery/Plugins/zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="../style/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet" />
+   
+    <link rel="stylesheet" href="http://172.30.16.248/arcgis_js_api/library/3.14/3.14/esri/css/esri.css" />
+
+
+   
+
+  
+    <style type="text/css">
+        .btn-primary {
+            background-color: rgb(107,106,109) !important;
+            border-color: rgb(84, 87, 90) !important;
+        }
+
+        .btn-primary:hover {
+                background-color: #333 !important;
+        }
+        .container {
+            max-width: 100% !important;
+        }
+        ul:first-child li {
+            padding-left: 20px;
+            line-height: 38px;
+            font-size: 14px;
+            font-family: 'Microsoft YaHei';          
+            cursor: pointer;
+            box-shadow: 1px 1px 1px;
+        }
+        ul:first-child li span {
+            float: right;
+            padding-right: 20px;
+        }   
+        .zaijian {
+            color: #31b0d5;
+        }
+        .zuofei {
+            color: #c9302c;
+        }
+        .zhengchang {
+            color: #449d44;
+        }
+        .btn {
+            display: inline-block;
+            padding: .3rem 0.3rem;
+            font-size: 0.3rem;
+            font-weight: normal;
+            line-height: 1;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        }
+        .btn-info {
+            color: #fff;
+            background-color: rgb(210,102,19) !important;
+            border-color: rgb(210,102,19) !important;
+        }
+        .btn-info:hover {
+            color: #fff;
+            background-color: rgb(196, 99, 25) !important;
+            border-color: rgb(210,102,19) !important;
+       }
+
+
+
+    </style>
+</head>
+<body>
+    <!--logo-->
+    <div class="logo">
+    </div>
+    <!--logo结束-->
+    <!--头部开始-->
+    <!--通用工具条-->
+    <div id="ToolBar_DIV" style="right:10px; bottom:20px; position: absolute;z-index:999;"></div>
+    <div class="Header">
+        <div class="menu">
+            <div class="logo"></div>
+
+            <div class="user data_display" id="DataDisplay"></div>
+            <!--<div class="division"></div>-->
+           <!-- <div class="user statistics" id="maintenanceReminder"></div>L-->
+            <div class="division"></div>
+            <div class="user equipment" id="infoManagement"></div>
+            <div class="division"></div>
+            <div class="user lotimport" id="LotImport"></div>
+            <div class="division"></div>
+            <div class="user hyrantAssert" id="hyrantAssert"></div>
+            <div class="division"></div>
+            <div class="user Statistics" id="Statistics"></div>
+            <!-- 空间分布 -->
+            <div class="division"></div>
+            <div class="user spaceSpread" id="spaceSpread"></div>
+            <!--<div class="division"></div>
+            <div class="user spaceSpread" id="featureLayerIn"></div>-->
+            <!--<div class="division"></div>
+            <div class="user curing" id="MaintenanceReminder"></div>
+            <div class="division"></div>
+            <div class="user alarm" id="Alarminformation"></div>-->
+        </div>
+
+        <!--<div class="ermenu checkbox" id="ermenu">
+            <div class="eruser " style="color:gray;" ><input type="checkbox" value="作废" id="discard" />作废</div>
+            <div class="eruser " style="color:red;" ><input type="checkbox"  value="在建" id="construction" />在建</div>
+            <div class="eruser " style="color:green; "><input type="checkbox"  value="正常" id="normal" checked="checked" />正常</div>
+        </div>
+
+        <div class="ermenu" id="datamenu">
+            <div class="history_data " id="histroydata" ></div>
+            <div class="alarm_data "id ="alarmdata" ></div>
+        </div>-->
+
+        <div style="position:absolute;left:40%;top:85px;">
+            <button id="construction" type="button" class="btn btn-danger" style="font-size:14px;background-color:rgb(210,102,19)">
+                <span class="fa fa-file-text-o fa-lg"></span> 在建
+            </button>
+            <button id="normal" type="button" class="btn btn-success" style="font-size:14px;">
+                <span class="fa fa-check-circle fa-lg"></span> 正常
+            </button>
+            <button id="discard" type="button" class="btn btn-danger" style="font-size:14px;">
+                <span class="fa fa-times-circle fa-lg"></span> 作废
+            </button>
+        </div>
+
+
+        <div style="position:absolute;left:20px;top:85px;width:300px;height:300px;font-size:16px;">
+            <div style="background-color:#c26613;line-height:38px;color:white;padding-left:20px;border-top-left-radius:5px;border-top-right-radius:5px;">
+                <span>消火栓列表</span>
+                
+            </div>
+            <div class="input-group inp_search" style="width:100%">
+                <input class="form-control" placeholder="请输入关键词" style="padding: 6px 12px;height:34px" id="sstext">
+                <span class="input-group-addon pm_search" id="search"><a href="javascript:void(0);" title="搜索"><i class="fa fa-search"></i></a></span>
+            </div>
+                <div id="dataListDiv" style="background-color:#edf1f2;height:100%;border-bottom-left-radius:5px;border-bottom-right-radius:5px;">
+
+                    <ul id="dataList" style="list-style-type:none;padding-left:0;">
+                        <!--<li>顺义区龙塘路01号消火栓<span class="zaijian">在建</span></li>
+                <li>顺义区龙塘路02号消火栓<span class="zuofei">作废</span></li>
+                <li>顺义区龙塘路03号消火栓<span class="zhengchang">正常</span></li>
+                <li>顺义区龙塘路04号消火栓<span class="zhengchang">正常</span></li>
+                <li>顺义区龙塘路05号消火栓<span class="zaijian">在建</span></li>
+                <li>顺义区龙塘路06号消火栓<span class="zuofei">作废</span></li>-->
+                    </ul>
+                </div>
+            </div>
+    </div>
+    <!--头部结束-->
+    <!--图层控制-->
+    <div id="LayerControl_DIV" class="legend"></div>
+    <div id="Div_Warning"></div>
+
+    <div id="Div_StationList"></div>
+    <div id="Main_Map_DIV"></div>
+
+
+    <script src="../js/jQuery/jquery.min.js"></script>
+    <script src="../js/jQuery/Plugins/jquery-ui.min.js"></script>
+    <script src="../js/jQuery/Plugins/tether/tether.min.js"></script>
+    <script src="../js/Bootstrap/version3/js/bootstrap.min.js"></script>
+    <script src="../js/jQuery/Plugins/jquery.cookie.js"></script>
+    <script src="../js/Noty/packaged/jquery.noty.packaged.min.js"></script>
+    <script src="../js/jQuery/Plugins/jsPanel/jquery.jspanel.min.js"></script>
+    <script src="../js/jQuery/Plugins/nprogress/nprogress.js"></script>
+    <script src="../js/jQuery/Plugins/time/moment.js"></script>
+    <script src="../js/jQuery/Plugins/DatePicker/WdatePicker.js"></script>
+    <script src="../js/jQuery/Plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="../js/jQuery/Plugins/zTree/jquery.ztree.all-3.5.min.js"></script>
+    <script type="text/javascript" src="http://172.30.16.248/arcgis_js_api/library/3.14/3.14/init.js"></script>
+
+   
+    <script data-main="../js/portal/hydrant-robin-app" src="../js/RequireJS/require.js"></script>
+</body>
+</html>
