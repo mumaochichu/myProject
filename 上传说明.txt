@@ -1,0 +1,31 @@
+git bash安装和基本配置
+1，官网下载：https://git-scm.com/
+2，下载后安装，默认安装到Finish完成安装即可
+3，配置git bash：
+（下面的命令没有连接在一起的说明是有空格的，不要忽略了）
+①打开Git Bash,输入ssh-keygen -t rsa -C"3030037970@qq.com"(自己github的注册邮箱)，回车
+②然后根据提示输入密码(passphrasw)，然后在输入一次密码(输入的密码为了安全，不会显示)，回车
+③在显示的路径中的.ssh目录中找到id_rsa.pub文件(这是公共密钥，另一个文件里是私人密钥)，复制里面的内容
+④登录github网站自己的账号，依次找到Settings>SSH and GPG keys，点击New SSH key,将上一步复制的内容粘贴到key中，title可填可不填，点击add ssh key即可
+⑤然后回到Git Bush，输入ssh -T git@github.com，回车，然后输入你的github密码(仍然不会显示)，回车，
+如果出现了You've successfully authenticated, but GitHub does not provide shell access 。那就说明，已经成功连上了GitHub
+⑥输入git config --global user.name “mumaochichu”   （此处name可修改也不是用于登录github的登录名），回车；
+输入git config --global user.email "3030037970@qq.com"   (此处email必须与登录邮箱一致) ，回车。
+
+可以输入git config --list查看自己的git信息
+4,如何将在github上创建的库克隆到本地电脑中，并进行上传代码
+在github的库创建完成之后，会出现一个网址(https://github.com/mumaochichu/myProject.git)，下面会用到
+①我想将文件放到d盘，所以需要将git bash定位到D盘；输入cd /D ，回车
+②输入git clone https://github.com/mumaochichu/myProject.git   .(git clone后面就是上面的网址)，回车
+③打开d盘，发现新出现了一个以我的库名命名的文件夹(myProject)。打开这个文件夹，创建一个txt文件，随便写点话。
+④在git bash中定位到这个文件夹，输入cd /D/myProject ，回车。输入ls（是字母ls，作用是查看所定位的文件夹中有那些文件），回车，可以看到刚创建的txt文件出现了。
+⑤输入git add 说明.txt，回车；
+然后输入git commit -m "第一个测试文件"，（引号内的内容是自己写的给文件的备注），回车；
+之后输入git push origin master，回车，出现登录界面，输入邮箱或用户名，和密码，然后点击Login.
+之后可能再输入用户名和密码，打开你的GitHub，找到创建的库，发现已经有了刚才上传的文件
+⑥之后再上传只需将文件放到库的对应文件夹中，然后定位到这个文件夹，使用git add 说明.txt；git commit -m "第一个测试文件"；git push origin master；类似指令提交。
+⑦上传文件夹：
+git clone https://github.com/mumaochichu/myProject.git  (吧github上面的仓库克隆到本地);
+git add .  (后面有个空格和点；把项目文件夹下面的文件都添加进来)；
+git commit -m "备注”   (提交说明，准备提交暂存区中的更改的已跟踪文件);
+git push -u origin master  (把本地仓库push到github上面)；
