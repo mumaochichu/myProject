@@ -1,0 +1,50 @@
+User ID=isgov;Password=isgov;Data Source=orcl_chsom
+User ID=genuises;Password=genuises;Data Source=orcl_192.168.1.26
+User ID=geniusesgis;Password=geniusesgis;Data Source=orcl_192.168.1.26
+User ID=geniusesgis;Password=geniusesgis;Data Source=orcl_192.168.1.30
+User ID=geniuspipe;Password=geniuspipe;Data Source=gis_192.168.1.4
+User ID=wellcover;Password=123;Data Source=orcl_192.168.1.4
+User ID=zygasparameter;Password=zygasparameter;Data Source=gis_192.168.1.4
+User ID=zbgis;Password=123456;Data Source=gis_192.168.0.92
+phgis;Password=1;Data Source=orcl
+User ID=phgis;Password=1;Data Source=orcl
+User ID=openwebgis;Password=123456;Data Source=gis_192.168.0.92
+zbgis;Password=123456;Data Source=gis_192.168.0.92
+User ID=AQPIS;Password=1;Data Source=gis_192.168.0.92
+User ID=qyfiss;Password=1;Data Source=orcl
+User ID=zzgis;Password=1;Data Source=orcl_zhy
+User ID=zbpis;Password=1;Data Source=orcl_rxs
+User ID=zbpis;Password=1;Data Source=orcl
+User ID=zypipewebuser;Password=123;Data Source=gisdata238
+User ID=zbgis;Password=1;Data Source=orcl_server
+Data Source=orcl;User Id=zzgis;Password=1
+User ID=zbpis;Password=1;Data Source=orcl_server
+User ID=dxgis;Password=1;Data Source=orcl_server
+User ID=fygis;Password=1;Data Source=orcl_192.168.0.202
+Data Source=192.168.0.118;Initial Catalog=fcgis;User Id=fcgis;Password=1;
+User ID=yjgis;Password=1;Data Source=orcl_192.168.0.174
+User ID=gsgis;Password=123;Data Source=orcl_192.168.0.4
+User ID=c##szgis;Password=1;Data Source=orcl_192.168.0.137
+c##szgis;Password=1;Data Source=orcl_192.168.0.137
+szgis;Password=1;Data Source=orcl_192.168.0.137
+Data Source=192.168.0.253;Initial Catalog=smartcarddb2010;User Id=sa;Password=1;
+User ID=rcbike;Password=1;Data Source=orcl_222.135.78.46
+Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\root\01技术支持部\26-昆明地下空间\PLDS-c\PLDS\PLDS\bin\Debug\DBSET.mdb;Persist Security Info=False;Jet OLEDB:Database Password=kmdxgx;Jet OLEDB:Encrypt Database=True;
+User ID=cdcover;Password=123;Data Source=orcl_222.135.78.46
+Data Source=D:\root\01技术支持部\26-昆明地下空间\PLDS-c\PLDS\PLDS\bin\Debug\DBSET.mdb;Persist Security Info=False;Jet OLEDB:Database Password=kmdxgx;Jet OLEDB:Encrypt Database=True;
+Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\root\01技术支持部\26-昆明地下空间\PLDS-c\PLDS\PLDS\bin\Debug\DBSET.mdb;
+Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\其他\JZ\20191104\DosDemo\DosDemo\bin\Debug\DBSET.mdb;
+Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\其他\JZ\20191104\DosDemo\DosDemo\bin\Debug\DBSET.mdb;
+Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\其他\JZ\20191104\DYZPJ\DYZPJ\bin\Debug\DBSET.accdb
+User ID=freedom;Password=123;Data Source=orcl_11521
+User ID=freedom;Password=123;Data Source=orcl_192.168.0.249
+Data Source=localhost;Initial Catalog=wsxk;User Id=wsxk;Password=1;
+Data Source=localhost;Initial Catalog=qxfw;User Id=qxfw;Password=1;
+Data Source=localhost;Initial Catalog=农业经济;User Id=nyjj;Password=1;
+User ID=cdcover;Password=123;Data Source=222.135.78.46/orcl
+server=172.30.17.126;user=root;pwd=123456;database=dongyue
+server=172.30.17.246;user=root;pwd=123456;database=dongyue
+server=192.168.0.246;user=root;pwd=123456;database=dongyue
+User ID=zydbuser;Password=zydb.123;Data Source=localhost
+server=192.168.0.246;user=root;pwd=123456;database=dongyue2
+User ID=orcl3;Password=123456;Data Source=localhost/liu
