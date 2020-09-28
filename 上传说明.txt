@@ -3,14 +3,14 @@ git bash安装和基本配置
 2，下载后安装，默认安装到Finish完成安装即可
 3，配置git bash：
 （下面的命令没有连接在一起的说明是有空格的，不要忽略了）
-①打开Git Bash,输入ssh-keygen -t rsa -C"3030037970@qq.com"(自己github的注册邮箱)，回车
+①打开Git Bash,输入ssh-keygen -t rsa -C"xxxx@qq.com"(自己github的注册邮箱)，回车
 ②然后根据提示输入密码(passphrasw)，然后在输入一次密码(输入的密码为了安全，不会显示)，回车
 ③在显示的路径中的.ssh目录中找到id_rsa.pub文件(这是公共密钥，另一个文件里是私人密钥)，复制里面的内容
 ④登录github网站自己的账号，依次找到Settings>SSH and GPG keys，点击New SSH key,将上一步复制的内容粘贴到key中，title可填可不填，点击add ssh key即可
 ⑤然后回到Git Bush，输入ssh -T git@github.com，回车，然后输入你的github密码(仍然不会显示)，回车，
 如果出现了You've successfully authenticated, but GitHub does not provide shell access 。那就说明，已经成功连上了GitHub
 ⑥输入git config --global user.name “mumaochichu”   （此处name可修改也不是用于登录github的登录名），回车；
-输入git config --global user.email "3030037970@qq.com"   (此处email必须与登录邮箱一致) ，回车。
+输入git config --global user.email "xxxx@qq.com"   (此处email必须与登录邮箱一致) ，回车。
 
 可以输入git config --list查看自己的git信息
 4,如何将在github上创建的库克隆到本地电脑中，并进行上传代码
