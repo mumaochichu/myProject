@@ -26,6 +26,6 @@ git bash安装和基本配置
 ⑥之后再上传只需将文件放到库的对应文件夹中，然后定位到这个文件夹，使用git add 说明.txt；git commit -m "第一个测试文件"；git push origin master；类似指令提交。
 ⑦上传文件夹：
 git clone https://github.com/mumaochichu/myProject.git  (吧github上面的仓库克隆到本地);
-git add .  (后面有个空格和点；把项目文件夹下面的文件都添加进来)；
+git add .  (后面有个空格和点；把项目文件夹下面新的文件或修改过的文件添加进来，如果有的文件之前已经添加了，它会自动省略)；
 git commit -m "备注”   (提交说明，准备提交暂存区中的更改的已跟踪文件);
 git push -u origin master  (把本地仓库push到github上面)；
