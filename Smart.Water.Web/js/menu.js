@@ -1,6 +1,7 @@
 $(function () {
   $.getJSON("json/menu.json", function (data) {
     //1.getJSON方法获取json文件数据，data为json存储的数据对象组
+     // console.log(data);
     for (var i = 0; i < data.length; i++) {
       //2.循环访问data数组中的每个对象，长度为data.length
       $.each(data[i], function (key, val) {

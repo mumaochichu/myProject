@@ -124,5 +124,19 @@
     "navTitle": "zTree树",
     "navUrl": "#",
     "navParentId": 2
+  },
+  {
+    "navId": 19,
+    "id": "satellite",
+    "navTitle": "3D视图中的卫星",
+    "navUrl": "#",
+    "navParentId": 5
+  },
+  {
+    "navId": 20,
+    "id": "arcgisAPI",
+    "navTitle": "ArcGIS jsapi项目部署",
+    "navUrl": "#",
+    "navParentId": 9
   }
 ]

@@ -80,10 +80,30 @@ $(function () {
       ]
     });
   });
+    //综合模块-3D视图中的卫星
+    $(document).on('click', '#satellite', function () {
+        top.datapanel = $.jsPanel({
+            position: { my: "center-top", at: "center-top", offsetY: 90 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
+            theme: "primary", //颜色，这里使用了原色
+            contentSize: { width: 650, height: 400 }, //面板内容div的宽度和高度
+            //headerTitle: "标题", //标题文本
+            //content: "<p>一些文本内容</p>",
+            callback: [
+                function () {
+                    this.content.css("padding", "15px");
+
+                },
+                function () {
+                    this.headerTitle('3D视图中的卫星')
+                    this.content.load('satellite/index.html');
+                },
+            ]
+        });
+    });
   //说明
   $(document).on('click', '#instruction', function () {
     $.jsPanel({
-      position: { my: "center-top", at: "center-top", offsetY: 50 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
+      position: { my: "center-top", at: "center-top", offsetY: 100 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
       theme: "primary", //颜色，这里使用了原色
       contentSize: { width: 550, height: 550 }, //面板内容div的宽度和高度
       //headerTitle: "标题", //标题文本
@@ -100,4 +120,24 @@ $(function () {
       ]
     });
   });
+  //ArcGIS API For Javascript项目部署
+  $(document).on('click', '#arcgisAPI', function () {
+        $.jsPanel({
+            position: { my: "center-top", at: "center-top", offsetY: 100 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
+            theme: "primary", //颜色，这里使用了原色
+            contentSize: { width: 550, height: 350 }, //面板内容div的宽度和高度
+            //headerTitle: "标题", //标题文本
+            //content: "<p>一些文本内容</p>",
+            callback: [
+                function () {
+                    this.content.css("padding", "15px");
+
+                },
+                function () {
+                    this.headerTitle('ArcGIS API For Javascript项目部署')
+                    this.content.load('instruction/arcgisAPI.html');
+                },
+            ]
+        });
+    });
 })

@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="../css/viewer.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+       #jqhtml {
+            width: 50px;
+            margin: 0 auto;
+            font-size: 0;
+        }
+    </style>
+</head>
+<body>
+    <h4>目的：将arcgis jsapi复制到项目中，引用路径为相对路径</h4>
+    <p>
+        方法:<br />
+        1，项目中新建js文件夹，js文件夹中新建esriapi文件夹<br />
+        2，将4.16\api\arcgis_js_v416_api\arcgis_js_api\library\4.16目录下所有文件(即init.js文件所在目录)<br />放到esriapi文件夹中
+        <img id="jqhtml" data-original="../img/jsapi.png" src="../img/thumbnails/jsapi.png" alt="图片1"><img />
+         <br />
+        3，将init.js文件里的baseUrl里的内容(默认值为"HOSTNAME_AND_PATH_TO_JSAPI")修改为上面dojo文件夹的地址即"js/esriapi/dojo"，<br />
+        4，将dojo.js文件(dojo文件夹里)里的baseUrl里的内容(默认值为"HOSTNAME_AND_PATH_TO_JSAPI")修改为和上面相同的地址，即"js/esriapi/dojo"，<br />
+        5，引用dojo.js文件，src="js/esriapi/dojo/dojo.js"；<br />引用main.css文件，href="js/esriapi/esri/themes/light/main.css"
+    </p>
+    <script src="../js/viewer.min.js"></script>  <!--view.js图片查看插件-->
+    <script>
+    var viewer = new Viewer(document.getElementById('jqhtml'), {
+            url: 'data-original'
+        });</script>
+</body>
+</html>

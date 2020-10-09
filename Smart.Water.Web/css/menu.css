@@ -9,12 +9,14 @@ body {
 
 /* 地图容器 */
 #viewDiv {
-  /* padding: 0;
+    /* padding: 0;
   margin: 0; */
-  float: left;
-  height: 87%;
-  width: 100%;
-  z-index: -1;
+    /*float: left;*/
+    padding: 0;
+    margin: 0;
+    height: 87%;
+    width: 100%;
+    z-index: -1;
 }
 
 ul,
@@ -52,7 +54,7 @@ a:link {
 /* 一级菜单栏 */
 #nav-mainbox li {
     float:left;
-    left:50%;
+    left:40%;
     background-color: #f2f2f2;
     color: #333;
     font-size: 14px;
