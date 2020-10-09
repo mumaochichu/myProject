@@ -3,14 +3,14 @@ git bash安装和基本配置
 2，下载后安装，默认安装到Finish完成安装即可
 3，配置git bash：
 （下面的命令没有连接在一起的说明是有空格的，不要忽略了）
-①打开Git Bash,输入ssh-keygen -t rsa -C"3030037970@qq.com"(自己github的注册邮箱)，回车
+①打开Git Bash,输入ssh-keygen -t rsa -C"xxxx@qq.com"(自己github的注册邮箱)，回车
 ②然后根据提示输入密码(passphrasw)，然后在输入一次密码(输入的密码为了安全，不会显示)，回车
 ③在显示的路径中的.ssh目录中找到id_rsa.pub文件(这是公共密钥，另一个文件里是私人密钥)，复制里面的内容
 ④登录github网站自己的账号，依次找到Settings>SSH and GPG keys，点击New SSH key,将上一步复制的内容粘贴到key中，title可填可不填，点击add ssh key即可
 ⑤然后回到Git Bush，输入ssh -T git@github.com，回车，然后输入你的github密码(仍然不会显示)，回车，
 如果出现了You've successfully authenticated, but GitHub does not provide shell access 。那就说明，已经成功连上了GitHub
 ⑥输入git config --global user.name “mumaochichu”   （此处name可修改也不是用于登录github的登录名），回车；
-输入git config --global user.email "3030037970@qq.com"   (此处email必须与登录邮箱一致) ，回车。
+输入git config --global user.email "xxxx@qq.com"   (此处email必须与登录邮箱一致) ，回车。
 
 可以输入git config --list查看自己的git信息
 4,如何将在github上创建的库克隆到本地电脑中，并进行上传代码
@@ -26,6 +26,6 @@ git bash安装和基本配置
 ⑥之后再上传只需将文件放到库的对应文件夹中，然后定位到这个文件夹，使用git add 说明.txt；git commit -m "第一个测试文件"；git push origin master；类似指令提交。
 ⑦上传文件夹：
 git clone https://github.com/mumaochichu/myProject.git  (吧github上面的仓库克隆到本地);
-git add .  (后面有个空格和点；把项目文件夹下面的文件都添加进来)；
+git add .  (后面有个空格和点；把项目文件夹下面新的文件或修改过的文件添加进来，如果有的文件之前已经添加了，它会自动省略)；
 git commit -m "备注”   (提交说明，准备提交暂存区中的更改的已跟踪文件);
 git push -u origin master  (把本地仓库push到github上面)；
