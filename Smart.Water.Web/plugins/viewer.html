@@ -31,32 +31,36 @@
     #jqhtml li img {
       width: 100%;
     }
+    #viewer li {
+          float: left; /* 往左浮动 */
+    }
   </style>
 </head>
 
 <body>
-  <h1>图片查看js版本</h1>
-  <ul>
-    <li><a href="https://fengyuanchen.github.io/viewerjs/" target="_blank" class="link">Viewer.js官网</a></li>
+ <ul id="viewer">
+    <li><a href="https://fengyuanchen.github.io/viewerjs/" target="_blank" class="link">Viewer.js官网，</a></li>
     <li><a href="https://blog.csdn.net/cxxc1976549895/article/details/82895892" target="_blank"
-        class="link">Viewer.js的使用1</a>
+        class="link">Viewer.js的使用1，</a>
     </li>
     <li><a href="https://blog.csdn.net/liujun_for_java/article/details/83150290" target="_blank"
         class="link">Viewer.js的使用2</a></li>
   </ul>
+  <br/>
   <ul id="jqhtml">
-    <li><img data-original="../img/tibet-1.jpg" src="../img/thumbnails/tibet-1.jpg" alt="图片1"></li>
-    <li><img data-original="../img/tibet-2.jpg" src="../img/thumbnails/tibet-2.jpg" alt="图片2"></li>
-    <li><img data-original="../img/tibet-3.jpg" src="../img/thumbnails/tibet-3.jpg" alt="图片3"></li>
-    <li><img data-original="../img/tibet-4.jpg" src="../img/thumbnails/tibet-4.jpg" alt="图片4"></li>
-    <li><img data-original="../img/tibet-5.jpg" src="../img/thumbnails/tibet-5.jpg" alt="图片5"></li>
-    <li><img data-original="../img/tibet-6.jpg" src="../img/thumbnails/tibet-6.jpg" alt="图片6"></li>
+      <li><img data-original="../img/tibet-1.jpg" src="../img/thumbnails/tibet-1.jpg" alt="图片1"></li>  <!--data-original是大图片，src是原始图片-->
+      <li><img data-original="../img/tibet-2.jpg" src="../img/thumbnails/tibet-2.jpg" alt="图片2"></li>
+      <li><img data-original="../img/tibet-3.jpg" src="../img/thumbnails/tibet-3.jpg" alt="图片3"></li>
+      <li><img data-original="../img/tibet-4.jpg" src="../img/thumbnails/tibet-4.jpg" alt="图片4"></li>
+      <li><img data-original="../img/tibet-5.jpg" src="../img/thumbnails/tibet-5.jpg" alt="图片5"></li>
+      <li><img data-original="../img/viewer_parameter.png" src="../img/thumbnails/viewer_parameter.png" alt="viewer方法的参数"></li>
   </ul>
   <p>另外按钮不需要的可以在viewer.min.js里找到对应地方修改样式，譬如要去掉下一张按钮，在viewer.min.js查找viewer-next，添加样式style="display:none"</p>
   <script src="../js/viewer.min.js"></script>
   <script>
+    //调用Viewer方法，
     var viewer = new Viewer(document.getElementById('jqhtml'), {
-      url: 'data-original'
+      url: 'data-original' //大图片的url
     });
   </script>
 

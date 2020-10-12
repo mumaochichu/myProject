@@ -95,9 +95,11 @@
     <Compile Include="BasePostgreSQL.cs" />
     <Compile Include="DataAccess\well\DCASE_KEYVALUE.cs" />
     <Compile Include="DataAccess\well\DDEMO.cs" />
+    <Compile Include="DataAccess\well\DSBXXB.cs" />
     <Compile Include="Model\FormatedList.cs" />
     <Compile Include="Model\well\CASE_KEYVALUE.cs" />
     <Compile Include="Model\well\DEMO.cs" />
+    <Compile Include="Model\well\SBXXB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

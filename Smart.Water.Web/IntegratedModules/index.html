@@ -5,8 +5,6 @@
     <meta charset="utf-8">
     <title>DataTable</title>
     <!-- DataTables CSS -->
-    
-   
     <style>
         /*部分列样式*/
         .hide_column {
@@ -22,23 +20,25 @@
     <script type="text/javascript">
         var oTable;
         $(function () {
+            //获取显示数据
             oTable = $("#paTable").DataTable({
-                "oLanguage": {
+                //配置参数(http://datatables.club/reference/option/)
+                "oLanguage": { //汉化
                     "sUrl": "IntegratedModules/dataTables.chinese.txt"
                 },
-                "columnDefs":
+                "columnDefs": //设置定义列的初始属性
                     [{
                         className: "hide_column",
-                        //"targets": [5, 6, 7, 8] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
+                        //"targets": [5, 6] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
                     }],
-                "bServerSide": true,
+                "bServerSide": true,  //是否开启服务器模式
                 "sAjaxSource": "../Handler/DEMOHandler.ashx?Action=GetList",      //mvc后台ajax调用接口
                 'bPaginate': true,                      //是否分页。
                 // "bLengthChange": false,                    //是否允许终端用户从一个选择列表中选择分页的页数，页数为10，25，50和100，需要分页组件bPaginate的支持
                 "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
                 'bFilter': false,                       //是否使用内置的过滤功能。
-                "bSort": false,
-                //"bScrollInfinite": true,
+                "bSort": false,                         //是否排序
+                //"bScrollInfinite": true,              //是否开启滚动条
                 "bAutoWidth": false,                          //是否自动计算列宽，计算列宽会花费一些时间
                 "bDeferRender": true,                         //是否延迟渲染,该属性设置为true时，表格每一行新增的元素只有在需要被画出来时才会被DataTable创建出来
                 "iDisplayLength": 20,  //每页显示的行数
@@ -47,13 +47,13 @@
                 'sPaginationType': 'full',      //分页样式 (full_numbers：除首页、上一页、下一页、末页四个按钮还有页数按钮)
                 "sScrollX": "100%",                        //水平滚动条
                 "sScrollXInner": "150%",
-                "bScrollCollapse": true,
+                "bScrollCollapse": true,              //水平限制宽度
                 "sScrollY": 200,                     //是否开启垂直滚动
                 "info": true,                      //是否开启底部文字
-                "fnServerParams": function (aoData) {
+                "fnServerParams": function (aoData) {  //用来在向服务器发送Ajax请求时发送额外的数据，
                     aoData.push({ "name": "name", "value": $("#txtName").val() });
                 },
-                "aoColumns": [
+                "aoColumns": [  //列属性
                     {
                         "mData": "NVFID", "sTitle": "选择", "sWidth": "10px", "sClass": "text-center", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
                             $(nTd).html("<input type='checkbox'  name='checkList'  value='" + sData + "'>");
@@ -61,7 +61,7 @@
                     },
                     { "mData": "NVFID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
                     {
-                        "mData": "MACHINECODE", "sTitle": "设备编号", "className": "table_font", 
+                        "mData": "MACHINECODE", "sTitle": "设备编号", "className": "table_font",     //mData:字段名称；sTitle:显示列标题
 
                     },
                     {
@@ -105,8 +105,8 @@
 
 
                 ],
-                "drawCallback": function () {
-                    appendSkipPage();
+                "drawCallback": function () { //回调函数
+                    appendSkipPage();  //加上跳转功能
                 }
             });
             //点击查询
@@ -116,11 +116,11 @@
                 //初始化
                 oTable.draw(true);
             });
-            //刷新
+            //刷新事件
             $("#refresh").click(function () {
-                //$('#home').show();
-                //bindData1_open();
-                oTable.draw(true);
+                $('#home').show();
+                bindData1_open();
+                oTable.draw(true); //draw()重绘事件-当表格重绘完成后
             });
             //删除事件
             $("#delete").click(function () {
@@ -142,7 +142,7 @@
                                         }
                                         else {
 
-                                            $('#home').show();
+                                            $('#paTable').show();
                                             //bindData1_open();
                                             oTable.draw(true);
                                             alert("设备删除成功");
@@ -179,7 +179,8 @@
                                 this.content.load('IntegratedModules/addEquipment.html');
                             },
                         ]
-                    });
+                });
+              
                 });
             //编辑
             $("#edit").click(function () {
@@ -214,12 +215,114 @@
                     }
                 });
                 if (ckValues.length <= 0) {
-                    alert("请先选择数据");
+                    noty({ text: "请先选择数据！", type: "warning", layout: "topCenter", timeout: 2000 });
                     return;
-                }
+            }
+               
             });
         });
+        //1，初始化显示
+        function bindData1_open() {
 
+            //console.log(start, end);
+            //初始化表格
+            if (oTable != null) {
+                //oTable.fnDestroy();
+                oTable.destroy();//摧毁旧表
+                oTable = null;
+            };
+            //debugger;
+            //初始化表格
+            oTable = $("#paTable").DataTable({
+                //配置参数(http://datatables.club/reference/option/)
+                "oLanguage": { //汉化
+                    "sUrl": "IntegratedModules/dataTables.chinese.txt"
+                },
+                "columnDefs": //设置定义列的初始属性
+                    [{
+                        className: "hide_column",
+                        //"targets": [5, 6] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
+                    }],
+                "bServerSide": true,  //是否开启服务器模式
+                "sAjaxSource": "../Handler/DEMOHandler.ashx?Action=GetList",      //mvc后台ajax调用接口
+                'bPaginate': true,                      //是否分页。
+                // "bLengthChange": false,                    //是否允许终端用户从一个选择列表中选择分页的页数，页数为10，25，50和100，需要分页组件bPaginate的支持
+                "bProcessing": true,                    //当datatable获取数据时候是否显示正在处理提示信息。
+                'bFilter': false,                       //是否使用内置的过滤功能。
+                "bSort": false,                         //是否排序
+                //"bScrollInfinite": true,              //是否开启滚动条
+                "bAutoWidth": false,                          //是否自动计算列宽，计算列宽会花费一些时间
+                "bDeferRender": true,                         //是否延迟渲染,该属性设置为true时，表格每一行新增的元素只有在需要被画出来时才会被DataTable创建出来
+                "iDisplayLength": 20,  //每页显示的行数
+                "bLengthChange": false,//允许用户从一个选择菜单中格式化页面大小(改变页面显示的数据数量)
+                "sPaginationType": "extStyle",
+                'sPaginationType': 'full',      //分页样式 (full_numbers：除首页、上一页、下一页、末页四个按钮还有页数按钮)
+                "sScrollX": "100%",                        //水平滚动条
+                "sScrollXInner": "150%",
+                "bScrollCollapse": true,              //水平限制宽度
+                "sScrollY": 200,                     //是否开启垂直滚动
+                "info": true,                      //是否开启底部文字
+                "fnServerParams": function (aoData) {  //用来在向服务器发送Ajax请求时发送额外的数据，
+                    aoData.push({ "name": "name", "value": $("#txtName").val() });
+                },
+                "aoColumns": [  //列属性
+                    {
+                        "mData": "NVFID", "sTitle": "选择", "sWidth": "10px", "sClass": "text-center", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+                            $(nTd).html("<input type='checkbox'  name='checkList'  value='" + sData + "'>");
+                        }
+                    },
+                    { "mData": "NVFID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
+                    {
+                        "mData": "MACHINECODE", "sTitle": "设备编号", "className": "table_font",     //mData:字段名称；sTitle:显示列标题
+
+                    },
+                    {
+                        "mData": "EXPNUM", "sTitle": "井盖编号", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "OWNERSHIPUNIT", "sTitle": "管理单位", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "MANUFACTURE", "sTitle": "生产厂家", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "INSTALLTIONUNIT", "sTitle": "安装单位", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "INSTALDATE", "sTitle": "安装日期", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "SERVICELIFE", "sTitle": "使用寿命", "className": "table_font",
+
+                    },
+
+                    {
+                        "mData": "BATTERYLIFE", "sTitle": "电池寿命", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "TIMESLOT", "sTitle": "时段", "className": "table_font",
+
+                    },
+                    {
+                        "mData": "NOTE", "sTitle": "备注", "className": "table_font",
+
+                    }
+
+
+
+                ],
+                "drawCallback": function () { //回调函数
+                    appendSkipPage();  //加上跳转功能
+                }
+            });
+        }
+        //跳转功能
         function appendSkipPage() {
             var table = $("#paTable").dataTable();
             var template =
@@ -263,7 +366,7 @@
             //获取查询条件
             var cNum = $("#txtName").val();
             if (!cNum) {
-                noty({ text: "查询条件不能为空！", type: "warning", layout: "topCenter", timeout: 2000 });
+                noty({ text: "查询条件不能为空！",type: "warning", layout: "topCenter", timeout: 2000 });  //text:提示文本；theme:主题(在js/default.js中，可以自己修改这个文件，然后使用这个主题属性)；type:提示样式(alert:默认；success:成功；error:错误；warning:警告；information:信息)；layout:布局位置(top: 顶部,长条状；topLeft/topCenter/topRight: 顶部的左/中/右位置, 短条状；center/centerLeft/centerRight: 正中/中左/中右, 短条状；bottomLeft/bottomCenter/bottomRight: 底部左/中/右位置, 短条状；bottom: 底部, 长条状)
                 return;
             }
             bindData2(cNum);
@@ -285,7 +388,7 @@
                 "columnDefs":
                     [{
                         className: "hide_column",
-                        //"targets": [5, 6, 7, 8] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
+                        //"targets": [5, 6] //将第6列和第7列(即X坐标和Y坐标)隐藏，从0开始计数
                     }],
                 "bServerSide": true,
                 "sAjaxSource": "../Handler/DEMOHandler.ashx?Action=GetList&coverNum=" + num,      //mvc后台ajax调用接口
@@ -365,6 +468,7 @@
 
             });
         }
+        //查询显示里的跳转
         function append() {
             var table = $("#paTable").dataTable();
             var template =
@@ -452,9 +556,11 @@
             </div>
         </form>
         <!--<div class="row pull-right" style="padding:10px">
-        <input type="button" class="btn btn-info" value="添加" onclick="Add()" /></div>-->
-        <table id="paTable" class="table table-striped table-bordered dataTable no-footer" cellspacing="0" style="width: 100%;"></table>
-        <table id="paTable" class="table display hover"></table>
+    <input type="button" class="btn btn-info" value="添加" onclick="Add()" /></div>-->
+        <div role="tabpanel" class="tab-pane active" id="home">
+            <table id="paTable" class="table table-striped table-bordered dataTable no-footer" cellspacing="0" style="width: 100%;"></table>
+            <table id="paTable" class="table display hover"></table>
+        </div>
     </div>
 </body>
 </html>

@@ -68,9 +68,9 @@
       { id: 211, pId: "21", Name: "叶子节点一一", icon: "../css/bootstrap/img/diy/3.png" },
       { id: 212, pId: "21", Name: "叶子节点一二", checked: true, icon: "../css/bootstrap/img/diy/3.png" },
     ];
-    //.push()方法；向数组的末尾添加一个或多个元素，并返回新的长度
+    //3， .push()方法；向数组的末尾添加一个或多个元素，并返回新的长度
     zNodes.push({ id: "add", pId: "2", Name: "井盖类型", open: false, checked: false });
-    //ajax获取并添加数据
+    //4，ajax获取并添加数据
     $.ajax({
       type: "GET",
       url: "../json/item.json",
@@ -80,16 +80,13 @@
         console.log(data);
         data.forEach(function (item, i) {
           var nodeid = item.ITEMID;
-          console.log();
           zNodes.push({ id: nodeid, pId: "add", Name: item.ITEMVALUE + "[]", open: true, checked: true, icon: "img/" + item.ITEMVALUE + ".png" });//根据ITEMVALUE属性不同显示不同图标
 
         });
         //zTree 初始化方法，创建 zTree 必须使用此方法，参数分别对应(用于展现 zTree 的 DOM 容器)，(zTree 的配置数据)，(zTree 的节点数据)
         zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
         //var nodes = zTreeObj.getNodes()[0].children; //获取第一个根节点的子节点
-        //console.log(nodes);
         //var treeObj = $.fn.zTree.getZTreeObj("treeDemo"); //获取id为treeDemo的zTree
-        //console.log(treeObj);
         //$.fn.zTree.destroy("treeDemo"); //销毁 id 为 "treeDemo" 的 zTree;无参数则表示销毁全部
         //zTreeObj.expandAll(true);       //true 节点全部展开、false节点收缩
       },

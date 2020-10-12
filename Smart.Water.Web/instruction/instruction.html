@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>zTree</title>
+  <title>zTree树插件</title>
   <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
   <link href="../css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
   <script src="../js/jquery.ztree.all-3.5.min.js"></script>
@@ -11,6 +11,7 @@
 
 <body>
   <div>
+     <!--ztree容器-->
     <ul id="treeDemo" class="ztree"></ul>
   </div>
   <script>
@@ -49,7 +50,7 @@
       }
     };
 
-    //数据
+    //数据(plugins/zTree.html中还有两种添加数据的方法，即.push()方法和ajax获取并添加数据)
     var zNodes = [
       //1,准嵌套格式的JSON数据对象
       {
@@ -60,7 +61,7 @@
           { id: 101, Name: "基本框架--EasyUI", url: "https://www.jeasyui.net/", icon: "css/bootstrap/img/diy/3.png" },
           { id: 102, Name: "地图开发API--ArcGIS JS FOR API(v4.16)", url: "https://developers.arcgis.com/javascript/", icon: "../css/bootstrap/img/diy/3.png" },
           { id: 103, Name: "jQuery图像浏览插件--Viewer.js(v0.3.1)", url: "https://fengyuanchen.github.io/viewerjs/", icon: "../css/bootstrap/img/diy/3.png" },
-            { id: 104, Name: "jQuery弹出层(浮动面板)--jsPanel(v2.1.4)", url: "https://v2.jspanel.de/", icon: "../css/bootstrap/img/diy/3.png" },
+          { id: 104, Name: "jQuery弹出层(浮动面板)--jsPanel(v2.1.4)", url: "https://v2.jspanel.de/", icon: "../css/bootstrap/img/diy/3.png" },
           { id: 105, Name: "EasyUI读取json文件构建菜单--menu.json", url: "json/menu.json", icon: "../css/bootstrap/img/diy/3.png" },
           { id: 106, Name: "zTree读取json文件添加节点--item.json", url: "json/item.json", icon: "../css/bootstrap/img/diy/3.png" },
           { id: 107, Name: "本地发布全国行政区划矢量数据--全国行政区划矢量数据_WGS84", icon: "../css/bootstrap/img/diy/3.png" },
@@ -69,11 +70,15 @@
           { id: 110, Name: "添加在线线要素图层--trailsLayer", url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trails/FeatureServer/0", icon: "../css/bootstrap/img/diy/3.png" },
           { id: 111, Name: "添加在线点要素图层--trailheadsLayer", url: "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0", icon: "../css/bootstrap/img/diy/3.png" },
           { id: 112, Name: "在线地图底图--中文地图", url: "http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer", icon: "../css/bootstrap/img/diy/3.png" },
-          { id: 113, Name: "在线天地图(其实写了但没用它做底图)", icon: "../css/bootstrap/img/diy/3.png" }
+          { id: 113, Name: "在线天地图(其实写了但没用它做底图)", icon: "../css/bootstrap/img/diy/3.png" },
+          { id: 114, Name: "jquery表格插件Datatables", url: "http://datatables.club/", icon: "../css/bootstrap/img/diy/3.png" },
+          { id: 115, Name: "dataTable参数详解", url: "json/datatable参数详细.txt", icon: "../css/bootstrap/img/diy/3.png" },
+          { id: 116, Name: "jquery提醒插件noty", url: "json/datatable参数详细.txt", icon: "../css/bootstrap/img/diy/3.png" },
+          { id: 117, Name: "noty参数详解", url: "json/noty参数详解.txt", icon: "../css/bootstrap/img/diy/3.png" },
         ]
       },
       //2,带有父子关系的简单array格式
-      { id: 2, pId: "0", Name: "主要功能", open: false, iconOpen: "../css/bootstrap/img/diy/1_open.png", iconClose: "../css/bootstrap/img/diy/1_close.png" },
+      { id: 2, pId: "0", Name: "主要功能", open: true, iconOpen: "../css/bootstrap/img/diy/1_open.png", iconClose: "../css/bootstrap/img/diy/1_close.png" },
       { id: 21, pId: "2", Name: "地图功能", icon: "../css/bootstrap/img/diy/3.png" },
       { id: 211, pId: "21", Name: "地图切换(BasemapToggle)", icon: "../css/bootstrap/img/diy/3.png" },
       { id: 212, pId: "21", Name: "绘图工具(Sketch)", checked: true, icon: "../css/bootstrap/img/diy/3.png" },
@@ -95,7 +100,11 @@
       { id: 311, pId: "31", Name: "jsPanel弹窗", icon: "../css/bootstrap/img/diy/3.png" },
       { id: 312, pId: "31", Name: "Viewer.js图片查看", icon: "../css/bootstrap/img/diy/3.png" },
       { id: 313, pId: "31", Name: "zTree树", icon: "../css/bootstrap/img/diy/3.png" },
-    ];
+      { id: 41, pId: "2", Name: "综合模块", icon: "../css/bootstrap/img/diy/3.png" },
+      { id: 411, pId: "41", Name: "数据管理", icon: "../css/bootstrap/img/diy/3.png" },
+      { id: 412, pId: "41", Name: "3D视图中的卫星", icon: "../css/bootstrap/img/diy/3.png" },
+      ];
+     //ztree初始化，参数分别对应(用于展现 zTree 的 DOM 容器)，(zTree 的配置数据)，(zTree 的节点数据)
     zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
 
 

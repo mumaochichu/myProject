@@ -11,20 +11,21 @@
     <link rel="stylesheet" href="css/dataTables.bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
 
+    <script type="text/javascript" src="js/echarts/echarts.min.js"></script>
     <script type="text/javascript" src="js/jquery.min.js"></script> <!--type="text/javascript"写了就明确告诉浏览器这是javascript，如果不写，浏览器就按照自身（浏览网页的、你无法控制的电脑）的默认设置来处理，一般的IE浏览器默认是javascript，但是难免没人把默认脚本设置为vbscript或者其它，最好还是写上-->
-    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.jspanel.min.js"></script>
-    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="js/jquery.noty.packaged.min.js"></script>
-    <script type="text/javascript" src="js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="js/esriapi/dojo/dojo.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script> <!--引用jQuery UI，建立在 jQuery JavaScript 库上的一组用户界面交互、特效、小部件及主题-->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script> <!--引用bootstrap前端框架-->
+    <script type="text/javascript" src="js/jquery.jspanel.min.js"></script> <!--引用jQuery弹出层(浮动面板)插件jspanel-->
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script> <!--引用jQuery表格插件Datatables-->
+    <script type="text/javascript" src="js/jquery.noty.packaged.min.js"></script> <!--引用jQuery 信息提示弹出插件noty.js(这里用作删除数据时的提示)-->
+    <script type="text/javascript" src="js/dataTables.bootstrap4.min.js"></script> <!--这里引用的bootstrap是为了配合datatables样式-->
+    <script type="text/javascript" src="js/jquery.easyui.min.js"></script> <!--引用Jquery EasyUI插件(一个用户界面插件集合)-->
+    <script type="text/javascript" src="js/easyui-lang-zh_CN.js"></script> <!--将EasyUI的分页信息、表格加载信息和日期栏等信息改成中文提示信息-->
+    <script type="text/javascript" src="js/esriapi/dojo/dojo.js"></script> <!--引用arcgis jsapi-->
 </head>
 
 <body>
-  <!--菜单容器-->
+  <!--菜单容器(放置生成的菜单)-->
   <div id="nav_box">
     <ul id="nav-mainbox">
       <li class="nav_head">
@@ -35,15 +36,15 @@
     </ul>
   </div>
 
-  <!--地图容器-->
+  <!--地图容器(放置生成的地图)-->
   <div id="viewDiv"></div>
 
   <!--菜单栏-->
-  <script src="js/menu.js"></script>
+  <script src="js/menu.js"></script>  <!--生成菜单-->
   <!--地图-->
-  <script src="js/map.js"></script>
+  <script src="js/map.js"></script>  <!--生成地图-->
   <!--弹窗-->
-  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/main.js"></script> <!--生成弹窗-->
   <script type="text/javascript"> 
       
   </script>

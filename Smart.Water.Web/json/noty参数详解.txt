@@ -1,0 +1,65 @@
+text:
+提示文本
+
+type:
+支持的提示样式，每种样式都有预定义好的css样式：
+alert: 默认的提示样式(白色)
+success: 成功(绿色)
+error: 错误(红色)
+warning: 警告(黄色)
+information: 信息(蓝色)
+
+theme:
+主题，在default.js中，可以自己修改这个文件，然后使用这个主题属性
+
+layout:
+支持的布局位置：
+top: 顶部,长条状
+topLeft/topCenter/topRight: 顶部的左/中/右位置, 短条状
+center/centerLeft/centerRight: 正中/中左/中右, 短条状
+bottomLeft/bottomCenter/bottomRight: 底部左/中/右位置, 短条状
+bottom: 底部,长条状
+
+timeout:
+自动关闭时间,默认不会自动关闭
+
+buttons:
+按钮，用于在弹出的消息框中显示按钮
+例子：
+
+noty({
+  text: '你要继续吗?',
+  buttons: [
+    {addClass: 'btn btn-primary', text: '确定', onClick: function($noty) {
+        // this = button element 也就是当前的按钮
+        // $noty = $noty element 也就是当前这个提示信息对象
+        $noty.close();
+        noty({text: '你点击了确定按钮', type: 'success'});
+      }
+    },
+    {addClass: 'btn btn-danger', text: '取消', onClick: function($noty) {
+        $noty.close();
+        noty({text: '你点击了取消按钮', type: 'error'});
+      }
+    }
+  ]
+
+API：
+$.noty.get(id): 通过id获取noty对象, 一般用不到
+$.noty.close(id): 关闭一个noty提示
+$.noty.clearQueue(): 清空队列中的noty
+$.noty.closeAll(): 关闭所有noty提示
+$.noty.setText(id, text): 更新noty提示信息的文本内容
+$.noty.setType(id, type): 更新noty提示信息的类型
+$.noty.setTheme(theme): 更新noty提示信息的主题
+$.noty.setTimeout(4500): false(清除超时)或integer(清除计时器，为给定值启动)
+$.noty.stop(); 清除timeout
+$.noty.resume(); 重新启动timeout
+$.noty.queue 消息队列, Array
+$.noty.layouts 可以获取当前加载的布局, Object
+$.noty.themes 获取可用的主题, Object
+$.noty.store 获取当前显示在页面中的noty对象,然后可以通过api进行操作, Array
+$.noty.returns 获取noty(options)函数返回的值, 默认为object返回noty对象,可以改成其他值返回noty对象的id
+此外,noty还提供了方法用来替代window.alert函数:
+$.noty.consumeAlert 替代window.alert
+$.noty.stopConsumeAlert 取消替代

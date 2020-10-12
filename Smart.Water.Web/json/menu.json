@@ -138,5 +138,12 @@
     "navTitle": "ArcGIS jsapi项目部署",
     "navUrl": "#",
     "navParentId": 9
+  },
+  {
+    "navId": 21,
+    "id": "Echarts",
+    "navTitle": "Echarts图表",
+    "navUrl": "#",
+    "navParentId": 2
   }
 ]
