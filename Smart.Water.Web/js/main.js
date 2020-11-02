@@ -66,9 +66,9 @@ $(function () {
     top.datapanel=$.jsPanel({
       position: { my: "center-top", at: "center-top", offsetY: 90 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
       theme: "primary", //颜色，这里使用了原色
-      contentSize: { width: 650, height: 400 }, //面板内容div的宽度和高度
-      //headerTitle: "标题", //标题文本
-      //content: "<p>一些文本内容</p>",
+      contentSize: { width: 650, height: 400 }, //面板内容div的宽度和高度       如何阅读一本书
+      //headerTitle: "标题", //标题文本                                         
+      //content: "<p>一些文本内容</p>", 
       callback: [
         function () {
           this.content.css("padding", "15px");
@@ -81,7 +81,7 @@ $(function () {
       ]
     });
   });
-  //5，综合模块-3D视图中的卫星
+  //5，综合模块-3D视图中的卫星                                                
   $(document).on('click', '#satellite', function () {
         top.datapanel = $.jsPanel({
             position: { my: "center-top", at: "center-top", offsetY: 90 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
@@ -101,7 +101,7 @@ $(function () {
             ]
         });
     });
-  //6，说明
+  //6，说明 
   $(document).on('click', '#instruction', function () {
     $.jsPanel({
       position: { my: "center-top", at: "center-top", offsetY: 100 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
@@ -146,7 +146,7 @@ $(function () {
         $.jsPanel({
             position: { my: "center-top", at: "center-top", offsetY: 100 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
             theme: "primary", //颜色，这里使用了原色
-            contentSize: { width: 550, height: 450 }, //面板内容div的宽度和高度
+            contentSize: { width: 550, height: 450 }, //面板内容div的宽度和高度          
             //headerTitle: "标题", //标题文本
             //content: "<p>一些文本内容</p>",
             callback: [

@@ -1,2 +1,0 @@
-
-User ID=orcl3;Password=123456;Data Source=localhost/liu

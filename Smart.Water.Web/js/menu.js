@@ -23,7 +23,7 @@ $(function () {
           //一级菜单项可以滑动显示或隐藏子菜单项
           $("." + data[i]["navId"]).on("click", function () {
               //$(this).children("ul")获取被选元素的所有直接子元素，即这里的子菜单项；slideToggle(speed，callback) 方法通过使用滑动效果（高度变化）来切换元素的可见状态
-              $(this).children("ul").slideToggle();
+              $(this).children("ul").slideToggle();             
               //当前菜单显示，则其他都隐藏
               $(this).siblings().children("ul").slideUp(); 
           })

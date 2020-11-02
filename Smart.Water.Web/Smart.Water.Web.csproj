@@ -10184,6 +10184,7 @@
     <Content Include="js\viewer-jquery.min.js" />
     <Content Include="js\viewer.min.js" />
     <Content Include="js\WdatePicker.js" />
+    <Content Include="js\xlsx.full.min.js" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
@@ -13730,6 +13731,7 @@
     <Content Include="json\menu.json" />
     <Content Include="Handler\DEMOHandler.ashx" />
     <Content Include="Handler\SBXXBHandler.ashx" />
+    <Content Include="js\xlsx.full.min.map" />
     <None Include="Properties\PublishProfiles\SmartWater.pubxml" />
     <Content Include="plugins\Echarts.html" />
     <Content Include="satellite\beidou.txt" />

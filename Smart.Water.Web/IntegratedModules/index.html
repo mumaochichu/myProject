@@ -17,9 +17,57 @@
             font-size: 4px;
         }
     </style>
+    <script type="text/javascript" src="../js/xlsx.full.min.js"></script>
     <script type="text/javascript">
         var oTable;
+
         $(function () {
+            colu = [//列属性
+                {
+                    "mData": "MACHINECODE", "sTitle": "设备编号", "sClass": "text-center",     //mData:字段名称；sTitle:显示列标题
+
+                },
+                {
+                    "mData": "EXPNUM", "sTitle": "井盖编号", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "OWNERSHIPUNIT", "sTitle": "管理单位", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "MANUFACTURE", "sTitle": "生产厂家", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "INSTALLTIONUNIT", "sTitle": "安装单位", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "INSTALDATE", "sTitle": "安装日期", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "SERVICELIFE", "sTitle": "使用寿命", "sClass": "text-center",
+
+                },
+
+                {
+                    "mData": "BATTERYLIFE", "sTitle": "电池寿命", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "TIMESLOT", "sTitle": "时段", "sClass": "text-center",
+
+                },
+                {
+                    "mData": "NOTE", "sTitle": "备注", "sClass": "text-center",
+
+                }
+
+
+
+            ];
             //获取显示数据
             oTable = $("#paTable").DataTable({
                 //配置参数(http://datatables.club/reference/option/)
@@ -53,58 +101,7 @@
                 "fnServerParams": function (aoData) {  //用来在向服务器发送Ajax请求时发送额外的数据，
                     aoData.push({ "name": "name", "value": $("#txtName").val() });
                 },
-                "aoColumns": [  //列属性
-                    {
-                        "mData": "NVFID", "sTitle": "选择", "sWidth": "10px", "sClass": "text-center", "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
-                            $(nTd).html("<input type='checkbox'  name='checkList'  value='" + sData + "'>");
-                        }
-                    },
-                    { "mData": "NVFID", "sTitle": "主键", "bVisible": false, "bSearchable": false, "bSortable": false },
-                    {
-                        "mData": "MACHINECODE", "sTitle": "设备编号", "className": "table_font",     //mData:字段名称；sTitle:显示列标题
-
-                    },
-                    {
-                        "mData": "EXPNUM", "sTitle": "井盖编号", "className": "table_font",
-
-                    },
-                    {
-                        "mData": "OWNERSHIPUNIT", "sTitle": "管理单位", "className": "table_font", 
-
-                    },
-                    {
-                        "mData": "MANUFACTURE", "sTitle": "生产厂家", "className": "table_font",
-
-                    },
-                    {
-                        "mData": "INSTALLTIONUNIT", "sTitle": "安装单位", "className": "table_font", 
-
-                    },
-                    {
-                        "mData": "INSTALDATE", "sTitle": "安装日期", "className": "table_font", 
-
-                    },
-                    {
-                        "mData": "SERVICELIFE", "sTitle": "使用寿命", "className": "table_font", 
-
-                    },
-                    
-                    {
-                        "mData": "BATTERYLIFE", "sTitle": "电池寿命", "className": "table_font",
-
-                    },
-                    {
-                        "mData": "TIMESLOT", "sTitle": "时段", "className": "table_font",
-
-                    },
-                    {
-                        "mData": "NOTE", "sTitle": "备注", "className": "table_font",
-
-                    }
-
-
-
-                ],
+                "aoColumns":colu,
                 "drawCallback": function () { //回调函数
                     appendSkipPage();  //加上跳转功能
                 }
@@ -130,7 +127,7 @@
                         ckValues.push($(this).val());
                         //console.log($(this).context);
                         var NVFID = $(this).val();
-                       
+
                         confirm("确定要删除设备【" + NVFID + "】吗？",
                             "information", function () {
                                 $.ajax({
@@ -163,30 +160,90 @@
             $("#addEquipment").click(function () {
                 //console.log($.jsPanel);
                 top.addjpanel = $.jsPanel({
-                        id:"add",
-                        position: { my: "center-top", at: "center-top", offsetY: 140 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
-                        theme: "primary", //颜色，这里使用了原色
-                        contentSize: { width: 550, height: 400 }, //面板内容div的宽度和高度
-                        //headerTitle: "标题", //标题文本
-                        //content: "<p>一些文本内容</p>",
-                        callback: [
-                            function () {
-                                this.content.css("padding", "15px");
+                    id: "add",
+                    position: { my: "center-top", at: "center-top", offsetY: 140 },//位置选项。my:jsPanel的相对于其他元素的位置；at；jsPanel将针对的元素点；offsetX：水平偏移;offsetY:上下偏移；
+                    theme: "primary", //颜色，这里使用了原色
+                    contentSize: { width: 550, height: 400 }, //面板内容div的宽度和高度
+                    //headerTitle: "标题", //标题文本
+                    //content: "<p>一些文本内容</p>",
+                    callback: [
+                        function () {
+                            this.content.css("padding", "15px");
 
-                            },
-                            function () {
-                                this.headerTitle('添加数据')
-                                this.content.load('IntegratedModules/addEquipment.html');
-                            },
-                        ]
+                        },
+                        function () {
+                            this.headerTitle('添加数据')
+                            this.content.load('IntegratedModules/addEquipment.html');
+                        },
+                    ]
                 });
-              
+
+            });
+            //导出事件
+            $("#excel_out").click(function () {
+                var header = [],//表头排序
+                    headerDisplay = {},//表头显示
+                    headwidth = [];//表列宽
+                //where = initParams();//查询参数
+
+                //处理表头
+               
+                
+                console.log(colu);
+                $.each(colu, function (i, item) {
+                    headwidth.push({
+                        wpx: 150//设置列宽，这里默认全部设置为150单位
+                    });
+                    if (item && item.mData) {
+                        var key = item.mData,
+                            text = item.sTitle;
+                        header.push(key);//展示的顺序
+                        headerDisplay[key] = text;//展示的名称
+                    }
+                })
+                //处理筛选条件
+                //var queryStr = ""
+                //for (var key in where) {
+                //    queryStr += "&" + key + "=" + where[key];
+                //}
+
+                //获取数据
+                $.ajax({
+                    "type": 'post',
+                    "url": "../Handler/DEMOHandler.ashx?Action=QueryAllData",
+                    "dataType": "json",
+                    "success": function (res) {
+                        //处理得到的数据
+                        //将表头放到原始数据里面去，要保证表头在数组的最前面
+                        const excleData = [headerDisplay, ...res];
+
+                        // 制作工作表的方式有很多种，以数组和对象为例
+                        // const worksheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(excleData);
+
+                        // 使用 XLSX.utils.json_to_sheet(数据，{header:表头,skipHeader:是否跳过默认表头});
+                        const worksheet = XLSX.utils.json_to_sheet(excleData, { header: header, skipHeader: true });
+
+                        // 使用指定的单元格作为起点插入数据，r：行， c：列，详情看官网文档
+                        // XLSX.utils.sheet_add_aoa(worksheet, [[“数学”，“语文”], [“政治”，“语文”], [“历史”，“政治”], ], {origin: {r: 2, c: 5}});
+                        // 设置表格样式，!cols为列宽
+                        const options = {
+                            '!cols': headwidth,
+                        };
+                        worksheet['!cols'] = options['!cols'];
+                        // 新建一个工作簿
+                        const workbook = XLSX.utils.book_new();
+                        /* 将工作表添加到工作簿*/
+                        XLSX.utils.book_append_sheet(workbook, worksheet, '某某数据表');
+                        /* 输出工作表， 由文件名决定的输出格式*/
+                        XLSX.writeFile(workbook, '某某数据表.xlsx');
+                    }
                 });
+            });
             //编辑
             $("#edit").click(function () {
                 var ckValues = [];
                 $("#paTable [type='checkbox']:checked").each(function () {
-                    
+
                     if ($(this).val()) {
                         ckValues.push($(this).val());
                         var num = $(this).val();
@@ -206,19 +263,19 @@
                             //        function () {
                             //            this.headerTitle('编辑数据')
                             //            //this.content.load("IntegratedModules/editSCList.html");
-                            //          
+                            //
                             //        },
                             //    ]
                         });
-                        
+
                         //console.log(top.addjpanel);
                     }
                 });
                 if (ckValues.length <= 0) {
                     noty({ text: "请先选择数据！", type: "warning", layout: "topCenter", timeout: 2000 });
                     return;
-            }
-               
+                }
+
             });
         });
         //1，初始化显示
@@ -366,7 +423,7 @@
             //获取查询条件
             var cNum = $("#txtName").val();
             if (!cNum) {
-                noty({ text: "查询条件不能为空！",type: "warning", layout: "topCenter", timeout: 2000 });  //text:提示文本；theme:主题(在js/default.js中，可以自己修改这个文件，然后使用这个主题属性)；type:提示样式(alert:默认；success:成功；error:错误；warning:警告；information:信息)；layout:布局位置(top: 顶部,长条状；topLeft/topCenter/topRight: 顶部的左/中/右位置, 短条状；center/centerLeft/centerRight: 正中/中左/中右, 短条状；bottomLeft/bottomCenter/bottomRight: 底部左/中/右位置, 短条状；bottom: 底部, 长条状)
+                noty({ text: "查询条件不能为空！", type: "warning", layout: "topCenter", timeout: 2000 });  //text:提示文本；theme:主题(在js/default.js中，可以自己修改这个文件，然后使用这个主题属性)；type:提示样式(alert:默认；success:成功；error:错误；warning:警告；information:信息)；layout:布局位置(top: 顶部,长条状；topLeft/topCenter/topRight: 顶部的左/中/右位置, 短条状；center/centerLeft/centerRight: 正中/中左/中右, 短条状；bottomLeft/bottomCenter/bottomRight: 底部左/中/右位置, 短条状；bottom: 底部, 长条状)
                 return;
             }
             bindData2(cNum);
@@ -549,7 +606,7 @@
 <body>
     <div class="container-fluid">
         <form class="form-inline" style="padding-top:10px;padding-left:15px;">
-            <span class="pull-left"><input type="button" id="addEquipment" class="btn btn-info" value="添加设备" />&nbsp;&nbsp;<input type="button" id="edit" class="btn btn-info" value="编辑" />&nbsp;&nbsp;<input type="button" id="delete" class="btn btn-info" value="删除" />&nbsp;&nbsp;<input type="button" id="refresh" class="btn btn-info" value="刷新" /></span>
+            <span class="pull-left"><input type="button" id="addEquipment" class="btn btn-info" value="添加设备" />&nbsp;&nbsp;<input type="button" id="edit" class="btn btn-info" value="编辑" />&nbsp;&nbsp;<input type="button" id="delete" class="btn btn-info" value="删除" />&nbsp;&nbsp;<input type="button" id="refresh" class="btn btn-info" value="刷新" />&nbsp;&nbsp;<input type="button" id="excel_out" class="btn btn-info" value="导出" /></span>
             <div style="float:right">
                 <h6 style="float:left">模糊查询:</h6>
                 <input type="text" class="form-control" id="txtName" style="float:left;width: 80px;" /><input type="button" class="btn btn-info" value="查询" id="btnQuery" style="float:left;" />

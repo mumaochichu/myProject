@@ -123,7 +123,7 @@ namespace Smart.Water.Web.Handler
             {
                 throw new Exception(ex.ToString());
             }
-            // List<DEMO> dataList = dhyrantassert.GetAllList(new WhereClip(where));
+            // List<DEMO> dataList = dhyrantassert.GetAllList(new WhereClip(where));   
             //string result = JsonHelper.SerializeObject(dataList);
             return result;
         }
@@ -139,7 +139,7 @@ namespace Smart.Water.Web.Handler
             wo.MANUFACTURE = formdata["MANUFACTURE"];
             wo.INSTALLTIONUNIT = formdata["INSTALLTIONUNIT"];
             wo.INSTALDATE = Convert.ToDateTime(formdata["INSTALDATE"]);
-            wo.SERVICELIFE = Convert.ToDecimal(formdata["SERVICELIFE"]);
+            wo.SERVICELIFE = Convert.ToDecimal(formdata["SERVICELIFE"]);   //
           
             wo.BATTERYLIFE = Convert.ToDecimal(formdata["BATTERYLIFE"]);
             wo.TIMESLOT = formdata["TIMESLOT"];
@@ -199,7 +199,7 @@ namespace Smart.Water.Web.Handler
             wo.MANUFACTURE = formdata["MANUFACTURE"];
             wo.INSTALLTIONUNIT = formdata["INSTALLTIONUNIT"];
             wo.INSTALDATE = Convert.ToDateTime(formdata["INSTALDATE"]);
-            wo.SERVICELIFE = Convert.ToDecimal(formdata["SERVICELIFE"]);
+            wo.SERVICELIFE = Convert.ToDecimal(formdata["SERVICELIFE"]);   //
            
             wo.BATTERYLIFE = Convert.ToDecimal(formdata["BATTERYLIFE"]);
             wo.TIMESLOT = formdata["TIMESLOT"];
